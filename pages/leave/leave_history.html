@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>请假|历史纪录</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css">
+    <link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <style type="text/css">
+        [parentpane]{}
+        .blur{
+            -webkit-filter:blur(3px);
+        }
+        td.notehh{
+            width: 25%;
+            padding: 2px 0px;
+            text-align: center;
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="skin-blue">
+<!-- header logo: style can be found in header.less -->
+
+<header class="header">
+    <a href="../../index.html" class="logo">
+        <!-- Add the class icon to your logo image or logo icon to add the margining -->
+        Synthflex
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>·
+            <span class="icon-bar"></span>
+        </a>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
+
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-right: 15px">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span id="myName"></span><i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header bg-light-blue">
+                            <img src="../../img/easy.jpg" class="img-circle" alt="User Image" />
+                            <p>
+                                Jane Doe - Web Developer
+                                <small>Member since Nov. 2012</small>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Followers</a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Sales</a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Friends</a>
+                            </div>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a id="btnMyMsg" class="btn btn-default btn-flat">个人信息</a>
+                            </div>
+                            <div class="pull-right">
+                                <a id="btnLogout" class="btn btn-default btn-flat">注销</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>请您登录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" name="LoginForm" id="LoginForm" method="post" action="../../php/login.php" onSubmit="return InputCheck(this)">
+                    <div class="form-group ">
+                        <label for="username" class="col-md-2 col-md-offset-2 control-label">账号</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入账号" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-2 col-md-offset-2 control-label">密码</label>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnLogin">
+                    登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="initModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>首次登录，请完善您的信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="divInitMyInfo">
+                    <div class="col-md-12" align="center" style="padding: 20px">
+                        <img src="img/easy.jpg" style="max-width:30%; height: auto;">
+                    </div>
+                    <div class="col-md-12" style="padding-top:30px; padding-bottom:5px;" align="center">
+                        <button id="btnDefaultInit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;使用默认初始化</button>
+                    </div>
+                </div>
+                <div style="padding:30px" align="center">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>姓名</th>
+                            <td><input id="initName" type='text' class='form-control' style='width:70%'></td>
+                        </tr>
+                        <tr>
+                            <th>员工号</th>
+                            <td><input id="initUid" type='text' class='form-control' style='width:70%'></td>
+                        </tr>
+                        <tr>
+                            <th>性别</th>
+                            <td><select class='form-control' id='initSex' style='width: 20%'><option value='男'>男</option><option value='女'>女</option></select></td>
+                        </tr>
+                        <tr>
+                            <th>部门</th>
+                            <td><select class='form-control' id='initDepartment' style='width: 20%'><option value='研发部'>研发部</option><option value='市场部'>市场部</option><option value='人事部'>人事部</option></select></td>
+                        </tr>
+                        <tr>
+                            <th>小组</th>
+                            <td><input id="initTeam" type='text' class='form-control' style='width:70%'></td>
+                        </tr>
+                        <tr>
+                            <th>职位</th>
+                            <td><input id="initTitle" type='text' class='form-control' style='width:70%'></td>
+                        </tr>
+                        <tr>
+                            <th>手机</th>
+                            <td><input id="initTele" type='text' class='form-control' style='width:70%'></td>
+                        </tr>
+                        <tr>
+                            <th>邮箱</th>
+                            <td><input id="initEmail" type='text' class='form-control' style='width:70%'></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnInit">
+                    初始化
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper row-offcanvas row-offcanvas-left" id="main">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="left-side sidebar-offcanvas">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="../../img/easy.jpg" class="img-circle" alt="User Image" />
+                </div>
+                <div class="pull-left info">
+                    <p>您好, <span id="givenName"></span></p>
+
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul id="guide" class="sidebar-menu nav">
+                <li>
+                    <a href="../../index.html">
+                        <i class="fa fa-laptop"></i> <span>主页面</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../addressbook.html">
+                        <i class="fa fa-group"></i><span>通讯录</span>
+                    </a>
+                </li>
+                <li class="treeview active">
+                    <a href="">
+                        <i class="fa fa-coffee"></i>
+                        <span>请假系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="leave_new.html"><i class="fa fa-angle-double-right"></i>新建请假条</a></li>
+                        <li><a href="leave_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="leave_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-money"></i>
+                        <span>报销系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../expense/expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
+                        <li><a href="../expense/expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="../expense/expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <span id="hh1">请假系统</span>
+                <small id="hh2">历史纪录</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Dashboard</li>
+            </ol>
+        </section>
+        <section class="content tab-content">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1"  id="content">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <p class="box-title">您的请假条纪录</p>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>开始时间</th>
+                                    <th>结束时间</th>
+                                    <th>原因</th>
+                                    <th>状态</th>
+                                    <th>详情</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbodyLeaveHisotry"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal fade" tabindex="-1" role="dialog" id="modalLeaveDetail" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="text-align:center">
+                                    <div class="pull-right box-tools">
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                    </div>
+                                    <h3>请假单详情</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div style="margin: 0px 30px 2px 30px">
+                                        <p style="float: left"><small>编号：</small><span id="detailId"></span></p>
+                                        <p style="float: right"><small>创建日期：&nbsp</small><span id="detailDate"></span></p>
+                                    </div>
+                                    <div style="margin: 10px">
+                                        <table class="table-bordered" style="width: 100%">
+                                            <tr>
+                                                <td class="notehh" width="25%"><strong>部门</strong></td>
+                                                <td id="detailDepartment" class="notehh" width="25%"></td>
+                                                <td class="notehh" width="25%"><strong>姓名</strong></td>
+                                                <td id="detailName" class="notehh" width="25%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notehh"><strong>职务</strong></td>
+                                                <td id="detailTitle" class="notehh"></td>
+                                                <td class="notehh"><strong>工号</strong></td>
+                                                <td id="detailUid" class="notehh"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notehh"><strong>时间区间</strong></td>
+                                                <td colspan="3" id="detailTime" class="notehh"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notehh"><strong>原因</strong></td>
+                                                <td colspan="3" id="detailReason" class="notehh"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notehh"><strong>备注</strong></td>
+                                                <td colspan="3" id="detailRemark" class="notehh"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notehh"><strong>附件</strong></td>
+                                                <td colspan="3" id="detailAttachment" class="notehh"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notehh"><strong>审核人</strong></td>
+                                                <td id="detailAccepter" class="notehh"></td>
+                                                <td class="notehh"><strong>状态</strong></td>
+                                                <td id="detailState" class="notehh"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" id="divMyInfo" style="display: none">
+                    <div id="MyMsgBox" class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title" id="MyInfoTitle">个人信息</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12" align="center" style="padding: 20px">
+                                    <img src="../../img/easy.jpg" style="max-width:30%; height: auto;">
+                                </div>
+                                <div class="col-md-12" style="padding-top:30px; padding-bottom:5px;" align="center">
+                                    <button id="btnAlterInfo" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;修改资料</button>
+                                </div>
+                            </div>
+                            <div style="padding:30px" align="center">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>姓名</th>
+                                        <td id="name">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>员工号</th>
+                                        <td id="uid">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>性别</th>
+                                        <td id="sex">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>部门</th>
+                                        <td id="department">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>小组</th>
+                                        <td id="team">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>职位</th>
+                                        <td id="title">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>手机</th>
+                                        <td id="tele">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>邮箱</th>
+                                        <td id="email">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>入职日期</th>
+                                        <td id="date">-</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnInitMsg" class="btn btn-primary" style="display:none">
+                                初始化并提交
+                            </button>
+                            <button type="button" id="btnCloseAlterMsg" class="btn btn-defult" data-dismiss="modal" style="display:none">
+                                关闭
+                            </button>
+                            <button type="button" id="btnSaveAlterMsg" class="btn btn-primary" style="display:none">
+                                保存更改
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Main content -->
+        <!-- /.content -->
+    </aside><!-- /.right-side -->
+</div><!-- ./wrapper -->
+
+<!-- add new calendar event modal -->
+
+
+<script src="../../js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/leave_history.js"></script>
+</body>
+</html>
