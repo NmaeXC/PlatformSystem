@@ -268,22 +268,80 @@
                 <div class="col-md-10 col-md-offset-1"  id="content">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">您的报销单纪录</p>
+                            <p class="box-title">您的报销单记录</p>
                         </div>
-                        <div class="box-body">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>报销类型</th>
-                                    <th>金额</th>
-                                    <th>备注</th>
-                                    <th>受理人</th>
-                                    <th>状态</th>
-                                </tr>
-                                </thead>
-                                <tbody id="tbodyExpenseHisotry"></tbody>
-                            </table>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%">#</th>
+                                <th style="width: 20%">报销单号</th>
+                                <th style="width: 30%">提交日期</th>
+                                <th style="width: 20px">受理人</th>
+                                <th style="width: 10px">状态</th>
+                                <th style="width: 10px">详情</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbodyExpenseHistory"></tbody>
+                        </table>
+                    </div>
+                    <div class="modal fade" tabindex="-1" role="dialog" id="modalExpenseDetail" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="text-align:center">
+                                    <div class="pull-right box-tools">
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                    </div>
+                                    <h3>报销单详情</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div style="margin: 0px 30px 2px 30px">
+                                        <p style="float: left"><small>编号：</small><span id="detailNumber"></span></p>
+                                        <p style="float: right"><small>提交日期：&nbsp</small><span id="detailSubmitDate"></span></p>
+                                    </div>
+                                    <div style="margin: 10px">
+                                        <table class="table-bordered" style="width: 100%">
+                                            <tr>
+                                                <td class="notehh" width="25%"><strong>部门</strong></td>
+                                                <td id="detailDepartment" class="notehh" width="25%"></td>
+                                                <td class="notehh" width="25%"><strong>姓名</strong></td>
+                                                <td id="detailName" class="notehh" width="25%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notehh"><strong>职务</strong></td>
+                                                <td id="detailTitle" class="notehh"></td>
+                                                <td class="notehh"><strong>工号</strong></td>
+                                                <td id="detailUid" class="notehh"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <div style="margin-top: 5px; margin-bottom: 5px">
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th width="10%">#</th>
+                                                                <th width="20%">类型</th>
+                                                                <th width="30%">时间</th>
+                                                                <th width="20%">金额</th>
+                                                                <th width="20%">附件数</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="tbodyExpenseDetail">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notehh"><strong>审核人</strong></td>
+                                                <td id="detailAccepter" class="notehh"></td>
+                                                <td class="notehh"><strong>状态</strong></td>
+                                                <td id="detailState" class="notehh"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

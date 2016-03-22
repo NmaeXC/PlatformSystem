@@ -11,6 +11,9 @@ $(document).ready(function () {
     $("#expenseUid").text($("#uid").text());
     $("#expenseDepartment").text($("#department").text());
     $("#expenseTitle").text($("#title").text());
+
+    //恢复草稿内容
+
 })
 
 //datetimepicker部件的设置
@@ -28,25 +31,56 @@ $('.form_date').datetimepicker({
 var column = 1;     //报销单的行数
 
 //检查输入是否符合规范
-$("#expenseAmount").blur(function (){
-    var value = $(this).val();
-    //alert(value);
-    if (!isNaN(value) && value >= 0){
-        //alert("YES");
-        $("#expenseAmountTip").text("");
-        $(this).val((Math.round(value * 100) / 100).toFixed(2));
+var error = 0;      //标记是否有输入错误
+function amountCheak(element){
+    var value = $(element).val();
+    var tip = $(element).parent().find("small");
+    if(!isNaN(value) && value >= 0)
+    {
+        $(element).val((Math.round(value * 100) / 100).toFixed(2));
+        if (tip.text() != "")
+        {
+            tip.text("");
+            --error;
+        }
     }
-    else {
-        //alert("NO");
-        $("#expenseAmountTip").text("请正确输入金额数字！");
-        $(this).focus().select();
+    else
+    {
+        if (tip.text() == "")
+        {
+            tip.text("请正确输入金额数字！");
+            ++error;
+        }
     }
-})
+
+}
+
+function attachmentCheak(element){
+    var value = $(element).val();
+    var tip = $(element).parent().find("small");
+    if(!isNaN(value) && value >= 0)
+    {
+        if (tip.text() != "")
+        {
+            tip.text("");
+            --error;
+        }
+    }
+    else
+    {
+        if (tip.text() == "")
+        {
+            tip.text("请正确输入附件个数!(大于等于0)");
+            ++error;
+        }
+    }
+}
+
 
 //添加一行报销单
 $("#btnAddExpenseAccount").click(function () {
     var newColume = $("#trNewExpenseAccount_0").clone().attr('id', 'trNewExpenseAccount_' + column);
-    newColume.find("#expenseAmount").val("");
+    newColume.find("#expenseAmount").val("0");
     newColume.find("#expenseDate").val("");
     newColume.find("#expenseAttachment").val("");
     newColume.find("#expenseRemark").val("");
@@ -68,23 +102,99 @@ $("#btnAddExpenseAccount").click(function () {
 
 
 $("#btnSubmitExpenseAccount").click(function(){
-    //处理数据
-    var expenseList = new Array();
-    var expenseAccount = $("#trNewExpenseAccount_0").find("#expenseAmount").val();
-    var expenseType = $("#trNewExpenseAccount_0").find("#expenseType").val();
-    var expenseDate = $("#trNewExpenseAccount_0").find("#expenseDate").val();
-    var expenseAttachment = $("#trNewExpenseAccount_0").find("#expenseAttachment").val();
-    var expenseRemark = $("#trNewExpenseAccount_0").find("#expenseRemark").val();
 
-    if (expenseAccount == 0){
-        alert("请至少填写一个有效报销单条目后提交");
+    if (error != 0)
+    {
+        $("#expenseTip").text("输入有误！请更正后重新提交。");
     }
     else
     {
-        var i = 0;
-        while(expenseAccount != 0 && i < column)
+        //处理数据
+        var expenseList = new Array();
+        var expenseAmount = $("#trNewExpenseAccount_0").find("#expenseAmount").val();
+        var expenseType = $("#trNewExpenseAccount_0").find("#expenseType").val();
+        var expenseDate = $("#trNewExpenseAccount_0").find("#expenseDate").val();
+        var expenseAttachment = $("#trNewExpenseAccount_0").find("#expenseAttachment").val();
+        var expenseRemark = $("#trNewExpenseAccount_0").find("#expenseRemark").val();
+
+        if (expenseAccount == 0){
+            alert("请至少填写一个有效报销单条目后提交");
+        }
+        else
         {
-            expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'account' : expenseAccount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
+            var i = 0;
+            while(expenseAccount != 0 && i < column)
+            {
+                expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
+                ++i;
+                var expenseAccount = $("#trNewExpenseAccount_" + i).find("#expenseAmount").val();
+                var expenseType = $("#trNewExpenseAccount_" + i).find("#expenseType").val();
+                var expenseDate = $("#trNewExpenseAccount_" + i).find("#expenseDate").val();
+                var expenseAttachment = $("#trNewExpenseAccount_" + i).find("#expenseAttachment").val();
+                var expenseRemark = $("#trNewExpenseAccount_" + i).find("#expenseRemark").val();
+            }
+
+            //for (var a in expenseList)
+            //{
+            //    for(var b in expenseList[a])
+            //    {
+            //        alert(expenseList[a][b]);
+            //    }
+            //}
+
+            $.ajax({
+                url : "../../php/submitExpenseAccount.php",
+                type : "POST",
+                cache : false,
+                data : {'expenseList' : JSON.stringify(expenseList)},
+                async : false,
+                dataType : 'json',
+                //processData : false,  // 告诉jQuery不要去处理发送的数据
+                //contentType : false,   // 告诉jQuery不要去设置Content-Type请求头
+                success : function(data){
+                    if(data == "0")
+                    {
+                        alert("提交成功!");
+                    }
+                    else
+                    {
+                        alert("提交失败，请重试...");
+                    }
+
+                }
+            })
+        }
+    }
+
+
+})
+
+//打印
+
+
+
+
+
+//保存草稿
+$("#btnSaveDraft").click(function(){
+    if (error != 0)
+    {
+        $("#expenseTip").text("输入有误！请更正后重新保存。");
+    }
+    else
+    {
+        //处理数据
+        var expenseList = new Array();
+        var expenseAmount = $("#trNewExpenseAccount_0").find("#expenseAmount").val();
+        var expenseType = $("#trNewExpenseAccount_0").find("#expenseType").val();
+        var expenseDate = $("#trNewExpenseAccount_0").find("#expenseDate").val();
+        var expenseAttachment = $("#trNewExpenseAccount_0").find("#expenseAttachment").val();
+        var expenseRemark = $("#trNewExpenseAccount_0").find("#expenseRemark").val();
+
+        var i = 0;
+        while(i < column)
+        {
+            expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
             ++i;
             var expenseAccount = $("#trNewExpenseAccount_" + i).find("#expenseAmount").val();
             var expenseType = $("#trNewExpenseAccount_" + i).find("#expenseType").val();
@@ -93,29 +203,26 @@ $("#btnSubmitExpenseAccount").click(function(){
             var expenseRemark = $("#trNewExpenseAccount_" + i).find("#expenseRemark").val();
         }
 
-        alert(expenseList);
 
         $.ajax({
-            url : "../../php/submitExpenseAccount.php",
+            url : "../../php/expenseSaveDraft.php",
             type : "POST",
             cache : false,
-            data : expenseList,
+            data : {'expenseList' : JSON.stringify(expenseList)},
             async : false,
             dataType : 'json',
-            //processData : false,  // 告诉jQuery不要去处理发送的数据
-            //contentType : false,   // 告诉jQuery不要去设置Content-Type请求头
             success : function(data){
                 if(data == "0")
                 {
-                    alert("提交成功!");
+                    alert("保存成功!");
                 }
                 else
                 {
-                    alert("提交失败，请重试...");
+                    alert("保存失败，请重试...");
                 }
 
             }
         })
-    }
 
+    }
 })

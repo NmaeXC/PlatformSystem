@@ -305,21 +305,21 @@
                                                     <tr id="trNewExpenseAccount_0">
                                                         <td>
                                                             <select class="form-control" id="expenseType" name="expenseType">
-                                                                <option value="交通费">交通费</option>
-                                                                <option value="机票费">机票费</option>
-                                                                <option value="酒店费">酒店费</option>
-                                                                <option value="差旅餐费">差旅餐费</option>
-                                                                <option value="其他差旅相关费用">其他差旅相关费用</option>
-                                                                <option value="娱乐餐饮">娱乐餐饮</option>
-                                                                <option value="培训课程、书籍">培训课程、书籍</option>
-                                                                <option value="邮费">邮费</option>
-                                                                <option value="水电费">水电费</option>
-                                                                <option value="座机费">座机费</option>
-                                                                <option value="手机费">手机费</option>
-                                                                <option value="网费">网费</option>
-                                                                <option value="仪器设备费用">仪器设备费用</option>
-                                                                <option value="办公室用品">办公室用品</option>
-                                                                <option value="会务费">会务费</option>
+                                                                <option value="1">交通费</option>
+                                                                <option value="2">机票费</option>
+                                                                <option value="3">酒店费</option>
+                                                                <option value="4">差旅餐费</option>
+                                                                <option value="5">其他差旅相关费用</option>
+                                                                <option value="6">娱乐餐饮</option>
+                                                                <option value="7">培训课程、书籍</option>
+                                                                <option value="8">邮费</option>
+                                                                <option value="9">水电费</option>
+                                                                <option value="10">座机费</option>
+                                                                <option value="11">手机费</option>
+                                                                <option value="12">网费</option>
+                                                                <option value="13">仪器设备费用</option>
+                                                                <option value="14">办公室用品</option>
+                                                                <option value="15">会务费</option>
                                                             </select>
                                                         </td>
                                                         <td>
@@ -329,10 +329,12 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control " id="expenseAmount" name="expenseAmount" value="0">
+                                                            <input type="text" class="form-control" id="expenseAmount" name="expenseAmount" value="0" onblur="amountCheak(this)">
+                                                            <small class="pull-right text-danger"></small>
                                                         </td>
                                                         <td>
-                                                            <input type="number" class="form-control" id="expenseAttachment" name="expenseAttachment" value="0">
+                                                            <input type="number" class="form-control" id="expenseAttachment" name="expenseAttachment" onblur="attachmentCheak(this)">
+                                                            <small class="pull-right text-danger"></small>
                                                         </td>
                                                         <td>
                                                             <textarea class="form-control" rows="1" id="expenseRemark" name="expenseRemark"></textarea>
@@ -344,6 +346,7 @@
                                             <button class="btn btn-primary pull-right" id="btnAddExpenseAccount">
                                                 <span class="glyphicon glyphicon-plus"></span> 添加
                                             </button>
+                                            <p id="expenseTip" class="text-left text-danger"></p>
                                         </td>
                                     </tr>
                                 </table>
@@ -354,14 +357,19 @@
                         </div>
                         <div class="box-footer clearfix">
                             <div class="row" style="margin-bottom: 15px">
-                                <div class="col-md-offset-3 col-md-2" align="center">
+                                <div class="col-md-offset-2 col-md-2" align="center">
                                     <button type="button" id="btnSubmitExpenseAccount" class="btn btn-primary btn-lg btn-block">
                                         提交
                                     </button>
                                 </div>
-                                <div class="col-md-2 col-md-offset-2" align="center">
-                                    <button type="button" class="btn btn-defult btn-lg btn-block">
-                                        取消
+                                <div class="col-md-2 col-md-offset-1">
+                                    <button type="button" id="btnPrintExpenseAccount" class="btn btn-Printdefault btn-lg btn-block">
+                                        打印
+                                    </button>
+                                </div>
+                                <div class="col-md-2 col-md-offset-1" align="center">
+                                    <button type="button" id="btnSaveDraft" class="btn btn-defult btn-lg btn-block">
+                                        保存草稿
                                     </button>
                                 </div>
                             </div>
