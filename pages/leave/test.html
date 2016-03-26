@@ -16,15 +16,33 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript">
-    $(".form_datetime").datetimepicker({
-        format: "dd MM yyyy - hh:ii",
-        autoclose: true,
-        todayBtn: true,
-        startDate: "2013-02-14 10:00",
-        minuteStep: 10
-    });
-</script>
 
 </body>
 </html>
+
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="imageBox">
+            <div class="thumbBox"></div>
+            <div class="spinner" style="display: none">Loading...</div>
+        </div>
+        <div class="action row">
+            <div class="col-md-4">
+                <a href="javascript:void(0)" class="upload-img">
+                    <label class="btn btn-primary" for="upload-file">上传图像</label>
+                </a>
+                <input type="file" class="" name="upload-file" id="upload-file" style="display: none"/>
+            </div>
+            <div class="col-md-4">
+                <input type="button" id="btnZoomIn" class="btn btn-default" value="+"  >
+                <input type="button" id="btnZoomOut" class="btn btn-default" value="-" >
+            </div>
+            <div class="col-md-4">
+                <input type="button" id="btnCrop"  class="btn btn-default" value="裁切">
+            </div>
+        </div>
+        <div class="cropped"></div>
+    </div>
+    <div class="box-footer">
+    </div>
+</div>

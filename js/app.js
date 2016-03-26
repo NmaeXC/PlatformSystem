@@ -62,7 +62,9 @@ function showMyPage(data)
     }
     else
     {
-        $("#myName").text(data.name);
+        $("#myName1").text(data.name);
+        $("#myName2").text(data.name);
+        $("#myTitle").text(data.title);
         $("#givenName").text(data.givenname);
         $("#MyMsgBox").find("#name").text(data.name);
         $("#MyMsgBox").find("#uid").text(data.uid);

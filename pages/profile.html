@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>主页</title>
+    <title>资料设置</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="css/AdminLTE.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css">
     <style type="text/css">
         [parentpane]{}
         .blur{
@@ -48,30 +48,30 @@
 
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-right: 15px">
-                    <i class="glyphicon glyphicon-user"></i>
-                    <span id="myName1"></span><i class="caret"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <!-- User image -->
-                    <li class="user-header bg-light-blue">
-                        <img src="img/easy.jpg" class="img-circle" alt="User Image" />
-                        <p>
-                            <span id="myName2"></span> - <span id="myTitle"></span>
-                        </p>
-                    </li>
-                    <!-- Menu Body -->
-                    <li class="user-body">
-                        <div class="col-xs-6 text-center">
-                            <a role="button" id="btnMyMsg">我的资料</a>
-                        </div>
-                        <div class="col-xs-6 text-center">
-                            <a role="button" id="btnLogout">注销</a>
-                        </div>
-                    </li>
-                    <!-- Menu Footer-->
-                </ul>
-            </li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-right: 15px">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span id="myName1"></span><i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header bg-light-blue">
+                            <img src="img/easy.jpg" class="img-circle" alt="User Image" />
+                            <p>
+                                <span id="myName2"></span> - <span id="myTitle"></span>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnMyMsg">我的资料</a>
+                            </div>
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnLogout">注销</a>
+                            </div>
+                        </li>
+                        <!-- Menu Footer-->
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
@@ -195,12 +195,12 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul id="guide" class="sidebar-menu nav">
                 <li class="active">
-                    <a href="index.html" >
+                    <a href="../index.html" >
                         <i class="fa fa-laptop"></i> <span>主页面</span>
                     </a>
                 </li>
                 <li>
-                    <a href="pages/addressbook.html" id="bar_addressbook">
+                    <a href="addressbook.html" id="bar_addressbook">
                         <i class="fa fa-group"></i><span>通讯录</span>
                     </a>
                 </li>
@@ -211,9 +211,9 @@
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/leave/leave_new.html"><i class="fa fa-angle-double-right"></i>新建请假条</a></li>
-                        <li><a href="pages/leave/leave_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
-                        <li><a href="pages/leave/leave_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                        <li><a href="leave/leave_new.html"><i class="fa fa-angle-double-right"></i>新建请假条</a></li>
+                        <li><a href="leave/leave_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="leave/leave_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -223,9 +223,9 @@
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/expense/expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
-                        <li><a href="pages/expense/expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
-                        <li><a href="pages/expense/expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                        <li><a href="expense/expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
+                        <li><a href="expense/expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="expense/expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
                     </ul>
                 </li>
             </ul>
@@ -249,22 +249,77 @@
         <section class="content tab-content">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1" id="content" align="center">
-                    <div class="imageBox">
-                        <div class="thumbBox"></div>
-                        <div class="spinner" style="display: none">Loading...</div>
-                    </div>
-                    <div class="action">
-                        <!-- <input type="file" id="file" style=" width: 200px">-->
-                        <div class="new-contentarea tc"> <a href="javascript:void(0)" class="upload-img">
-                            <label for="upload-file">上传图像</label>
-                        </a>
-                            <input type="file" class="" name="upload-file" id="upload-file" />
+                    <div class="box box-primary">
+                        <div class="box-body row">
+                            <div class="col-md-6">
+                                <p class="box-title">头像设置</p>
+                                <div class="imageBox">
+                                    <div class="thumbBox"></div>
+                                    <div class="spinner" style="display: none">Loading...</div>
+                                </div>
+                                <div class="action row">
+                                    <div class="col-md-4">
+                                        <a href="javascript:void(0)" class="upload-img">
+                                            <label class="btn btn-primary" for="upload-file">上传图像</label>
+                                        </a>
+                                        <input type="file" class="" name="upload-file" id="upload-file" style="display: none"/>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="button" id="btnZoomIn" class="btn btn-default" value="+"  >
+                                        <input type="button" id="btnZoomOut" class="btn btn-default" value="-" >
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="button" id="btnCrop"  class="btn btn-default" value="裁切">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="box-title">基本资料</p>
+                                <div class="cropped"></div>
+                                <div style="padding:30px" align="center">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th width="15%">姓名</th>
+                                            <td width="35%" id="profile_name">-</td>
+                                            <th width="15%">职位</th>
+                                            <td width="35%" id="profile_title">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th>员工号</th>
+                                            <td id="profile_uid">-</td>
+                                            <th>手机</th>
+                                            <td id="profile_tele"><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>性别</th>
+                                            <td id="profile_sex">-</td>
+                                            <th>邮箱</th>
+                                            <td id="profile_email"><input type="text" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>部门</th>
+                                            <td id="profile_department">-</td>
+                                            <th>入职日期</th>
+                                            <td id="profile_date">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th>小组</th>
+                                            <td id="profile_team">-</td>
+                                            <th>直接上司</th>
+                                            <td id="top">-</td>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <input type="button" id="btnCrop"  class="Btnsty_peyton" value="裁切">
-                        <input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+"  >
-                        <input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-" >
+                        <div class="box-footer">
+                            <button type="button" id="btnSaveAlterMsg" class="btn btn-primary" style="display:none">
+                                保存更改
+                            </button>
+                            <button type="button" id="btnCloseAlterMsg" class="btn btn-defult" data-dismiss="modal" style="display:none">
+                                关闭
+                            </button>
+                        </div>
                     </div>
-                    <div class="cropped"></div>
                 </div>
                 <div class="col-md-4" id="divMyInfo" style="display: none">
                     <div id="MyMsgBox" class="box box-primary">
@@ -344,20 +399,19 @@
 <!-- add new calendar event modal -->
 
 
-<script src="js/jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap-datetimepicker.min.js"></script>
-<script src="js/app.js"></script>
-<script src="js/index.js"></script>
-<script src="js/cropbox.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/cropbox.js"></script>
 <script type="text/javascript">
     $(window).load(function() {
         var options =
         {
             thumbBox: '.thumbBox',
             spinner: '.spinner',
-            imgSrc: 'images/avatar.jpg'
+            imgSrc: '../img/easy.jpg'
         }
         var cropper = $('.imageBox').cropbox(options);
         $('#upload-file').on('change', function(){
@@ -372,9 +426,9 @@
         $('#btnCrop').on('click', function(){
             var img = cropper.getDataURL();
             $('.cropped').html('');
-            $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
-            $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;"><p>128px*128px</p>');
-            $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:180px;margin-top:4px;border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>');
+//            $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
+            $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;">');
+//            $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:180px;margin-top:4px;border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>');
         })
         $('#btnZoomIn').on('click', function(){
             cropper.zoomIn();
