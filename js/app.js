@@ -62,19 +62,17 @@ function showMyPage(data)
     }
     else
     {
-        $("#myName1").text(data.name);
-        $("#myName2").text(data.name);
-        $("#myTitle").text(data.title);
+        $(".nameUser").text(data.name);
+        $(".titleUser").text(data.title);
+        $(".uidUser").text(data.uid);
+        $(".sexUser").text(data.sex);
+        $(".departmentUser").text(data.department);
+        $(".teamUser").text(data.team);
+        $(".teleUser").text(data.tele);
+        $(".emailUser").text(data.email);
+        $(".dateUser").text(data.date);
         $("#givenName").text(data.givenname);
-        $("#MyMsgBox").find("#name").text(data.name);
-        $("#MyMsgBox").find("#uid").text(data.uid);
-        $("#MyMsgBox").find("#sex").text(data.sex);
-        $("#MyMsgBox").find("#department").text(data.department);
-        $("#MyMsgBox").find("#team").text(data.team);
-        $("#MyMsgBox").find("#title").text(data.title);
-        $("#MyMsgBox").find("#tele").text(data.tele);
-        $("#MyMsgBox").find("#email").text(data.email);
-        $("#MyMsgBox").find("#date").text(data.date);
+        $(".imgUser").src(data.img);
     }
 }
 
@@ -156,47 +154,7 @@ $("#btnMyMsg").click(function(){
     $("#divMyInfo").show();
 })
 
-//点击“修改个人资料”按钮，显示修改信息界面
-$("#btnAlterInfo").click(function(){
 
-    var tele = $("#MyMsgBox").find("#tele").text();
-    var email = $("#MyMsgBox").find("#email").text();
-    $("#content").hide();
-    $("#divMyInfo").addClass("col-md-offset-4").attr("id", "divAlterInfo");
-    $("#btnAlterInfo").hide();
-    $("#MyInfoTitle").text("请修改您的资料");
-    $("#btnSaveAlterMsg").show();
-    $("#btnCloseAlterMsg").show();
-    $("#divAlterInfo").find("#tele").html("<input type='text' class='form-control' style='width:70%' value='" + tele + "'>");
-    $("#divAlterInfo").find("#email").html("<input type='text' class='form-control' style='width:70%' value='" + email + "'>");
-
-})
-
-//修改完成后点击“保存”按钮，保存并提交资料的修改
-$("#btnSaveAlterMsg").click(function(){
-    // var newSex= $("#divAlterInfo").find("#sex").val();
-    var newTele = $("#divAlterInfo").find("#tele input").val();
-    var newEmail = $("#divAlterInfo").find("#email input").val();
-
-    $.ajax({
-        url : "/" + projectName + "/php/updatemyinfo.php",
-        data : {'newTele':newTele, 'newEmail':newEmail},
-        type : "POST",
-        cache : false,
-        dataType : 'text',
-        success : function(data){
-            if (data == "0") {
-                alert("保存成功！");
-            }
-            else
-            {
-                alert("保存失败，请重试...");
-            }
-
-            window.location.reload();
-        }
-    })
-})
 //修改资料时点击“关闭”按钮，刷新当前页面
 $("#btnCloseAlterMsg").click(function(){
     var tele = $("#divAlterInfo").find("#tele input").val();
