@@ -125,4 +125,10 @@ function expenseDetail(x){
 
 $('#modalExpenseDetail').on('hidden.bs.modal', function () {
     $("#tbodyExpenseDetail").empty();
-})
+});
+
+$("#btnPrint").click(function () {
+    $("#divDetailPage").jqprint({
+        operaSupport: true
+    });
+});

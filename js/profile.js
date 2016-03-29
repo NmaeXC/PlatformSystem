@@ -2,13 +2,16 @@
  * Created by hopoo on 2016/3/27.
  */
 
+$(document).ready(function () {
+   freshMyPage();
+});
 //点击“修改个人资料”按钮，显示修改信息界面
 $("#btnAlterMsg").click(function(){
 
     var tele = $("#divTele").text();
     var email = $("#divEmail").text();
-    $("#divTele").html("<input type='text' id='inputTele' class='form-control' value='" + tele + "'>");
-    $("#divEmail").html("<input type='text' id='inputEmail' class='form-control' value='" + email + "'>");
+    $("#divTele").html("<input type='text' id='inputTele'  class='form-control' value='" + tele + "'>");
+    $("#divEmail").html("<input type='text' id='inputEmail'  class='form-control' value='" + email + "'>");
     (function(element){
         var height = element.height();
         var width = element.width();
@@ -26,13 +29,13 @@ $("#btnAlterMsg").click(function(){
 $("#btnSaveAlterMsg").click(function(){
     var newTele = $("#inputTele").val();
     var newEmail = $("#inputEmail").val();
-
+    var newtAvatar = $("#imgAlertAvatar").attr("src");
     $.ajax({
         url : "/" + projectName + "/php/updatemyinfo.php",
-        data : {'newTele':newTele, 'newEmail':newEmail},
         type : "POST",
         cache : false,
-        dataType : 'text',
+        data : {'newTele': newTele, 'newEmail': newEmail, 'newAvatar': newtAvatar},
+        async : false,
         success : function(data){
             if (data == "0") {
                 alert("保存成功！");
@@ -47,10 +50,12 @@ $("#btnSaveAlterMsg").click(function(){
     })
 });
 
+//修改时点击“取消”按钮
 $("#btnAlertCancel").click(function(){
     window.location.reload();
 });
 
+//修改头像功能模块
 $(window).load(function() {
     var options =
     {
@@ -59,7 +64,7 @@ $(window).load(function() {
         imgSrc: '../img/easy.jpg'
     }
     var cropper = $('.imageBox').cropbox(options);
-    $('#upload-file').on('change', function(){
+    $('#inputImg').on('change', function(){
         var reader = new FileReader();
         reader.onload = function(e) {
             options.imgSrc = e.target.result;
@@ -70,9 +75,11 @@ $(window).load(function() {
     })
     $('#btnCrop').on('click', function(){
         var img = cropper.getDataURL();
-        $('.cropped').html('');
+        $("#imgAlertAvatar").attr('src', img);
+        $("#inputAvatar").val(img);
+        //$('.cropped').html('');
 //            $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
-        $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;">');
+//        $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;">');
 //            $('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:180px;margin-top:4px;border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>');
     })
     $('#btnZoomIn').on('click', function(){

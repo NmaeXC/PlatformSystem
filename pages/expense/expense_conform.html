@@ -44,7 +44,7 @@
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>·
+            <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
         <div class="navbar-right">
@@ -55,38 +55,26 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-right: 15px">
                         <i class="glyphicon glyphicon-user"></i>
-                        <span id="myName"></span><i class="caret"></i>
+                        <span class="nameUser"></span><i class="caret"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
-                            <img src="../../img/easy.jpg" class="img-circle" alt="User Image" />
+                            <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
                             <p>
-                                Jane Doe - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                <span class="nameUser"></span> - <span class="titleUser"></span>
                             </p>
                         </li>
                         <!-- Menu Body -->
                         <li class="user-body">
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Followers</a>
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnMyMsg">我的资料</a>
                             </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Sales</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Friends</a>
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnLogout">注销</a>
                             </div>
                         </li>
                         <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a id="btnMyMsg" class="btn btn-default btn-flat">个人信息</a>
-                            </div>
-                            <div class="pull-right">
-                                <a id="btnLogout" class="btn btn-default btn-flat">注销</a>
-                            </div>
-                        </li>
                     </ul>
                 </li>
             </ul>
@@ -191,7 +179,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../../img/easy.jpg" class="img-circle" alt="User Image" />
+                    <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
                 </div>
                 <div class="pull-left info">
                     <p>您好, <span id="givenName"></span></p>
@@ -259,8 +247,8 @@
                 <small id="hh2">历史记录</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Dashboard</li>
+                <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Expense Account Conform</li>
             </ol>
         </section>
         <section class="content tab-content">

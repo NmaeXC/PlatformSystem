@@ -55,38 +55,26 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-right: 15px">
                         <i class="glyphicon glyphicon-user"></i>
-                        <span id="myName"></span><i class="caret"></i>
+                        <span class="nameUser"></span><i class="caret"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
-                            <img src="../../img/easy.jpg" class="img-circle" alt="User Image" />
+                            <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
                             <p>
-                                Jane Doe - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                <span class="nameUser"></span> - <span class="titleUser"></span>
                             </p>
                         </li>
                         <!-- Menu Body -->
                         <li class="user-body">
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Followers</a>
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnMyMsg">我的资料</a>
                             </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Sales</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Friends</a>
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnLogout">注销</a>
                             </div>
                         </li>
                         <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a id="btnMyMsg" class="btn btn-default btn-flat">个人信息</a>
-                            </div>
-                            <div class="pull-right">
-                                <a id="btnLogout" class="btn btn-default btn-flat">注销</a>
-                            </div>
-                        </li>
                     </ul>
                 </li>
             </ul>
@@ -191,7 +179,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../../img/easy.jpg" class="img-circle" alt="User Image" />
+                    <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
                 </div>
                 <div class="pull-left info">
                     <p>您好, <span id="givenName"></span></p>
@@ -259,8 +247,8 @@
                 <small id="hh2">历史记录</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Dashboard</li>
+                <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Expense Account History</li>
             </ol>
         </section>
         <section class="content tab-content">
@@ -293,7 +281,7 @@
                                     </div>
                                     <h3>报销单详情</h3>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" id="divDetailPage">
                                     <div style="margin: 0px 30px 2px 30px">
                                         <p style="float: left"><small>编号：</small><span id="detailNumber"></span></p>
                                         <p style="float: right"><small>提交日期：&nbsp</small><span id="detailSubmitDate"></span></p>
@@ -340,7 +328,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="modal-footer"></div>
+                                <div class="modal-footer" style="text-align: center">
+                                    <button class="btn btn-primary" id="btnPrint">打印</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -353,63 +343,56 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12" align="center" style="padding: 20px">
-                                    <img src="../../img/easy.jpg" style="max-width:30%; height: auto;">
+                                    <img src="../../img/easy.jpg" class="imgUser" style="max-width:30%; height: auto;">
                                 </div>
                                 <div class="col-md-12" style="padding-top:30px; padding-bottom:5px;" align="center">
                                     <button id="btnAlterInfo" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;修改资料</button>
                                 </div>
                             </div>
                             <div style="padding:30px" align="center">
-                                <table class="table table-hover">
-                                    <tr>
-                                        <th>姓名</th>
-                                        <td id="name">-</td>
-                                    </tr>
-                                    <tr>
-                                        <th>员工号</th>
-                                        <td id="uid">-</td>
-                                    </tr>
-                                    <tr>
-                                        <th>性别</th>
-                                        <td id="sex">-</td>
-                                    </tr>
-                                    <tr>
-                                        <th>部门</th>
-                                        <td id="department">-</td>
-                                    </tr>
-                                    <tr>
-                                        <th>小组</th>
-                                        <td id="team">-</td>
-                                    </tr>
-                                    <tr>
-                                        <th>职位</th>
-                                        <td id="title">-</td>
-                                    </tr>
-                                    <tr>
-                                        <th>手机</th>
-                                        <td id="tele">-</td>
-                                    </tr>
-                                    <tr>
-                                        <th>邮箱</th>
-                                        <td id="email">-</td>
-                                    </tr>
-                                    <tr>
-                                        <th>入职日期</th>
-                                        <td id="date">-</td>
-                                    </tr>
-                                </table>
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">姓名</label>
+                                        <div class="col-md-8 nameUser">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">员工号</label>
+                                        <div class="col-md-8 User">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">性别</label>
+                                        <div class="col-md-8 sexUser">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">部门</label>
+                                        <div class="col-md-8 departmentUser">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">小组</label>
+                                        <div class="col-md-8 teamUser">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">职位</label>
+                                        <div class="col-md-8 titleUser">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">手机</label>
+                                        <div class="col-md-8 teleUser">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">邮箱</label>
+                                        <div class="col-md-8 emailUser">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">入职日期</label>
+                                        <div class="col-md-8 dateUser">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">直接上司</label>
+                                        <div class="col-md-8 topUser">-</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" id="btnInitMsg" class="btn btn-primary" style="display:none">
-                                初始化并提交
-                            </button>
-                            <button type="button" id="btnCloseAlterMsg" class="btn btn-defult" data-dismiss="modal" style="display:none">
-                                关闭
-                            </button>
-                            <button type="button" id="btnSaveAlterMsg" class="btn btn-primary" style="display:none">
-                                保存更改
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -426,8 +409,9 @@
 <script src="../../js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../js/bootstrap.min.js"></script>
-<script src="../../js/bootstrap-datetimepicker.min.js"></script>
 <script src="../../js/app.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+<script src="../../js/jquery.jqprint-0.3.js"></script>
 <script src="../../js/expense_history.js"></script>
 </body>
 </html>

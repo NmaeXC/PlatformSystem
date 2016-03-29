@@ -9,7 +9,7 @@
 
 		//从数据库获取信息
 		$username = $_SESSION["username"];
-		$sql = "SELECT username, name, tele, sex, email, date, department, team, title, top, uid FROM user WHERE username = '$username'";
+		$sql = "SELECT username, name, tele, sex, email, date, department, team, title, top, uid, img FROM user WHERE username = '$username'";
 		$rs_sql = $mysqli -> query($sql);
 		// echo mysqli_num_rows($rs_sql);
 		if (mysqli_num_rows($rs_sql) == 0)
@@ -55,7 +55,8 @@
 				"department" => $result["department"],
 				"team" => $result["team"],
 				"title" => $result["title"],
-				"top" => $result["top"]
+				"top" => $result["top"],
+				"img" => $result["img"]
 				);
 		}
 		

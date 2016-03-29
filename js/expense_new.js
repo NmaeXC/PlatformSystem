@@ -117,17 +117,17 @@ $("#btnSubmitExpenseAccount").click(function(){
         var expenseAttachment = $("#trNewExpenseAccount_0").find("#expenseAttachment").val();
         var expenseRemark = $("#trNewExpenseAccount_0").find("#expenseRemark").val();
 
-        if (expenseAccount == 0){
+        if (expenseAmount == 0){
             alert("请至少填写一个有效报销单条目后提交");
         }
         else
         {
             var i = 0;
-            while(expenseAccount != 0 && i < column)
+            while(expenseAmount != 0 && i < column)
             {
                 expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
                 ++i;
-                var expenseAccount = $("#trNewExpenseAccount_" + i).find("#expenseAmount").val();
+                var expenseAmount = $("#trNewExpenseAccount_" + i).find("#expenseAmount").val();
                 var expenseType = $("#trNewExpenseAccount_" + i).find("#expenseType").val();
                 var expenseDate = $("#trNewExpenseAccount_" + i).find("#expenseDate").val();
                 var expenseAttachment = $("#trNewExpenseAccount_" + i).find("#expenseAttachment").val();
@@ -196,7 +196,7 @@ $("#btnSaveDraft").click(function(){
         {
             expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
             ++i;
-            var expenseAccount = $("#trNewExpenseAccount_" + i).find("#expenseAmount").val();
+            var expenseAmount = $("#trNewExpenseAccount_" + i).find("#expenseAmount").val();
             var expenseType = $("#trNewExpenseAccount_" + i).find("#expenseType").val();
             var expenseDate = $("#trNewExpenseAccount_" + i).find("#expenseDate").val();
             var expenseAttachment = $("#trNewExpenseAccount_" + i).find("#expenseAttachment").val();
