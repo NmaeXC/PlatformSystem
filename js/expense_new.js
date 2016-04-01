@@ -76,6 +76,21 @@ function attachmentCheak(element){
     }
 }
 
+function amountTip(){
+    var sum = new Number(0);
+    $(".expenseAmount").each(function () {
+        sum += new Number($(this).val());
+    });
+    if(!isNaN(sum))
+    {
+        $("#sumOfAmount").text(sum.toFixed(2));
+    }
+    else
+    {
+        $("#sumOfAmount").text("等待修改...");
+    }
+
+}
 
 //添加一行报销单
 $("#btnAddExpenseAccount").click(function () {

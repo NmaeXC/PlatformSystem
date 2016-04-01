@@ -67,68 +67,100 @@ $(document).ready(function () {
             }
         }
     })
-})
+});
 
 
-//查看报销单详情
-function expenseDetail(x){
-    var item = $("#trExpenseHistory" + x);
-    number = item.find("td:eq(1)").text();
-    $.ajax({
-        url : "../../php/expenseHistory.php",
-        type : "POST",
-        cache : false,
-        data : {'detailNumber' : number},
-        async : false,
-        dataType : 'json',
-        success : function (data) {
-            $("#detailNumber").text(number);
-            $("#detailSubmitDate").text(item.find("td:eq(2)").text());
-            $("#detailName").text($("#name").text());
-            $("#detailUid").text($("#uid").text());
-            $("#detailDepartment").text($("#department").text());
-            $("#detailTitle").text($("#title").text());
 
-            if (data.sum > 0)
-            {
-                for(var i = 0; i < data.sum; i++)
+(function (){
+    var detailItem = {
+        number: null,
+        submitDate: null,
+        name: null,
+        uid: null,
+        department: null,
+        title: null,
+        data: []
+    };
+
+    //查看报销单详情
+    function expenseDetail(x){
+        var item = $("#trExpenseHistory" + x);
+        detailItem.number = item.find("td:eq(1)").text();
+        $.ajax({
+            url : "../../php/expenseHistory.php",
+            type : "POST",
+            cache : false,
+            data : {'detailNumber' : number},
+            async : false,
+            dataType : 'json',
+            success : function (data) {
+                $("#detailNumber").text(detailItem.number);
+                $("#detailSubmitDate").text(detailItem.submitDate = item.find("td:eq(2)").text());
+                $("#detailName").text(detailItem.name = $("#name").text());
+                $("#detailUid").text(detailItem.uid = $("#uid").text());
+                $("#detailDepartment").text(detailItem.department = $("#department").text());
+                $("#detailTitle").text(detailItem.title = $("#title").text());
+
+                if (data.sum > 0)
                 {
-                    var tr1ID = "tr1Detail" + i;
-                    var tr2ID = "tr2Detail" + i;
+                    for(var i = 0; i < data.sum; i++)
+                    {
+                        var tr1ID = "tr1Detail" + i;
+                        var tr2ID = "tr2Detail" + i;
 
-                    $("<tr>").attr('id', tr1ID).appendTo("#tbodyExpenseDetail");
-                    $("<td rowspan='2'></td>").text((i+1) + ".").appendTo("#" + tr1ID);
-                    $("<td></td>").text(data[i].type).appendTo("#" + tr1ID);
-                    $("<td></td>").text(data[i].date).appendTo("#" + tr1ID);
-                    $("<td></td>").text(data[i].amount).appendTo("#" + tr1ID);
-                    $("<td></td>").text(data[i].attachment).appendTo("#" + tr1ID);
+                        $("<tr>").attr('id', tr1ID).appendTo("#tbodyExpenseDetail");
+                        $("<td rowspan='2'></td>").text((i+1) + ".").appendTo("#" + tr1ID);
+                        $("<td></td>").text(detailItem.data[i].type = data[i].type).appendTo("#" + tr1ID);
+                        $("<td></td>").text(detailItem.data[i].date = data[i].date).appendTo("#" + tr1ID);
+                        $("<td></td>").text(detailItem.data[i].amount = data[i].amount).appendTo("#" + tr1ID);
+                        $("<td></td>").text(detailItem.data[i].attachment = data[i].attachment).appendTo("#" + tr1ID);
 
-                    $("<tr>").attr('id', tr2ID).appendTo("#tbodyExpenseDetail");
-                    $("<td><strong>备注：</strong></td>").appendTo("#" + tr2ID);
-                    $("<td colspan='3'></td>").text(data[i].remark).appendTo("#" + tr2ID);
+                        $("<tr>").attr('id', tr2ID).appendTo("#tbodyExpenseDetail");
+                        $("<td><strong>备注：</strong></td>").appendTo("#" + tr2ID);
+                        $("<td colspan='3'></td>").text(detailItem.data[i].remark = data[i].remark).appendTo("#" + tr2ID);
 
+                    }
                 }
+                else
+                {
+                    $("<tr><td colspan='5'></td></td></tr>").text("无报销条目。。。").appendTo("#tbodyExpenseDetail");
+                }
+
+
+                $("#detailAccepter").text(item.find("td:eq(3)").text());
+                $("#detailState").text(item.find("td:eq(4)").find("span").text());
+                $("#modalExpenseDetail").modal("show");
+
             }
-            else
-            {
-                $("<tr><td colspan='5'></td></td></tr>").text("无报销条目。。。").appendTo("#tbodyExpenseDetail");
-            }
+        })
+    }
 
-
-            $("#detailAccepter").text(item.find("td:eq(3)").text());
-            $("#detailState").text(item.find("td:eq(4)").find("span").text());
-            $("#modalExpenseDetail").modal("show");
-
-        }
-    })
-}
-
-$('#modalExpenseDetail').on('hidden.bs.modal', function () {
-    $("#tbodyExpenseDetail").empty();
-});
-
-$("#btnPrint").click(function () {
-    $("#divDetailPage").jqprint({
-        operaSupport: true
+    //关闭报销单时清空内容
+    $('#modalExpenseDetail').on('hidden.bs.modal', function () {
+        $("#tbodyExpenseDetail").empty();
     });
-});
+
+    //打印报销单
+    $("#btnPrint").click(function () {
+        //$("#divDetailPage").jqprint({
+        //    operaSupport: true
+        //});
+
+        var strPrintBody = "<div class='container'>"
+            + "<div><h2 class='text-center'>世行报销清单</h2></div>"
+            + "<div style='margin: 5px 20px'><p style='float: left'>编号：" + detailItem.number + "</p><p style='float: right'>提交日期：" + detailItem.submitDate + "</p></div>"
+            + "<div><table class='table table-bordered'>"
+                +""
+            + "</table></div>"
+
+            + "</div>"
+            ;
+
+    });
+
+})();
+
+
+
+
+

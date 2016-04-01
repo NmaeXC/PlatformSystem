@@ -68,7 +68,7 @@
                         <!-- Menu Body -->
                         <li class="user-body">
                             <div class="col-xs-6 text-center">
-                                <a role="button" id="btnMyMsg">我的资料</a>
+                                <a href="profile.html">我的资料</a>
                             </div>
                             <div class="col-xs-6 text-center">
                                 <a role="button" id="btnLogout">注销</a>
@@ -111,66 +111,6 @@
         </div>
     </div>
 </div>
-<div id="initModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>首次登录，请完善您的信息</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row" id="divInitMyInfo">
-                    <div class="col-md-12" align="center" style="padding: 20px">
-                        <img src="img/easy.jpg" style="max-width:30%; height: auto;">
-                    </div>
-                    <div class="col-md-12" style="padding-top:30px; padding-bottom:5px;" align="center">
-                        <button id="btnDefaultInit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;使用默认初始化</button>
-                    </div>
-                </div>
-                <div style="padding:30px" align="center">
-                    <table class="table table-hover">
-                        <tr>
-                            <th>姓名</th>
-                            <td><input id="initName" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>员工号</th>
-                            <td><input id="initUid" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>性别</th>
-                            <td><select class='form-control' id='initSex' style='width: 20%'><option value='男'>男</option><option value='女'>女</option></select></td>
-                        </tr>
-                        <tr>
-                            <th>部门</th>
-                            <td><select class='form-control' id='initDepartment' style='width: 20%'><option value='研发部'>研发部</option><option value='市场部'>市场部</option><option value='人事部'>人事部</option></select></td>
-                        </tr>
-                        <tr>
-                            <th>小组</th>
-                            <td><input id="initTeam" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>职位</th>
-                            <td><input id="initTitle" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>手机</th>
-                            <td><input id="initTele" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>邮箱</th>
-                            <td><input id="initEmail" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnInit">
-                    初始化
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="wrapper row-offcanvas row-offcanvas-left" id="main">
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="left-side sidebar-offcanvas">
@@ -191,9 +131,9 @@
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
+                    <span class="input-group-btn">
+                        <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                    </span>
                 </div>
             </form>
             <!-- /.search form -->

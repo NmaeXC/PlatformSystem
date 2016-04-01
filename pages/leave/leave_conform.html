@@ -54,7 +54,7 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
-                            <img src="../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
+                            <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
                             <p>
                                 <span class="nameUser"></span> - <span class="titleUser"></span>
                             </p>
@@ -100,66 +100,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnLogin">
                     登录
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="initModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>首次登录，请完善您的信息</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row" id="divInitMyInfo">
-                    <div class="col-md-12" align="center" style="padding: 20px">
-                        <img src="../../img/easy.jpg" style="max-width:30%; height: auto;">
-                    </div>
-                    <div class="col-md-12" style="padding-top:30px; padding-bottom:5px;" align="center">
-                        <button id="btnDefaultInit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;使用默认初始化</button>
-                    </div>
-                </div>
-                <div style="padding:30px" align="center">
-                    <table class="table table-hover">
-                        <tr>
-                            <th>姓名</th>
-                            <td><input id="initName" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>员工号</th>
-                            <td><input id="initUid" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>性别</th>
-                            <td><select class='form-control' id='initSex' style='width: 20%'><option value='男'>男</option><option value='女'>女</option></select></td>
-                        </tr>
-                        <tr>
-                            <th>部门</th>
-                            <td><select class='form-control' id='initDepartment' style='width: 20%'><option value='研发部'>研发部</option><option value='市场部'>市场部</option><option value='人事部'>人事部</option></select></td>
-                        </tr>
-                        <tr>
-                            <th>小组</th>
-                            <td><input id="initTeam" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>职位</th>
-                            <td><input id="initTitle" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>手机</th>
-                            <td><input id="initTele" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                        <tr>
-                            <th>邮箱</th>
-                            <td><input id="initEmail" type='text' class='form-control' style='width:70%'></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnInit">
-                    初始化
                 </button>
             </div>
         </div>
@@ -280,67 +220,6 @@
                                 <div class="col-md-offset-6 col-md-3">
                                     <button type="button" class="btn btn-primary" id="btnAgreeLeave">同意</button>
                                     <button type="button" class="btn btn-default" id="btnRejectLeave">驳回</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4" id="divMyInfo" style="display: none">
-                    <div id="MyMsgBox" class="box box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title" id="MyInfoTitle">个人信息</h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12" align="center" style="padding: 20px">
-                                    <img src="../../img/easy.jpg" class="imgUser" style="max-width:30%; height: auto;">
-                                </div>
-                                <div class="col-md-12" style="padding-top:30px; padding-bottom:5px;" align="center">
-                                    <button id="btnAlterInfo" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;修改资料</button>
-                                </div>
-                            </div>
-                            <div style="padding:30px" align="center">
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">姓名</label>
-                                        <div class="col-md-8 nameUser">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">员工号</label>
-                                        <div class="col-md-8 User">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">性别</label>
-                                        <div class="col-md-8 sexUser">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">部门</label>
-                                        <div class="col-md-8 departmentUser">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">小组</label>
-                                        <div class="col-md-8 teamUser">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">职位</label>
-                                        <div class="col-md-8 titleUser">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">手机</label>
-                                        <div class="col-md-8 teleUser">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">邮箱</label>
-                                        <div class="col-md-8 emailUser">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">入职日期</label>
-                                        <div class="col-md-8 dateUser">-</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">直接上司</label>
-                                        <div class="col-md-8 topUser">-</div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
