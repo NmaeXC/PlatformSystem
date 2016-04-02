@@ -68,7 +68,7 @@
                         <!-- Menu Body -->
                         <li class="user-body">
                             <div class="col-xs-6 text-center">
-                                <a role="button" id="btnMyMsg">我的资料</a>
+                                <a href="../profile.html">我的资料</a>
                             </div>
                             <div class="col-xs-6 text-center">
                                 <a role="button" id="btnLogout">注销</a>
@@ -81,6 +81,37 @@
         </div>
     </nav>
 </header>
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>请您登录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" name="LoginForm" id="LoginForm" method="post" action="../../php/login.php" onSubmit="return InputCheck(this)">
+                    <div class="form-group ">
+                        <label for="username" class="col-md-2 col-md-offset-2 control-label">账号</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入账号" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-2 col-md-offset-2 control-label">密码</label>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnLogin">
+                    登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="wrapper row-offcanvas row-offcanvas-left" id="main">
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="left-side sidebar-offcanvas">
@@ -157,7 +188,7 @@
                 <small id="hh2">新建报销单</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="../../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">New Expense Account</li>
             </ol>
         </section>
@@ -176,15 +207,15 @@
                                 <table class="table-bordered" style="width: 100%">
                                     <tr>
                                         <td class="notehh"><strong>部门</strong></td>
-                                        <td id="expenseDepartment" class="notehh"></td>
+                                        <td id="expenseDepartment" class="notehh departmentUser"></td>
                                         <td class="notehh"><strong>姓名</strong></td>
-                                        <td id="expenseName" class="notehh"></td>
+                                        <td id="expenseName" class="notehh nameUser"></td>
                                     </tr>
                                     <tr>
                                         <td class="notehh"><strong>职务</strong></td>
-                                        <td id="expenseTitle" class="notehh"></td>
+                                        <td id="expenseTitle" class="notehh titleUser"></td>
                                         <td class="notehh"><strong>工号</strong></td>
-                                        <td id="expenseUid" class="notehh"></td>
+                                        <td id="expenseUid" class="notehh uidUser"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" style="padding: 50px">

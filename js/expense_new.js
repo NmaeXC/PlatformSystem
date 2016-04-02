@@ -7,10 +7,10 @@ $(document).ready(function () {
 
     var today = new Date();
     $("#expenseTime").text(today.getFullYear() + "年" + (today.getMonth()+1) + "月" + today.getDate() + "日");
-    $("#expenseName").text($("#name").text());
-    $("#expenseUid").text($("#uid").text());
-    $("#expenseDepartment").text($("#department").text());
-    $("#expenseTitle").text($("#title").text());
+    //$("#expenseName").text($("#name").text());
+    //$("#expenseUid").text($("#uid").text());
+    //$("#expenseDepartment").text($("#department").text());
+    //$("#expenseTitle").text($("#title").text());
 
     //恢复草稿内容
 

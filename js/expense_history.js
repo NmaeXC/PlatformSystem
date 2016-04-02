@@ -150,11 +150,15 @@ $(document).ready(function () {
             + "<div><h2 class='text-center'>世行报销清单</h2></div>"
             + "<div style='margin: 5px 20px'><p style='float: left'>编号：" + detailItem.number + "</p><p style='float: right'>提交日期：" + detailItem.submitDate + "</p></div>"
             + "<div><table class='table table-bordered'>"
-                +""
-            + "</table></div>"
+                + "<thead><tr><th width='20%'>日期</th><th width='10%'>地点</th><th width='25%'>类型</th><th width='15%'>金额</th><th width='10%'>附件数</th><th width='20%'>备注</th></tr></thead>"
+                + "<tbody>";
 
-            + "</div>"
-            ;
+        for(var i in detailItem.data)
+        {
+            strPrintBody += "<tr><td>" + detailItem.data[i].date + "</td><td>" + detailItem.data[i].site + "</td><td>" + detailItem.data[i].type + "</td><td>" + detailItem.data[i].amount + "</td><td>" + detailItem.data[i].attachment + "</td><td>" + detailItem.data[i].amount + "</td><td>" + detailItem.data[i].remark + "</td></tr>";
+        }
+
+            strPrintBody += "<tr><td colspan='6'></td></tr>" + "</tbody></table></div></div>";
 
     });
 
