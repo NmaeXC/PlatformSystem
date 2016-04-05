@@ -7,10 +7,9 @@
 	{
 		//将待审核的请假条发送给前端
 		$username = $_SESSION["username"];
-
+		$data = array();
 		$sql = "SELECT number, user.name, startTime, endTime, reason, attachment, remark, submitDate, user.username, state FROM leavenote LEFT JOIN user ON accepted = user.uid WHERE state = '未处理' AND user.username = '{$username}'";		
 		$rs_sql = $mysqli -> query($sql);
-		$data = array();
 		$x = 0;
 		while($rs = mysqli_fetch_array($rs_sql))
 		{

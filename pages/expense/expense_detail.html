@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>报销单详情</title>
+
+    <style type="text/css">
+        #header{
+            margin: 100px 50px 10px 50px;
+            text-align: center;
+        }
+        #container,
+        #footer{
+            margin: 10px 50px;
+        }
+        #footer{
+            display: none;
+        }
+        #container > table{
+            margin: 20px 0px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #footer > table{
+            margin-top: 50px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        table.border,
+        table.border td,
+        table.border th{
+            border: 1px solid black;
+        }
+        td.sign{
+            border-bottom: solid 1px;
+        }
+        button{
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="printArea">
+        <div id="header">
+            <h2>世行报销清单</h2>
+        </div>
+        <div id="container">
+            <div style='margin: 5px 20px'>
+                <p style='float: left'>编号：<span id="number">[NULL]</span></p>
+                <p style='float: right'>提交日期：<span id="submitDate">[NULL]</span></p>
+            </div>
+            <table class="border">
+                <tr>
+                    <th width="10%">姓名</th>
+                    <td width="15%" id="name">[NULL]</td>
+                    <th width="10%">员工号</th>
+                    <td width="15%" id="uid">[NULL]</td>
+                    <th width="10%">部门</th>
+                    <td width="15%" id="department">[NULL]</td>
+                    <th width="10%">职务</th>
+                    <td width="15%" id="title">[NULL]</td>
+                </tr>
+            </table>
+            <table style="width: 50%">
+                <tr>
+                    <th>所属项目：</th>
+                    <td>[NULL]</td>
+                    <th>子项目：</th>
+                    <td>[NULL]</td>
+                </tr>
+            </table>
+            <table class="border">
+                <thead>
+                <tr>
+                    <th width='20%'>日期</th>
+                    <th width='10%'>地点</th>
+                    <th width='25%'>类型</th>
+                    <th width='15%'>金额</th>
+                    <th width='10%'>附件数</th>
+                    <th width='20%'>备注</th>
+                </tr>
+                </thead>
+                <tbody id="tbodyitem">
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th style="border: none">总计报销金额:</th>
+                    <td colspan="2" style="border: none"></td>
+                    <td id="sum" style="border: none">0.00</td>
+                    <td colspan="2" style="border: none"></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div id="footer">
+            <table style="margin-top: 50px">
+                <tr>
+                    <th width="15%">经理批复:</th>
+                    <td width="15%" class="sign"></td>
+                    <th width="20%">董事长批复:</th>
+                    <td width="15%" class="sign"></td>
+                    <th width="15%">财务批复:</th>
+                    <td width="15%" class="sign"></td>
+                </tr>
+            </table>
+            <table style="margin-top: 70px">
+                <tr>
+                    <td width="70%"></td>
+                    <th width="15%">报销人员:</th>
+                    <td width="15%" class="sign"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <th colspan="2" id="today"  style="padding-top: 15px">[NULL]</th>
+                </tr>
+            </table>
+        </div>
+    </div> <!--printArea-->
+    <div style="text-align: center">
+        <button id="btnPrint">打印</button>
+    </div>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/expense_detail.js"></script>
+</body>
+</html>

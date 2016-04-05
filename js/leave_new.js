@@ -13,23 +13,76 @@ $(document).ready(function () {
     $("#leaveNoteUid").text($("#uid").text());
     $("#leaveNoteDepartment").text($("#department").text());
     $("#leaveNoteTitle").text($("#title").text());
-})
+});
 
-var startDateChange = 0;
-var endDateChange = 0;
+//var startDateChange = 0;
+//var endDateChange = 0;
+var leaveRemainer = 0;
 $("#startTime").change(function () {
-    ++startDateChange;
-    if (startDateChange != 0 && endDateChange != 0){
+    if (($("#startTime").val() != "") && ($("#endTime").val() != "")){
         showLeaveNoteTip();
+        if (!$("#leaveRemaindTip").is(":hidden"))
+        {
+            showLeaveRemainTip();
+        }
     }
-})
+});
 
 $("#endTime").change(function () {
-    ++endDateChange;
-    if (startDateChange != 0 && endDateChange != 0){
+    if (($("#startTime").val() != "") && ($("#endTime").val() != "")){
         showLeaveNoteTip();
+        if (!$("#leaveRemaindTip").is(":hidden"))
+        {
+            showLeaveRemainTip();
+        }
+
     }
-})
+});
+
+//年休假提示业务
+$("#reason").change(function () {
+    if ($("#reason").val() == "年休假")
+    {
+        $.ajax({
+            url: "../../php/leaveRemaind.php",
+            success: function(data){
+                if (data >= 0)
+                {
+                    leaveRemainer = data;
+                }
+                else
+                {
+                    $("#leaveRemaindTip").text("提示错误，请与管理员联系");
+                }
+                if (($("#startTime").val() != "") && ($("#endTime").val() != "")){
+                    showLeaveRemainTip();
+                }
+
+            }
+        });
+    }
+    else
+    {
+        if($("#leaveRemaindTip").text() != "")
+        {
+            $("#leaveRemaindTip").text("");
+            $("#overstep").hide();
+        }
+    }
+});
+
+function showLeaveRemainTip(){
+    $("#leaveRemaindTip").text("提示：您的年休假余额为 " + leaveRemainer + " 天");
+    if ($("#leaveNoteTip").find("span:eq(0)").text() > leaveRemainer)
+    {
+        $("#overstep").show();
+    }
+    else
+    {
+        $("#overstep").hide();
+    }
+
+}
 
 function showLeaveNoteTip(){
     var startDate =new Date($("#startTime").val().split("-"));
@@ -40,7 +93,7 @@ function showLeaveNoteTip(){
     }
     else{
 
-        $("#leaveNoteTip").text("共计：" + cc + "天");
+        $("#leaveNoteTip").find("span:eq(0)").text(cc);
     }
     $("#leaveNoteTip").show();
 }
@@ -71,7 +124,7 @@ $("#btnSubmitLeave").click(function(){
 
         }
     })
-})
+});
 
 
 //datetimepicker部件的设置

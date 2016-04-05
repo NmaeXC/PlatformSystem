@@ -46,7 +46,7 @@ if (isset($_POST["detailNumber"]))
 else
 {
     //报销单历史纪录
-    $sql = "SELECT number,accepted, submitDate, state FROM expense WHERE uid = '{$uid}' ORDER BY id DESC";
+    $sql = "SELECT expense.number number, user.name accepted, submitDate, state FROM expense, user WHERE expense.uid = '{$uid}' AND user.uid = expense.accepted ORDER BY expense.id DESC";
     $rs_sql = $mysqli -> query($sql);
 
     $data = array();
