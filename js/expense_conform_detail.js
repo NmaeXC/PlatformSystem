@@ -1,13 +1,10 @@
 /**
- * Created by admin on 2016/4/2.
+ * Created by wx_h0001 on 2016/4/12.
  */
 
-
-
-
 (function () {
-    number = getQueryString("x");
-    submitDate = getQueryString("d");
+    var number = getQueryString("x");
+    var submitDate = getQueryString("d");
     if (number !== null)
     {
         //初始化页面
@@ -17,7 +14,7 @@
     {
         console.log("No Detail Number");
     }
-    
+
     function initPage(number, submitDate) {
         $.ajax({
             url: "../../php/expense_detail.php",
@@ -50,13 +47,58 @@
         })
     }
 
-    //点击打印按钮
-    $("#btnPrint").click(function(){
-        $("#btnPrint").css('display', 'none')
-        $("#footer").show();
-        window.print();
-        $("#footer").hide();
-        $("#btnPrint").css('display', 'inline-block');
+    //点击同意按钮
+    $("#btnAgree").click(function(){
+        var conformed = [];
+        conformed[0] = number;
+        $.ajax({
+            url : "../../php/expenseConform.php",
+            traditional: true,
+            type : "POST",
+            cache : false,
+            dataType : 'json',
+            data : {"sum": 1, "conformed":JSON.stringify(conformed), "type": "agree"},
+            success : function(data){
+                if(data == '')
+                {
+                    alert('审核成功！');
+                }
+                else
+                {
+                    alert("编号：\n" + data.join("\n") + "\n已经审核,请勿再次操作");
+                }
+            }
+        })
+    });
+
+    //驳回按钮
+    $("#btnReject").mouseenter(function () {
+        if ($("#rejectInfo").css('display') == 'none')
+        {
+            $("#rejectInfo").show();
+        }
+    });
+    $("#btnReject").click(function () {
+        var conformed = [];
+        conformed[0] = number;
+        var rejectInfo = $("#rejectInfo").val();
+        $.ajax({
+            url : "../../php/expenseConform.php",
+            type : "POST",
+            cache : false,
+            dataType : 'json',
+            data : {"sum": 1, "conformed":JSON.stringify(conformed), "type": "reject", "rejectInfo": rejectInfo},
+            success : function(data){
+                if(data == '')
+                {
+                    alert('审核成功！');
+                }
+                else
+                {
+                    alert("编号：\n" + data.join("\n") + "\n已经审核,请勿再次操作");
+                }
+            }
+        })
     });
 
     //获取页面参数name

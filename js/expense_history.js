@@ -75,7 +75,7 @@ function expenseDetail(x) {
     var item = $("#trExpenseHistory" + x);
     var number = item.find("td:eq(1)").text();
     var submitDate = item.find("td:eq(2)").text();
-    window.open("expense_detail.html?x=" + number + "&d=" + submitDate);
+    window.open("expense_history_detail.html?x=" + number + "&d=" + submitDate);
 }
 
 

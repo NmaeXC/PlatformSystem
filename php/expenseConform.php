@@ -66,7 +66,7 @@ else
     if($type == "agree")
     {
         foreach ($conformed as $value) {
-            $mysqli -> query("UPDATE expense SET state = 3 WHERE number = '{$value}'");
+            $mysqli -> query("UPDATE expense SET state = 3 WHERE number = '{$value}' AND state = 2");
             if(mysqli_affected_rows($mysqli) <= 0)
             {
                 $ret[] = $value;
@@ -77,12 +77,33 @@ else
     else
     {
         foreach ($conformed as $value) {
-            $mysqli -> query("UPDATE expense SET state = 4 WHERE number = '{$value}'");
+            $mysqli -> query("UPDATE expense SET state = 4 WHERE number = '{$value}' AND state = 2");
             if(mysqli_affected_rows($mysqli) <= 0)
             {
                 $ret[] = $value;
             }
+            else
+            {
+                //驳回后向用户发送提请邮件
+                $sql_rs = $mysqli -> query("SELECT submitUser.name submitName, submitUser.email submitEmail, acceptedUser.name acceptedName from user submitUser, expense, user acceptedUser WHERE submitUser.uid = expense.uid AND acceptedUser.uid = expense.accepted AND expense.number = '{$value}'");
+                if ($rs = mysqli_fetch_array($sql_rs))
+                {
+                    $mailTo = $rs["submitEmail"];
+                    $acceptedName = $rs["acceptedName"];
+                    $submitName = $rs["submitName"];
+                    $subject = "报销单驳回提醒（来自：".$acceptedName.":".$_POST["rejectInfo"]."）";
+                    $body = "尊敬的".$submitName."：\n    您提交的报销单(".$value.")未能通过审核。(点击进入个人历史记录查看  http://10.0.0.2:880/PlatformSystem/pages/expense/expense_history.html)。";
+                    mail($mailTo, $subject, $body);
+                }
+                else
+                {
+                    echo "send Email Error";
+                }
+            }
+
         }
+
+
     }
 
     $ret_json = json_encode($ret);

@@ -95,10 +95,10 @@ function amountTip(){
 //添加一行报销单
 $("#btnAddExpenseAccount").click(function () {
     var newColume = $("#trNewExpenseAccount_0").clone().attr('id', 'trNewExpenseAccount_' + column);
-    newColume.find("#expenseAmount").val("0");
-    newColume.find("#expenseDate").val("");
-    newColume.find("#expenseAttachment").val("");
-    newColume.find("#expenseRemark").val("");
+    newColume.find(".expenseAmount").val("0");
+    newColume.find(".expenseDate").val("");
+    newColume.find(".expenseAttachment").val("");
+    newColume.find(".expenseRemark").val("");
 
     $("#tbodyNewExpenseAccount").append(newColume);
     ++column;
@@ -126,11 +126,11 @@ $("#btnSubmitExpenseAccount").click(function(){
     {
         //处理数据
         var expenseList = new Array();
-        var expenseAmount = $("#trNewExpenseAccount_0").find("#expenseAmount").val();
-        var expenseType = $("#trNewExpenseAccount_0").find("#expenseType").val();
-        var expenseDate = $("#trNewExpenseAccount_0").find("#expenseDate").val();
-        var expenseAttachment = $("#trNewExpenseAccount_0").find("#expenseAttachment").val();
-        var expenseRemark = $("#trNewExpenseAccount_0").find("#expenseRemark").val();
+        var expenseAmount = $("#trNewExpenseAccount_0").find(".expenseAmount").val();
+        var expenseType = $("#trNewExpenseAccount_0").find(".expenseType").val();
+        var expenseDate = $("#trNewExpenseAccount_0").find(".expenseDate").val();
+        var expenseAttachment = $("#trNewExpenseAccount_0").find(".expenseAttachment").val();
+        var expenseRemark = $("#trNewExpenseAccount_0").find(".expenseRemark").val();
 
         if (expenseAmount == 0){
             alert("请至少填写一个有效报销单条目后提交");
@@ -142,11 +142,11 @@ $("#btnSubmitExpenseAccount").click(function(){
             {
                 expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
                 ++i;
-                var expenseAmount = $("#trNewExpenseAccount_" + i).find("#expenseAmount").val();
-                var expenseType = $("#trNewExpenseAccount_" + i).find("#expenseType").val();
-                var expenseDate = $("#trNewExpenseAccount_" + i).find("#expenseDate").val();
-                var expenseAttachment = $("#trNewExpenseAccount_" + i).find("#expenseAttachment").val();
-                var expenseRemark = $("#trNewExpenseAccount_" + i).find("#expenseRemark").val();
+                var expenseAmount = $("#trNewExpenseAccount_" + i).find(".expenseAmount").val();
+                var expenseType = $("#trNewExpenseAccount_" + i).find(".expenseType").val();
+                var expenseDate = $("#trNewExpenseAccount_" + i).find(".expenseDate").val();
+                var expenseAttachment = $("#trNewExpenseAccount_" + i).find(".expenseAttachment").val();
+                var expenseRemark = $("#trNewExpenseAccount_" + i).find(".expenseRemark").val();
             }
 
             //for (var a in expenseList)
@@ -170,6 +170,7 @@ $("#btnSubmitExpenseAccount").click(function(){
                     if(data == "0")
                     {
                         alert("提交成功!");
+                        window.location('expense_history.html');
                     }
                     else
                     {
@@ -200,22 +201,22 @@ $("#btnSaveDraft").click(function(){
     {
         //处理数据
         var expenseList = new Array();
-        var expenseAmount = $("#trNewExpenseAccount_0").find("#expenseAmount").val();
-        var expenseType = $("#trNewExpenseAccount_0").find("#expenseType").val();
-        var expenseDate = $("#trNewExpenseAccount_0").find("#expenseDate").val();
-        var expenseAttachment = $("#trNewExpenseAccount_0").find("#expenseAttachment").val();
-        var expenseRemark = $("#trNewExpenseAccount_0").find("#expenseRemark").val();
+        var expenseAmount = $("#trNewExpenseAccount_0").find(".expenseAmount").val();
+        var expenseType = $("#trNewExpenseAccount_0").find(".expenseType").val();
+        var expenseDate = $("#trNewExpenseAccount_0").find(".expenseDate").val();
+        var expenseAttachment = $("#trNewExpenseAccount_0").find(".expenseAttachment").val();
+        var expenseRemark = $("#trNewExpenseAccount_0").find(".expenseRemark").val();
 
         var i = 0;
         while(i < column)
         {
             expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
             ++i;
-            var expenseAmount = $("#trNewExpenseAccount_" + i).find("#expenseAmount").val();
-            var expenseType = $("#trNewExpenseAccount_" + i).find("#expenseType").val();
-            var expenseDate = $("#trNewExpenseAccount_" + i).find("#expenseDate").val();
-            var expenseAttachment = $("#trNewExpenseAccount_" + i).find("#expenseAttachment").val();
-            var expenseRemark = $("#trNewExpenseAccount_" + i).find("#expenseRemark").val();
+            var expenseAmount = $("#trNewExpenseAccount_" + i).find(".expenseAmount").val();
+            var expenseType = $("#trNewExpenseAccount_" + i).find(".expenseType").val();
+            var expenseDate = $("#trNewExpenseAccount_" + i).find(".expenseDate").val();
+            var expenseAttachment = $("#trNewExpenseAccount_" + i).find(".expenseAttachment").val();
+            var expenseRemark = $("#trNewExpenseAccount_" + i).find(".expenseRemark").val();
         }
 
 
@@ -224,7 +225,7 @@ $("#btnSaveDraft").click(function(){
             type : "POST",
             cache : false,
             data : {'expenseList' : JSON.stringify(expenseList)},
-            async : false,
+            //async : false,
             dataType : 'json',
             success : function(data){
                 if(data == "0")

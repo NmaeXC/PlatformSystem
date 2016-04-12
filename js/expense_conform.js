@@ -54,54 +54,59 @@ function highlightRow(element)
 
 function expenseDetail(x){
     var item = $("#trExpenseConform" + x);
-    number = item.find("td:eq(1)").text();
-    $.ajax({
-        url : "../../php/expenseConform.php",
-        type : "POST",
-        cache : false,
-        data : {'detailNumber' : number},
-        async : false,
-        dataType : 'json',
-        success : function (data) {
-            $("#detailNumber").text(number);
-            $("#detailSubmitDate").text(item.find("td:eq(3)").text());
-            $("#detailName").text(data["name"]);
-            $("#detailUid").text(data["uid"]);
-            $("#detailDepartment").text(data["department"]);
-            $("#detailTitle").text(data["title"]);
+    var number = item.find("td:eq(1)").text();
+    var submitDate = item.find("td:eq(3)").text();
+    window.open("expense_confom_detail.html?x=" + number + "&d=" + submitDate);
 
-            if (data.sum > 0)
-            {
-                for(var i = 0; i < data.sum; i++)
-                {
-                    var tr1ID = "tr1Detail" + i;
-                    var tr2ID = "tr2Detail" + i;
-
-                    $("<tr>").attr('id', tr1ID).appendTo("#tbodyExpenseDetail");
-                    $("<td rowspan='2'></td>").text((i+1) + ".").appendTo("#" + tr1ID);
-                    $("<td></td>").text(data[i].type).appendTo("#" + tr1ID);
-                    $("<td></td>").text(data[i].date).appendTo("#" + tr1ID);
-                    $("<td></td>").text(data[i].amount).appendTo("#" + tr1ID);
-                    $("<td></td>").text(data[i].attachment).appendTo("#" + tr1ID);
-
-                    $("<tr>").attr('id', tr2ID).appendTo("#tbodyExpenseDetail");
-                    $("<td><strong>备注：</strong></td>").appendTo("#" + tr2ID);
-                    $("<td colspan='3'></td>").text(data[i].remark).appendTo("#" + tr2ID);
-
-                }
-            }
-            else
-            {
-                $("<tr><td colspan='5'></td></td></tr>").text("无报销条目。。。").appendTo("#tbodyExpenseDetail");
-            }
-
-
-            $("#detailAccepter").text(item.find("td:eq(3)").text());
-            $("#detailState").text(item.find("td:eq(4)").find("span").text());
-            $("#modalExpenseDetail").modal("show");
-
-        }
-    })
+    //var item = $("#trExpenseConform" + x);
+    //number = item.find("td:eq(1)").text();
+    //$.ajax({
+    //    url : "../../php/expenseConform.php",
+    //    type : "POST",
+    //    cache : false,
+    //    data : {'detailNumber' : number},
+    //    //async : false,
+    //    dataType : 'json',
+    //    success : function (data) {
+    //        $("#detailNumber").text(number);
+    //        $("#detailSubmitDate").text(item.find("td:eq(3)").text());
+    //        $("#detailName").text(data["name"]);
+    //        $("#detailUid").text(data["uid"]);
+    //        $("#detailDepartment").text(data["department"]);
+    //        $("#detailTitle").text(data["title"]);
+    //
+    //        if (data.sum > 0)
+    //        {
+    //            for(var i = 0; i < data.sum; i++)
+    //            {
+    //                var tr1ID = "tr1Detail" + i;
+    //                var tr2ID = "tr2Detail" + i;
+    //
+    //                $("<tr>").attr('id', tr1ID).appendTo("#tbodyExpenseDetail");
+    //                $("<td rowspan='2'></td>").text((i+1) + ".").appendTo("#" + tr1ID);
+    //                $("<td></td>").text(data[i].type).appendTo("#" + tr1ID);
+    //                $("<td></td>").text(data[i].date).appendTo("#" + tr1ID);
+    //                $("<td></td>").text(data[i].amount).appendTo("#" + tr1ID);
+    //                $("<td></td>").text(data[i].attachment).appendTo("#" + tr1ID);
+    //
+    //                $("<tr>").attr('id', tr2ID).appendTo("#tbodyExpenseDetail");
+    //                $("<td><strong>备注：</strong></td>").appendTo("#" + tr2ID);
+    //                $("<td colspan='3'></td>").text(data[i].remark).appendTo("#" + tr2ID);
+    //
+    //            }
+    //        }
+    //        else
+    //        {
+    //            $("<tr><td colspan='5'></td></td></tr>").text("无报销条目。。。").appendTo("#tbodyExpenseDetail");
+    //        }
+    //
+    //
+    //        $("#detailAccepter").text(item.find("td:eq(3)").text());
+    //        $("#detailState").text(item.find("td:eq(4)").find("span").text());
+    //        $("#modalExpenseDetail").modal("show");
+    //
+    //    }
+    //})
 }
 
 $("#btnSelectAllLeave").click(function(){
@@ -142,12 +147,12 @@ $("#btnAgreeLeave").click(function(){
             }
             else
             {
-                alert("编号：\n" + data.join("\n") + "\n已经同意,请勿再次操作");
+                alert("编号：\n" + data.join("\n") + "\n已经审核,请勿再次操作");
             }
         }
     })
 
-})
+});
 
 $("#btnRejectLeave").click(function(){
     var sum = 0;
@@ -173,12 +178,12 @@ $("#btnRejectLeave").click(function(){
             }
             else
             {
-                alert("编号：\n" + data.join("\n") + "\n已经驳回,请勿再次操作");
+                alert("编号：\n" + data.join("\n") + "\n已经审核,请勿再次操作");
             }
         }
     })
 
-})
+});
 
 $('#modalExpenseDetail').on('hidden.bs.modal', function () {
     $("#tbodyExpenseDetail").empty();

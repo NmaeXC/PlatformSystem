@@ -65,7 +65,7 @@ function leaveDetail(number){
         type : "POST",
         cache : false,
         data : {'number' : number},
-        async : false,
+        //async : false,
         dataType : 'json',
         success : function (data) {
             $("#detailId").text(data.number);

@@ -39,7 +39,7 @@ function freshMyPage(){
         url : "/" + projectName + "/php/myinfo.php",
         type : "GET",
         cache : false,
-        async : false,
+        //async : false,
         dataType : 'json',
         success : showMyPage
     })

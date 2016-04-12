@@ -35,7 +35,7 @@ $("#btnSaveAlterMsg").click(function(){
         type : "POST",
         cache : false,
         data : {'newTele': newTele, 'newEmail': newEmail, 'newAvatar': newtAvatar},
-        async : false,
+        //async : false,
         success : function(data){
             if (data == "0") {
                 alert("保存成功！");

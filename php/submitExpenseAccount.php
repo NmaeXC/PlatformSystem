@@ -6,12 +6,13 @@
     $username = $_SESSION["username"];
 
     //确定受理人
-    $rs_sql = $mysqli -> query("SELECT top, uid FROM user WHERE username = '{$username}'");
+    $rs_sql = $mysqli -> query("SELECT name, top, uid FROM user WHERE username = '{$username}'");
     if (mysqli_num_rows($rs_sql) > 0)
     {
         $rs = mysqli_fetch_array($rs_sql);
         $uid = $rs["uid"];
         $top = $rs["top"];
+        $name = $rs["name"];
 
         if($top == null)
         {
@@ -25,7 +26,7 @@
     }
     else
     {
-        echo "User Info Error";
+        exit("User Info Error");
     }
 
     //生成单号
@@ -39,8 +40,7 @@
     }
     else
     {
-        echo "Get Info Error";
-        exit();
+        exit("Get Info Error");
     }
 
     $expenseList = json_decode($_POST["expenseList"]);
@@ -54,6 +54,25 @@
         if(mysqli_affected_rows($mysqli) <= 0)
         {
             exit("INSERT INTO expense Error");
+        }
+        else
+        {
+            //给受理人发送提醒邮件
+            $sql_rs = $mysqli -> query("SELECT name, email from user WHERE uid = '{$top}'");
+            if ($rs = mysqli_fetch_array($sql_rs))
+            {
+                $mailTo = $rs["email"];
+                $acceptedName = $rs["name"];
+                $subject = "报销单审核提醒（来自：".$name."）";
+                $body = "尊敬的".$acceptedName."：\n    ".$name."(".$uid.")已经向您提交了一份报销单，请您尽快审核(点击进入审核页面http://10.0.0.2:880/PlatformSystem/pages/expense/expense_conform.html)。";
+                mail($mailTo, $subject, $body);
+            }
+            else
+            {
+                echo "send Email Error";
+            }
+
+
         }
 
         //插入条目
