@@ -7,13 +7,40 @@
     <title>报价单详情</title>
 
     <style>
+        .container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        @media (min-width: 768px) {
+            .container {
+                width: 750px;
+            }
+        }
+        @media (min-width: 992px) {
+            .container {
+                width: 970px;
+            }
+        }
+        @media (min-width: 1200px) {
+            .container {
+                width: 1170px;
+            }
+        }
         p{
-            font-size: 14px;
+            font-size: 10px;
+            line-height: 50%;
+            font-family: "Microsoft JhengHei UI";
 
         }
-        #container{
 
+        h2{
+            margin-top: 0px;
+            font-family:"Microsoft YaHei";
+            font-size: 18px;
         }
+
 
         #header{
 
@@ -33,11 +60,22 @@
     </style>
 </head>
 <body>
-    <div id="container">
+    <div class="container">
+        <img src="../../img/_logo.jpg" style="width: 200px; height: auto">
         <div id="header">
-            <div >
-
+            <div style="width: 70%; float: left">
+                <p>北京中科世行测控技术有限公司</p>
+                <p>地址：陕西省西安市高新区唐延南路11号i都会2号楼2单元1220室</p>
+                <p>电话：000-00000000</p>
+                <p>传真：111-11111111</p>
+                <P>Web：www.shixing.com</P>
             </div>
+            <div style="width: 30%; float: left">
+                <h2>报价单号：9060</h2>
+                <p>打印日期：2016-05-09</p>
+                <p>报价方式：人民币(RMB)</p>
+            </div>
+            <div style="float: none"></div>
         </div>
         <div id="info_1">
 

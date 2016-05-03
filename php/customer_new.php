@@ -20,7 +20,7 @@ $contactTele = $_POST["contactTele"];
 $contactEmail = $_POST["contactEmail"];
 
 $sql = "INSERT INTO customer_info (id, name, tele, fox, email) VALUES ('{$customerID}', '{$customerName}', '{$customerTele}', '{$customerFox}', '{$customerEmail}')";
-echo $sql;
+//echo $sql;
 $rs = $mysqli -> query($sql);
 
 if(mysqli_affected_rows($mysqli) <= 0)
