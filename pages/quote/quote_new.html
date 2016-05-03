@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>报价|新建</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css">
+    <link href="../../css/daterangepicker-bs3.css" rel="stylesheet" type="text/css">
+    <link href="../../css/jquery.bigautocomplete.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        [parentpane]{}
+        .blur{
+            -webkit-filter:blur(3px);
+        }
+        .notehh{
+            width: 25%;
+            padding: 2px 0px;
+            text-align: center;
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="skin-blue">
+<!-- header logo: style can be found in header.less -->
+
+<header class="header">
+    <a href="../../index.html" class="logo">
+        <!-- Add the class icon to your logo image or logo icon to add the margining -->
+        Synthflex
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
+
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-right: 15px">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="nameUser"></span><i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header bg-light-blue">
+                            <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
+                            <p>
+                                <span class="nameUser"></span> - <span class="titleUser"></span>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="col-xs-6 text-center">
+                                <a href="../profile.html">我的资料</a>
+                            </div>
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnLogout">注销</a>
+                            </div>
+                        </li>
+                        <!-- Menu Footer-->
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>请您登录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" name="LoginForm" id="LoginForm" method="post" action="../../php/login.php" onSubmit="return InputCheck(this)">
+                    <div class="form-group ">
+                        <label for="username" class="col-md-2 col-md-offset-2 control-label">账号</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入账号" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-2 col-md-offset-2 control-label">密码</label>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnLogin">
+                    登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper row-offcanvas row-offcanvas-left" id="main">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="left-side sidebar-offcanvas">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="../../img/easy.jpg" class="img-circle imgUse" alt="User Image" />
+                </div>
+                <div class="pull-left info">
+                    <p>您好, <span id="givenName"></span></p>
+
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                    <span class="input-group-btn">
+                        <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul id="guide" class="sidebar-menu nav">
+                <li>
+                    <a href="../../index.html">
+                        <i class="fa fa-laptop"></i> <span>主页面</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../addressbook.html">
+                        <i class="fa fa-group"></i><span>通讯录</span>
+                    </a>
+                </li>
+                <li class="treeview active">
+                    <a href="">
+                        <i class="fa fa-coffee"></i>
+                        <span>请假系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../leave/leave_new.html"><i class="fa fa-angle-double-right"></i>新建请假条</a></li>
+                        <li><a href="../leave/leave_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="../leave/leave_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-money"></i>
+                        <span>报销系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../expense/expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
+                        <li><a href="../expense/expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="../expense/expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <span id="hh1">报价系统</span>
+                <small id="hh2">新建报价单</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="../../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">New Quote Note</li>
+            </ol>
+        </section>
+        <section class="content tab-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-success">
+                        <div class="box-header">
+                            <h3 class="box-title">客户信息</h3>
+                        </div>
+                        <div class="box-body row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="customerName" placeholder="Customer Name">
+                                    <a href="../customer/customer_new.html" class="input-group-addon"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <strong class="text-right">客户号: </strong>
+                            </div>
+                            <div class="col-md-4">
+                                <p id="customerID"></p>
+                            </div>
+                        </div>
+                    </div><!-- /.box -->
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header">
+                            <h3 class="box-title">报价单有效期</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" id="validity">
+                                </div><!-- /.input group -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">产品</h3>
+                            <div class="box-tools pull-right">
+                                <div class="btn-group" data-toggle="btn-toggle">
+                                    <button id="currencyRMB" type="button" class="btn btn-primary btn-xs active" data-toggle="on">RMB</button>
+                                    <button id="currencyUSD" type="button" class="btn btn-primary btn-xs" data-toggle="off">USD</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table class="table" style="width: 100%">
+                                <thead>
+                                <tr>
+                                    <th class="notehh" style="width: 5%"><small>序号</small></th>
+                                    <th class="notehh" style="width: 15%"><small>产品号</small></th>
+                                    <th class="notehh" style="width: 25%"><small>产品详细说明</small></th>
+                                    <th class="notehh" style="width: 10%"><small>原价(<span class="rmb-usd">¥</span></small>)</th>
+                                    <th class="notehh" style="width: 10%"><small>折扣</small></th>
+                                    <th class="notehh" style="width: 10%"><small>税率</small></th>
+                                    <th class="notehh" style="width: 10%"><small>单价(<span class="rmb-usd">¥</span></small>)</th>
+                                    <th class="notehh" style="width: 5%"><small>数量</small></th>
+                                    <th class="notehh" style="width: 10%"><small>总价(<span class="rmb-usd">¥</span></small>)</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbodyProductItem">
+                                <tr id="trProductItem_0">
+                                    <td class="No" style="text-align: center; padding-top: 13px" >
+                                        1.
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control productID" name="productID">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control productDisc" name="productDisc">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control productOriginalPrice" name="productOriginalPrice" onchange="autoCalculate(this)" onblur="formatOriginalPrice(this)">
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control productDiscount" name="productDiscount" value="100" onchange="autoCalculate(this.parentNode)">
+                                            <span class="input-group-addon">%</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <select class="form-control productTaxRate" name="productTaxRate" onchange="autoCalculate(this)">
+                                            <option value="0">0%</option>
+                                            <option value="1">6%</option>
+                                            <option value="2">17%</option>
+                                        </select>
+                                    </td>
+                                    <td style="text-align: center; padding-top: 13px" class="productPrice">
+                                        0.00
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control productAmount" name="productAmount" value="1" onchange="autoCalculate(this)">
+                                    </td>
+                                    <td style="text-align: center; padding-top: 13px" class="productTotalPrice">
+                                        0.00
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <hr style="height:1px;border:none;border-top:2px solid lightgray;" />
+                            <div style="text-align: right">
+                                <button class="btn btn-primary" id="btnAddProductItem">
+                                    <span class="glyphicon glyphicon-plus"></span> 添加
+                                </button>
+                            </div>
+                            <p class="text-right" style="margin-top: 30px">总计：<span><strong class="text-primary" style="font-size: x-large"><span class="rmb-usd">¥</span><span id="sumOfTotalPrice">0.00</span></strong></span></p>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <div class="row" style="margin-bottom: 15px">
+                                <div class="col-md-offset-3 col-md-2" align="center">
+                                    <button type="button" id="btnSave" class="btn btn-primary btn-lg btn-block">
+                                        <i class="fa  fa-save"></i> &nbsp; 保存
+                                    </button>
+                                </div>
+                                <div class="col-md-2 col-md-offset-2">
+                                    <button type="button" id="btnPrint" class="btn btn-lg btn-block" onclick="window.print();">
+                                        <i class="fa fa-print"></i> &nbsp; 打印
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Main content -->
+        <!-- /.content -->
+    </aside><!-- /.right-side -->
+</div><!-- ./wrapper -->
+
+<!-- add new calendar event modal -->
+
+
+<script src="../../js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/daterangepicker.js"></script>
+<script src="../../js/jquery.bigautocomplete.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/quote_new.js"></script>
+</body>
+</html>

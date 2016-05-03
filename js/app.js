@@ -59,29 +59,6 @@ function showMyPage(data)
         //检测到用户是第一次登录，提示用户完善信息
         alert("请联系管理员初始化个人信息后再尝试登录");
         logout();
-
-        //$("#main").addClass("blur");
-        //$("#initModal").modal('show');
-
-
-
-        //$("#bar_addressbook").tab("show");
-        //$("#divSearch").hide();
-        //$("#divMyInfo").removeClass("col-md-4").addClass("col-md-4 col-md-offset-4").attr("id", "divInitInfo");
-        //$("#MyMsgBox").attr("class","box box-primary");
-        //$("#MyInfoTitle").text("首次登录，请完善您的信息");
-        //$("#btnAlterInfo").attr("id", "btnInitInfo").text("使用域服务器上的信息");
-        //$("#btnInitMsg").show();
-        //$("#divInitInfo").find("#name").html("<input type='text' class='form-control' style='width:70%'>");
-        //$("#divInitInfo").find("#uid").html("<input type='text' class='form-control' style='width:70%'>");
-        //$("#divInitInfo").find("#sex").html("<select class='form-control' id='sex' style='width: '20%'><option value='男'>男</option><option value='女'>女</option></select>");
-        //$("#divInitInfo").find("#department").html("<select class='form-control' id='sex' style='width: '20%'><option value='软件部'>软件部</option><option value='硬件部'>硬件部</option><option value='销售部'>销售部</option></select>")
-        //$("#divInitInfo").find("#team").html("<input type='text' class='form-control' style='width:70%'>");
-        //$("#divInitInfo").find("#title").html("<input type='text' class='form-control' style='width:70%'>");
-        //$("#divInitInfo").find("#tele").html("<input type='text' class='form-control' style='width:70%'>");
-        //$("#divInitInfo").find("#email").html("<input type='text' class='form-control' style='width:70%'>");
-        //$("#divInitInfo").find("#date").text(data.date);
-
     }
     else
     {
@@ -147,45 +124,15 @@ function clickBtnLogin()
     }
 }
 
-//初始化个人信息时点击“提交”按钮
-//$("#btnInit").click(function(){
-//    var name = $("#initName").val();
-//    var uid = $("#initUid").val();
-//    var sex = $("#initSex").val();
-//    var department = $("#initDepartment").val();
-//	var team = $("#initTeam").val();
-//    var title = $("#initTitle").val();
-//    var tele = $("#initTele").val();
-//    var email = $("#initEmail").val();
-//
-//    $.ajax({
-//        url : "/" + projectName + "/php/initInfo.php",
-//        data : {'name':name, 'uid':uid, 'sex':sex, 'department':department, 'team':team, 'title':title, 'tele':tele, 'email':email},
-//        type : "POST",
-//        success : function(data){
-//            if(data == 0)
-//                window.location.reload();
-//            else
-//                alert("初始化出错，请重试...");
-//        }
-//    })
-//})
-
-
-//修改资料时点击“关闭”按钮，刷新当前页面
-//$("#btnCloseAlterMsg").click(function(){
-//    var tele = $("#divAlterInfo").find("#tele input").val();
-//    var email = $("#divAlterInfo").find("#email input").val();
-//    $("#content").show();
-//    $("#divAlterInfo").find("#tele").html(tele);
-//    $("#divAlterInfo").find("#email").html(email);
-//    $("#divAlterInfo").removeClass("col-md-offset-4").attr("id", "divMyInfo");
-//    $("#btnAlterInfo").show();
-//    $("#MyInfoTitle").text("个人信息");
-//    $("#btnSaveAlterMsg").hide();
-//    $("#btnCloseAlterMsg").hide();
-//})
-
+//显示提示信息
+function alertMsg(msg, type)
+{
+    var content = "<div id='divAlert' class='alert alert-" + type + "'>" +
+        "<a href='#' class='close' data-dismiss='alert'>&times;</a> " +
+        "<strong>" + type + "</strong>" + msg +
+        "</div>";
+    $("section.tab-content").first().before(content);
+}
 
 //注销
 $("#btnLogout").click(logout);

@@ -223,10 +223,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="notehh" style="width: 15%">类型</th>
-                                                        <th class="notehh" style="width: 20%">时间</th>
+                                                        <th class="notehh" style="width: 15%">时间</th>
+                                                        <th class="notehh" style="width: 15%">地点</th>
                                                         <th class="notehh" style="width: 15%">金额</th>
                                                         <th class="notehh" style="width: 10%">附件数</th>
-                                                        <th class="notehh" style="width: 40%">备注</th>
+                                                        <th class="notehh" style="width: 30%">备注</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbodyNewExpenseAccount">
@@ -255,6 +256,9 @@
                                                                 <input name="expenseDate" class="form-control expenseDate" placeholder="消费日期" size="16" type="text" value="" readonly>
                                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                             </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control expenseSite" name="expenseSite" value="西安">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control expenseAmount" name="expenseAmount" value="0" onblur="amountCheak(this); amountTip();">
@@ -286,19 +290,14 @@
                         </div>
                         <div class="box-footer clearfix">
                             <div class="row" style="margin-bottom: 15px">
-                                <div class="col-md-offset-2 col-md-2" align="center">
+                                <div class="col-md-offset-3 col-md-2" align="center">
                                     <button type="button" id="btnSubmitExpenseAccount" class="btn btn-primary btn-lg btn-block">
                                         提交
                                     </button>
                                 </div>
-                                <div class="col-md-2 col-md-offset-1">
-                                    <button type="button" id="btnPrintExpenseAccount" class="btn btn-Printdefault btn-lg btn-block">
-                                        打印
-                                    </button>
-                                </div>
-                                <div class="col-md-2 col-md-offset-1" align="center">
+                                <div class="col-md-2 col-md-offset-2" align="center">
                                     <button type="button" id="btnSaveDraft" class="btn btn-defult btn-lg btn-block">
-                                        保存草稿
+                                        保存草稿(暂不支持)
                                     </button>
                                 </div>
                             </div>

@@ -21,44 +21,59 @@ else
     echo "Get User Info Error";
 }
 
+//报销单历史纪录
+$sql = "SELECT expense.number number, user.name accepted, submitDate, state FROM expense, user WHERE expense.uid = '{$uid}' AND user.uid = expense.accepted ORDER BY expense.id DESC";
+$rs_sql = $mysqli -> query($sql);
 
-if (isset($_POST["detailNumber"]))
+$data = array();
+$x = 0;
+while($rs = mysqli_fetch_array($rs_sql))
 {
-    //报销单详情
-    $expenseId = $_POST['detailNumber'];
-    //返回该条请假单的详细信息
-    $sql = "SELECT type, amount, remark, date, attachment FROM expense_item WHERE id = '{$expenseId}'";
-    $rs_sql = $mysqli -> query($sql);
-
-    $data = array();
-    $x = 0;
-    while($rs = mysqli_fetch_array($rs_sql))
-    {
-        $data[$x] = $rs;
-        $x ++;
-    }
-    $data["sum"] = $x;
-    $data_json = json_encode($data);
-
-    echo $data_json;
-
+    $data[$x] = $rs;
+    $x ++;
 }
-else
-{
-    //报销单历史纪录
-    $sql = "SELECT expense.number number, user.name accepted, submitDate, state FROM expense, user WHERE expense.uid = '{$uid}' AND user.uid = expense.accepted ORDER BY expense.id DESC";
-    $rs_sql = $mysqli -> query($sql);
+$data["sum"] = $x;
+$data_json = json_encode($data);
 
-    $data = array();
-    $x = 0;
-    while($rs = mysqli_fetch_array($rs_sql))
-    {
-        $data[$x] = $rs;
-        $x ++;
-    }
-    $data["sum"] = $x;
-    $data_json = json_encode($data);
+echo $data_json;
 
-    echo $data_json;
-
-}
+//if (isset($_POST["detailNumber"]))
+//{
+//    //报销单详情
+//    $expenseId = $_POST['detailNumber'];
+//    //返回该条请假单的详细信息
+//    $sql = "SELECT type, amount, remark, date, attachment FROM expense_item WHERE id = '{$expenseId}'";
+//    $rs_sql = $mysqli -> query($sql);
+//
+//    $data = array();
+//    $x = 0;
+//    while($rs = mysqli_fetch_array($rs_sql))
+//    {
+//        $data[$x] = $rs;
+//        $x ++;
+//    }
+//    $data["sum"] = $x;
+//    $data_json = json_encode($data);
+//
+//    echo $data_json;
+//
+//}
+//else
+//{
+//    //报销单历史纪录
+//    $sql = "SELECT expense.number number, user.name accepted, submitDate, state FROM expense, user WHERE expense.uid = '{$uid}' AND user.uid = expense.accepted ORDER BY expense.id DESC";
+//    $rs_sql = $mysqli -> query($sql);
+//
+//    $data = array();
+//    $x = 0;
+//    while($rs = mysqli_fetch_array($rs_sql))
+//    {
+//        $data[$x] = $rs;
+//        $x ++;
+//    }
+//    $data["sum"] = $x;
+//    $data_json = json_encode($data);
+//
+//    echo $data_json;
+//
+//}

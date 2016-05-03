@@ -11,42 +11,42 @@
 	// echo "$username";
 	// echo "$password";
 
-	//Á¬½ÓÊý¾Ý¿â
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
 	// include "conn.php";
 
-	//Á¬½ÓADÓò·þÎñÆ÷
+	//ï¿½ï¿½ï¿½ï¿½ADï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	$host = "ldap://10.0.0.2";
  	$port = 389;
 	
- 	//Á¬½Óµ½LDAP·þÎñÆ÷
+ 	//ï¿½ï¿½ï¿½Óµï¿½LDAPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	$ldapconn = ldap_connect($host, $port)
           or die("Could not connect to $ldaphost");
 	
-	//ÉùÃ÷Ê¹ÓÃ°æ±¾3
+	//ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã°æ±¾3
 	ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-	//Ê¹ÓÃstart TLS°²È«Í¨ÐÅ»úÖÆ
+	//Ê¹ï¿½ï¿½start TLSï¿½ï¿½È«Í¨ï¿½Å»ï¿½ï¿½ï¿½
 	// ldap_start_tls($ldapconn);
 
 
-	//°ó¶¨
+	//ï¿½ï¿½
 	if(!@ldap_bind($ldapconn, "SYNTHFLEX\\".$username, $password))
 	{
 		echo -1;
 		exit();
 	}
 
-	//»ñÈ¡LDAPÊý¾Ý
+	//ï¿½ï¿½È¡LDAPï¿½ï¿½ï¿½ï¿½
 	$result_ldap = ldap_search($ldapconn, "cn=USERS, dc=synthflex, dc=com", "(samaccountname=$username)", array('sn','givenname'));
 
 	// echo "result_ldap".$result_ldap;
 	// echo "<br />";
 	
-	//Í³¼ÆËù»ñÈ¡µÄÏî
+	//Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 	// echo $count = ldap_count_entries($ldapconn, $result_ldap);
 
 	// echo "<br />";
 
-	//´¦Àí·µ»ØµÄ¶îÊý¾Ý	
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ØµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½	
 	$result = ldap_get_entries($ldapconn, $result_ldap);
 	// print_r($result);
 	// echo $result[0]['displayname'][0];
@@ -54,7 +54,7 @@
 	$_SESSION['sn'] = $result[0]['sn'][0];
 	$_SESSION['givenname'] = $result[0]['givenname'][0];
 	$_SESSION['username'] = $username;
-	$_SESSION['password'] = $password;
+//	$_SESSION['password'] = $password;
 	$_SESSION['isLogin'] = 0;
 
 	echo 0;
@@ -64,7 +64,7 @@
 	// $cheak_query = $mysqli -> query("select uid, name from worker where username = '$username' and password = '$password'");
 	// if($rs = @mysqli_fetch_array($cheak_query))
 	// {
-	// 	//µÇÂ¼³É¹¦
+	// 	//ï¿½ï¿½Â¼ï¿½É¹ï¿½
 	// 	$_SESSION["name"] = $rs["name"];
 	// 	$_SESSION["uid"] = $rs["uid"];
 	// 	$_SESSION["isLogin"] = 0;

@@ -82,8 +82,9 @@
             $amount = $value -> amount;
             $remark = $value -> remark;
             $date = $value -> date;
+            $site = $value -> site;
             $attachment = $value -> attachment;
-            $rs = $mysqli -> query("INSERT INTO expense_item (id, type, amount, remark, date, attachment) VALUES ('{$number}', '{$type}', '{$amount}', '{$remark}', '{$date}', '{$attachment}')");
+            $rs = $mysqli -> query("INSERT INTO expense_item (id, type, amount, remark, date, site, attachment) VALUES ('{$number}', '{$type}', '{$amount}', '{$remark}', '{$date}', '{$site}', '{$attachment}')");
 
 
             if(mysqli_affected_rows($mysqli) <= 0)

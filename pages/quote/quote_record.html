@@ -5,19 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>报销|历史纪录</title>
+    <title>报价|记录</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css">
-    <link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    
     <style type="text/css">
         [parentpane]{}
         .blur{
             -webkit-filter:blur(3px);
         }
-        td.notehh{
+        .notehh{
             width: 25%;
             padding: 2px 0px;
             text-align: center;
@@ -119,7 +119,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
+                    <img src="../../img/easy.jpg" class="img-circle imgUse" alt="User Image" />
                 </div>
                 <div class="pull-left info">
                     <p>您好, <span id="givenName"></span></p>
@@ -131,9 +131,9 @@
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
+                    <span class="input-group-btn">
+                        <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                    </span>
                 </div>
             </form>
             <!-- /.search form -->
@@ -161,16 +161,16 @@
                         <li><a href="../leave/leave_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
                     </ul>
                 </li>
-                <li class="treeview active">
+                <li class="treeview">
                     <a href="">
                         <i class="fa fa-money"></i>
                         <span>报销系统</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
-                        <li><a href="expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
-                        <li><a href="expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                        <li><a href="../expense/expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
+                        <li><a href="../expense/expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="../expense/expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
                     </ul>
                 </li>
             </ul>
@@ -183,33 +183,31 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                <span id="hh1">报销系统</span>
-                <small id="hh2">历史记录</small>
+                <span id="hh1">报价系统</span>
+                <small id="hh2">历史纪录</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="../../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Expense Account History</li>
+                <li class="active">Quote Note History</li>
             </ol>
         </section>
         <section class="content tab-content">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1"  id="content">
                     <div class="box box-primary">
-                        <div class="box-header">
-                            <p class="box-title">您的报销单记录</p>
-                        </div>
                         <table class="table table-hover">
                             <thead>
                             <tr>
                                 <th style="width: 10%">#</th>
-                                <th style="width: 20%">报销单号</th>
-                                <th style="width: 30%">提交日期</th>
-                                <th style="width: 20px">受理人</th>
-                                <th style="width: 10px">状态</th>
+                                <th style="width: 15%">报价单号</th>
+                                <th style="width: 20px">客户</th>
+                                <th style="width: 15px">联系人</th>
+                                <th style="width: 20%">有效期</th>
+                                <th style="width: 10%">状态</th>
                                 <th style="width: 10px">详情</th>
                             </tr>
                             </thead>
-                            <tbody id="tbodyExpenseHistory"></tbody>
+                            <tbody id="tbodyQuoteHistory"></tbody>
                         </table>
                     </div>
                 </div>
@@ -219,10 +217,15 @@
         <!-- /.content -->
     </aside><!-- /.right-side -->
 </div><!-- ./wrapper -->
+
+<!-- add new calendar event modal -->
+
+
 <script src="../../js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../js/bootstrap.min.js"></script>
+
 <script src="../../js/app.js"></script>
-<script src="../../js/expense_history.js"></script>
+<script src="../../js/quote_record.js"></script>
 </body>
 </html>

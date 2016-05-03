@@ -13,7 +13,7 @@ $(document).ready(function () {
     });
 
     //查看报销历史纪录
-    $("#tbodyLeaveHisotry").empty();
+    $("#tbodyExpenseHisotry").empty();
     $.ajax({
         url : "../../php/expenseHistory.php",
         type : "POST",

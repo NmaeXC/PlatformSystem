@@ -15,6 +15,7 @@
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css">
+    <link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -193,15 +194,169 @@
             </ol>
         </section>
         <section class="content tab-content">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="btn-group-vertical pull-right">
-                        <button type="button" class="btn btn-primary">Top</button>
-                        <button type="button" class="btn btn-primary">Middle</button>
-                        <button type="button" class="btn btn-primary">Bottom</button>
-                    </div>
-                </div>
-            </div>
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-4">
+                            <!-- BOXES are complex enough to move the .box-header around.
+                                 This is an example of having the box header within the box body -->
+                            <div class="box-header">
+                                <i class="fa fa-inbox"></i>
+                                <h3 class="box-title">员工管理</h3>
+                            </div>
+                            <!-- compose message btn -->
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" placeholder="Search">
+                                <div class="input-group-btn">
+                                    <button type="submit" name="q" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                            <!-- Navigation - folders-->
+                            <div style="margin-top: 15px; overflow-y:auto; height: 300px">
+                                <ul id="ulMemberList" class="nav nav-pills nav-stacked">
+                                    <li class="header">Member List</li>
+                                </ul>
+                            </div>
+                        </div><!-- /.col (LEFT) -->
+                        <div class="col-md-9 col-sm-8">
+                            <div class="tab-content" style="margin-top: 55px">
+                                <div class="tab-pane userInfo active" id="userInfo_0">
+                                    <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href=".tab_1" data-toggle="tab">用户资料</a></li>
+                                            <li><a href=".tab_2" data-toggle="tab">修改资料</a></li>
+                                            <li class="dropdown">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                    Dropdown <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                                                    <li role="presentation" class="divider"></li>
+                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active tab_1">
+                                                <div style="padding:30px" align="center">
+                                                    <div  class="form-horizontal" class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">姓名</label>
+                                                            <div class="col-md-4 nameInfo">-</div>
+                                                            <label class="control-label col-md-2">职位</label>
+                                                            <div class="col-md-4 titleInfo">-</div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">员工号</label>
+                                                            <div class="col-md-4 uidInfo">-</div>
+                                                            <label class="control-label col-md-2">手机</label>
+                                                            <div class="col-md-4 teleInfo">-</div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">姓别</label>
+                                                            <div class="col-md-4 sexInfo">-</div>
+                                                            <label class="control-label col-md-2">邮箱</label>
+                                                            <div class="col-md-4 emailInfo">-</div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">部门</label>
+                                                            <div class="col-md-4 departmentInfo">-</div>
+                                                            <label class="control-label col-md-2">入职日期</label>
+                                                            <div class="col-md-4 dateInfo">-</div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">小组</label>
+                                                            <div class="col-md-4 teamInfo">-</div>
+                                                            <label class="control-label col-md-2">直接上司</label>
+                                                            <div class="col-md-4 topInfo">-</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.tab-pane -->
+                                            <div class="tab-pane tab_2">
+                                                <div style="padding:30px" align="center">
+                                                    <form onSubmit='return false;'  class="form-horizontal" class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">姓名</label>
+                                                            <div class="col-md-4">
+                                                                <input name="nameAlter" class="form-control nameAlter" type="text">
+                                                            </div>
+                                                            <label class="control-label col-md-2">职位</label>
+                                                            <div class="col-md-4">
+                                                                <input name="titleAlter" class="form-control titleAlter" type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">员工号</label>
+                                                            <div class="col-md-4 ">
+                                                                <input name="uidAlter" class="form-control uidAlter" type="text">
+                                                            </div>
+                                                            <label class="control-label col-md-2">手机</label>
+                                                            <div class="col-md-4 ">
+                                                                <input name="teleAlter" class="form-control teleAlter" type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">姓别</label>
+                                                            <div class="col-md-2">
+                                                                <select class="form-control sexAlter" name="sexAlter">
+                                                                    <option value="男">男</option>
+                                                                    <option value="女">女</option>
+                                                                </select>
+                                                            </div>
+                                                            <label class="control-label col-md-2 col-md-offset-2">邮箱</label>
+                                                            <div class="col-md-4">
+                                                                <input name="emailAlter" class="form-control emailAlter" type="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">部门</label>
+                                                            <div class="col-md-2 ">
+                                                                <select name="departmentAlter" class="form-control departmentAlter" type="text">
+                                                                    <option value="市场部">市场部</option>
+                                                                    <option value="人事部">人事部</option>
+                                                                    <option value="研发部">研发部</option>
+                                                                </select>
+                                                            </div>
+                                                            <label class="control-label col-md-2 col-md-offset-2">入职日期</label>
+                                                            <div class="col-md-4">
+                                                                <div class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                                                    <input name="dateAlter" class="form-control dateAlter" size="16" type="text">
+                                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">小组</label>
+                                                            <div class="col-md-4">
+                                                                <input name="teamAlter" class="form-control teamAlter" type="text">
+                                                            </div>
+                                                            <label class="control-label col-md-2">直接上司</label>
+                                                            <div class="col-md-4">
+                                                                <input name="topAlter" class="form-control topAlter" type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div style="margin-top: 35px; text-align: right">
+                                                            <button class="btn btn-primary" onclick="saveUserInfo(this.parentNode.parentNode)"><i class="fa fa-save"></i> 保存</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div><!-- /.tab-pane -->
+                                        </div><!-- /.tab-content -->
+                                    </div>
+                                </div><!-- /.tab-pane -->
+                            </div><!-- /.tab-content -->
+                        </div><!-- /.col (RIGHT) -->
+                    </div><!-- /.row -->
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+
+                </div><!-- box-footer -->
+            </div><!-- /.box -->
         </section>
         <!-- Main content -->
         <!-- /.content -->
@@ -214,6 +369,7 @@
 <script src="../../js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker.min.js"></script>
 <script src="../../js/app.js"></script>
 <script src="../../js/Administration.js"></script>
 </body>
