@@ -10,9 +10,12 @@
     include "conn.php";
     $username = $_SESSION["username"];
 
+    //报销单详情
+    $expenseId = $_POST['detailNumber'];
+
     $data = array();
 
-    $sql = "SELECT name, uid, department, title FROM user WHERE username = '{$username}'";
+    $sql = "SELECT user.name, user.uid, user.department, user.title FROM user LEFT JOIN expense ON user.uid = expense.uid WHERE expense.number = '{$expenseId}'";
     $rs_sql = $mysqli -> query($sql);
     if($rs = mysqli_fetch_array($rs_sql))
     {
@@ -23,8 +26,6 @@
         echo "Get User Info Error";
     }
 
-    //报销单详情
-    $expenseId = $_POST['detailNumber'];
     //返回该条请假单的详细信息
     $sql = "SELECT expense_item_type.value type, amount, site, remark, date, attachment FROM expense_item, expense_item_type WHERE expense_item.id = '{$expenseId}' AND expense_item.type = expense_item_type.id";
     $rs_sql = $mysqli -> query($sql);
