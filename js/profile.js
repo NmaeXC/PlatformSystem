@@ -29,12 +29,16 @@ $("#btnAlterMsg").click(function(){
 $("#btnSaveAlterMsg").click(function(){
     var newTele = $("#inputTele").val();
     var newEmail = $("#inputEmail").val();
-    var newtAvatar = $("#imgAlertAvatar").attr("src");
+    var newAvatar = $("#imgAlertAvatar").attr("src");
+    var base64_reg = new RegExp("^data:.*;base64");
+    if(!base64_reg.test(newAvatar)){
+        newAvatar = null;
+    }
     $.ajax({
         url : "/" + projectName + "/php/updatemyinfo.php",
         type : "POST",
         cache : false,
-        data : {'newTele': newTele, 'newEmail': newEmail, 'newAvatar': newtAvatar},
+        data : {'newTele': newTele, 'newEmail': newEmail, 'newAvatar': newAvatar},
         //async : false,
         success : function(data){
             if (data == "0") {
@@ -42,7 +46,7 @@ $("#btnSaveAlterMsg").click(function(){
             }
             else
             {
-                alert("保存失败，请重试...");
+                alert("头像保存失败，请重试...");
             }
 
             window.location.reload();

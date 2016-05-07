@@ -9,7 +9,19 @@ $(document).ready(function () {
     $("#customerName").bigAutocomplete({
         url: "../../php/auto_customer.php",
         callback: function(data){
-            $("#customerID").text(data.id);
+            var customerId = data.id;
+            $("#customerID").text(customerId);
+            $.ajax({
+                url: "../../php/auto_contact.php",
+                type: "POST",
+                data: {'customerId': customerId},
+                dataType: "json",
+                success: function(data){
+                    data.forEach(function(ele){
+                        this.append("<option value='" + ele.id + "'>" + ele.name + "</option>");
+                    }, $("#customerContact"));
+                }
+            })
         }
     });
 });
@@ -98,9 +110,12 @@ $("#btnAddProductItem").click(function () {
 
 //保存
 $("#btnSave").click(function () {
+    //验证填写是否符合规范
+
+
     var customer = {
-        name: $("#customerName").val(),
         id: $("#customerID").text(),
+        contact: $("#customerContact").val()
     }
 
     var validity = $("#validity").val().split(" - ");
@@ -126,7 +141,7 @@ $("#btnSave").click(function () {
 
     $.ajax({
         url: "../../php/quote_save.php",
-        data: {customer: customer.id,
+        data: {customer: JSON.stringify(customer),
             validity: validity,
             currency: currency,
             product: JSON.stringify(product)

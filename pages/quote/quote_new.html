@@ -199,18 +199,28 @@
                         <div class="box-header">
                             <h3 class="box-title">客户信息</h3>
                         </div>
-                        <div class="box-body row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="customerName" placeholder="Customer Name">
-                                    <a href="../customer/customer_new.html" class="input-group-addon"><i class="fa fa-plus"></i></a>
+                        <div class="box-body">
+                            <div class="row" style="margin-bottom: 5px">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="customerName" placeholder="Customer Name">
+                                        <a href="../customer/customer_new.html" class="input-group-addon"><i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"  style="margin-top: 8px; padding-right: 0px;">
+                                    <strong class="text-right">联系人: </strong>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" id="customerContact"></select>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <strong class="text-right">客户号: </strong>
-                            </div>
-                            <div class="col-md-4">
-                                <p id="customerID"></p>
+                            <div class="row">
+                                <div class="col-md-2" style="text-align: center">
+                                    客户号：
+                                </div>
+                                <div class="col-md-4">
+                                    <p id="customerID"></p>
+                                </div>
                             </div>
                         </div>
                     </div><!-- /.box -->
@@ -221,7 +231,7 @@
                             <h3 class="box-title">报价单有效期</h3>
                         </div>
                         <div class="box-body">
-                            <div class="form-group">
+                            <div class="form-group" style="padding-bottom: 11px">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>

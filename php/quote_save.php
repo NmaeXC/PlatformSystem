@@ -16,7 +16,9 @@ if($rs = mysqli_fetch_array($rs_sql))
 {
     $staff_uid = $rs[0];
 }
-$customer = $_POST["customer"];
+$customer = json_decode($_POST["customer"]);
+$customer_id = $customer -> id;
+$contact_id = $customer -> contact;
 $validity_start = $_POST["validity"][0];
 $validity_end = $_POST["validity"][1];
 $currency = $_POST["currency"];
@@ -47,7 +49,7 @@ else
     $id = $idHead."001";
 }
 
-$sql = "INSERT INTO quote (id, validity_start, validity_end, customer, staff_uid, state_id, currency) VALUES ('{$id}', '{$validity_start}', '{$validity_end}', '{$customer}', '{$staff_uid}', 1, '{$currency}')";
+$sql = "INSERT INTO quote (id, validity_start, validity_end, customer, contact_id, staff_uid, state_id, currency) VALUES ('{$id}', '{$validity_start}', '{$validity_end}', '{$customer_id}', '{$contact_id}', '{$staff_uid}', 1, '{$currency}')";
 $rs = $mysqli -> query($sql);
 
 if(mysqli_affected_rows($mysqli) <= 0)
