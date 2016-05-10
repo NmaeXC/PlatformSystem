@@ -7,62 +7,170 @@
     <title>报价单详情</title>
 
     <style>
-        .container {
-            width: 594.3pt;
-            padding-right: 15pt;
-            padding-left: 15pt;
-            margin-right: auto;
-            margin-left: auto;
-        }
-        p, td, th{
-            font-size: 9pt;
-            line-height: 50%;
-            font-family: "Microsoft YaHei UI";
+        @media print {
+            .container {
+                width: 594.3pt;
+                padding-right: 15pt;
+                padding-left: 15pt;
+                margin-right: auto;
+                margin-left: auto;
+            }
+            p, td, th{
+                font-size: 9pt;
+                line-height: 50%;
+                font-family: "Microsoft YaHei UI";
+            }
+
+            .hd > p{
+                font-weight: 600;
+            }
+
+            h2{
+                margin-top: 0pt;
+                font-family:"Microsoft YaHei";
+                font-size: 15pt;
+            }
+            td, th{
+                padding: 7pt;
+                text-align: center;
+            }
+
+
+            #header{
+                height: 102px;
+            }
+
+            #info_1{
+                height: 120px;
+            }
+
+            #info_2{
+
+            }
+            #footer{
+                position:absolute;
+                top:800pt;
+                width: 100%;
+            }
+
+            #footer p{
+                font-weight: 600;
+                font-size: 8pt;
+                margin-top: 2pt;
+                margin-bottom: 2pt;
+            }
+            #footer ul{
+                margin-top: 5pt;
+            }
+
+            .noprint{
+                display: none;
+            }
+
+            #divSum{
+                position: absolute;
+                top: 770pt;
+                left: 450pt;
+                width: 100pt;
+            }
+
+            hr{
+                height:1pt;
+                border:none;
+                border-top:1pt solid #555555;
+                margin-left: 15pt;
+                margin-right: 15pt
+            }
+
         }
 
-        .hd > p{
-            font-weight: 600;
+        @media screen and (min-width: 768px) {
+            .container {
+                width: 750px;
+            }
+        }
+        @media screen and (min-width: 992px) {
+            .container {
+                width: 970px;
+            }
+        }
+        @media screen and (min-width: 1200px) {
+            .container {
+                width: 1170px;
+            }
         }
 
-        h2{
-            margin-top: 0pt;
-            font-family:"Microsoft YaHei";
-            font-size: 15pt;
-        }
-        td, th{
-            padding: 7pt;
-            text-align: center;
-        }
+        @media screen {
+            hr{
+                height:1px;
+                border:none;
+                border-top:1px solid #555555;
+                margin-left: 20px;
+                margin-right: 20px
+            }
+            .container {
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            p, td, th{
+                font-size: 9pt;
+                line-height: 50%;
+                font-family: "Microsoft YaHei UI";
+            }
+
+            .hd > p{
+                font-weight: 600;
+            }
+
+            h2{
+                margin-top: 0pt;
+                font-family:"Microsoft YaHei";
+                font-size: 12pt;
+            }
+            td, th{
+                padding: 7pt;
+                text-align: center;
+            }
 
 
-        #header{
-            height: 102px;
+            #header{
+                height: 102px;
+            }
+
+            #info_1{
+                height: 120px;
+            }
+
+            #info_2{
+
+            }
+
+            .noshow{
+                display: none;
+            }
+
+            #footer p{
+                font-weight: 600;
+                font-size: 8pt;
+                margin-top: 2pt;
+                margin-bottom: 2pt;
+            }
+            #footer ul{
+                margin-top: 5pt;
+            }
+
         }
 
-        #info_1{
-            height: 120px;
-        }
-
-        #info_2{
-
-        }
-
-        #footer p{
-            font-weight: 600;
-            font-size: 8pt;
-            margin-top: 2pt;
-            margin-bottom: 2pt;
-        }
-        #footer ul{
-            margin-top: 5pt;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="../../img/_logo.jpg" style="width: 200px; height: auto">
         <div id="header">
-            <div style="width: 60%; float: left; margin-left: 20px">
+            <div style="width: 55%; float: left; margin-left: 20px">
                 <p>北京中科世行测控技术有限公司</p>
                 <p>地址：陕西省西安市高新区唐延南路11号i都会2号楼2单元1220室</p>
                 <p>电话：000-00000000</p>
@@ -70,12 +178,13 @@
                 <P>Web：www.shixing.com</P>
             </div>
             <div style="width: 30%; float: right">
-                <h2>报价单号：9060</h2>
-                <p>打印日期：2016-05-09</p>
-                <p>报价方式：人民币(RMB)</p>
+                <p>报价单号：</p>
+                <h2 id="id"></h2>
+                <p>打印日期：<span id="print_date"></span></p>
+                <p>报价方式：<span id="currency"></span></p>
             </div>
         </div>
-        <hr style="height:1px;border:none;border-top:1px solid #555555; margin-left: 20px; margin-right: 20px" />
+        <hr/>
         <div id="info_1">
             <div style="width: 50%; float: left">
                 <div>
@@ -88,12 +197,12 @@
                         <p>地址：</p>
                     </div>
                     <div style="width: 65%; float: right; text-align: left">
-                        <p>西安电子科技大学</p>
-                        <p>010010001</p>
-                        <p>郑晓静</p>
-                        <p>110111011110</p>
-                        <P>10101010@0101.com</P>
-                        <P>陕西省西安市雁塔区</P>
+                        <p id="customer_name"></p>
+                        <p id="customer_id"></p>
+                        <p id="contact_name"></p>
+                        <p id="contact_tele"></p>
+                        <P id="contact_email"></P>
+                        <P id="customer_addr"></P>
                     </div>
                 </div>
             </div>
@@ -107,16 +216,16 @@
                         <p>E-mail：</p>
                     </div>
                     <div style="width: 65%; float: right; text-align: left">
-                        <p>2016.05.07 ~ 2016.06.06</p>
-                        <p>胡鹏飞</p>
-                        <p>17791945646</p>
-                        <p>1201200</p>
-                        <P>hpf@120.com</P>
+                        <p id="validity"><span id="start"></span> ~ <span id="end"></span></p>
+                        <p class="nameUser"></p>
+                        <p class="teleUser"></p>
+                        <p class="foxUser"></p>
+                        <P class="emailUser"></P>
                     </div>
                 </div>
             </div>
         </div>
-        <hr style="height:1px;border:none;border-top:1px solid #555555; margin-left: 20px; margin-right: 20px" />
+        <hr/>
         <div id="info_2">
             <table style="width: 100%">
                 <thead>
@@ -125,247 +234,29 @@
                     <th>产品号</th>
                     <th>产品详细说明</th>
                     <th>原价[¥]</th>
+                    <th>折扣</th>
                     <th>税率</th>
                     <th>税后单价[¥]</th>
                     <th>数量</th>
                     <th>总价[¥]</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>781720-01</td>
-                    <td>NI PXI-1086, 牛逼的示波器</td>
-                    <td>15000.00</td>
-                    <td>7%</td>
-                    <td>16050.00</td>
-                    <td>5</td>
-                    <td>80250.00</td>
-                </tr>
+                <tbody id="tbody_products">
+
                 </tbody>
             </table>
         </div>
-        <hr style="height:1px;border:none;border-top:1px solid #555555; margin-left: 20px; margin-right: 20px" />
-        <div style="height: 43px; padding-right: 20px">
+        <hr/>
+        <div id="divSum" style="height: 43px; padding-right: 20px">
             <div style="float: left;width: 80%; text-align: right">
-                <h2>总计[¥]：</h2>
+                <h2>总计<span class="currency"></span>：</h2>
             </div>
-            <div style="float: left;width: 20%; text-align: right;">
-                <h2>2100000.00</h2>
+            <div style="float: left;width: 15%; text-align: right;">
+                <h2 id="sum"></h2>
             </div>
         </div>
-        <hr style="height:1px;border:none; border-top:1px solid #555555; margin-left: 20px; margin-right: 20px" />
-        <div id="footer" class="hd">
+        <div id="footer" class="noshow" class="hd">
+            <hr style="margin-right: 50pt"/>
             <p style="margin-left: 20px">附加信息:</p>
             <ul>
                 <li><p>付款方式：100%全额预付</p></li>
@@ -375,5 +266,11 @@
             </ul>
         </div>
     </div>
+    <div class="noprint" style="text-align: center">
+        <button id="btnPrint">打印</button>
+    </div>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/quote_record_detail.js"></script>
+
 </body>
 </html>

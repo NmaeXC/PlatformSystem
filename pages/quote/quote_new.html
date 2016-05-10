@@ -274,7 +274,7 @@
                                         1.
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control productID" name="productID">
+                                        <select class="form-control productID" name="productID" onchange="autoproduct(this)" ></select>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control productDisc" name="productDisc">
@@ -299,7 +299,7 @@
                                         0.00
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control productAmount" name="productAmount" value="1" onchange="autoCalculate(this)">
+                                        <input type="number" class="form-control productAmount" name="productAmount" value="0" onchange="autoCalculate(this)">
                                     </td>
                                     <td style="text-align: center; padding-top: 13px" class="productTotalPrice">
                                         0.00

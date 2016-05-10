@@ -8,35 +8,6 @@
 
 		// print_r($_FILES["LeaveFile"]);
 
-		$accessory_error = $_FILES["LeaveFile"]["error"];
-		$accessory_type = $_FILES["LeaveFile"]["type"];
-		// echo "type:".$accessory_type."<br/>";
-		$accessory_size = $_FILES["LeaveFile"]["size"];
-		$accessory_tmp_name = $_FILES["LeaveFile"]["tmp_name"];
-		$accessory_name = $_FILES["LeaveFile"]["name"];
-		if($accessory_error > 0)
-		{
-			echo -1; //文件上传失败
-			exit();
-		}
-		// $accessory_fp = fopen($accessory_tmp_name, 'r');
-		// $accessory_content = fread($accessory_fp, $accessory_size);
-		// fclose($accessory_fp);
-		// echo $accessory;
-
-		// $accessory_content = addslashes($accessory_content);
-		
-		//检测上传文件
-		if($accessory_type != 'image/png' && $accessory_type != 'image/jpeg')
-		{
-			echo "File Type Error";
-			exit();
-		}
-		if ($accessory_size > 8 * 1024 * 1024) {
-			echo "File Size Error";
-			exit();
-		}
-
 		$startTime = $_POST["startTime"];
 		$endTime = $_POST["endTime"];
 		$reason = $_POST["reason"];
@@ -119,8 +90,44 @@
 		}
 
 
-		$file_name = $number.".".pathinfo($accessory_name)["extension"];
-		move_uploaded_file($accessory_tmp_name, "..\\data\\leavenote\\".$file_name);
+		if (isset($_FILES["LeaveFile"]))
+		{
+			$accessory_error = $_FILES["LeaveFile"]["error"];
+			$accessory_type = $_FILES["LeaveFile"]["type"];
+			// echo "type:".$accessory_type."<br/>";
+			$accessory_size = $_FILES["LeaveFile"]["size"];
+			$accessory_tmp_name = $_FILES["LeaveFile"]["tmp_name"];
+			$accessory_name = $_FILES["LeaveFile"]["name"];
+			if($accessory_error > 0)
+			{
+				echo -1; //文件上传失败
+				exit();
+			}
+			// $accessory_fp = fopen($accessory_tmp_name, 'r');
+			// $accessory_content = fread($accessory_fp, $accessory_size);
+			// fclose($accessory_fp);
+			// echo $accessory;
+
+			// $accessory_content = addslashes($accessory_content);
+
+			//检测上传文件
+			if($accessory_type != 'image/png' && $accessory_type != 'image/jpeg')
+			{
+				echo "File Type Error";
+				exit();
+			}
+			if ($accessory_size > 8 * 1024 * 1024) {
+				echo "File Size Error";
+				exit();
+			}
+			$file_name = $number.".".pathinfo($accessory_name)["extension"];
+			move_uploaded_file($accessory_tmp_name, "..\\data\\leavenote\\".$file_name);
+		}
+		else
+		{
+			$file_name = null;
+		}
+		
 
 		// echo date('Y-m-d');
 

@@ -36,10 +36,10 @@ $(document).ready(function () {
                             break;
                         default:
                             state = "<span class='label label-danger'>Error</span>";
-                            break;
+                            break;c
                     }
                     $("<td></td>").html(state).appendTo("#" + trID);
-                    $("<td></td>").html("<a role='button' onclick=quoteDetail(" + x + ")><span class='badge bg-light-blue'>More..</span>").appendTo("#" + trID)
+                    $("<td></td>").html("<a role='button' onclick=quoteDetail(" + x + ",'" + data[x].contact_id + "')><span class='badge bg-light-blue'>More..</span>").appendTo("#" + trID)
 
                 }
             }
@@ -52,9 +52,9 @@ $(document).ready(function () {
 });
 
 //使用一个新的页面来呈现报销单详情
-function quoteDetail(x) {
+function quoteDetail(x, contact) {
     var item = $("#trQuoteHistory" + x);
     var number = item.find("td:eq(1)").text();
     var submitDate = item.find("td:eq(2)").text();
-    window.open("quote_record_detail.html?x=" + number);
+    window.open("quote_record_detail.html?x=" + number + "&c=" + contact);
 }

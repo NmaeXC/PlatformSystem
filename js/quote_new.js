@@ -5,25 +5,45 @@
 //页面初始化
 $(document).ready(function () {
     freshMyPage();
-    $('#validity').daterangepicker();
-    $("#customerName").bigAutocomplete({
-        url: "../../php/auto_customer.php",
-        callback: function(data){
-            var customerId = data.id;
-            $("#customerID").text(customerId);
-            $.ajax({
-                url: "../../php/auto_contact.php",
-                type: "POST",
-                data: {'customerId': customerId},
-                dataType: "json",
-                success: function(data){
-                    data.forEach(function(ele){
-                        this.append("<option value='" + ele.id + "'>" + ele.name + "</option>");
-                    }, $("#customerContact"));
-                }
-            })
-        }
-    });
+
+    //初始化产品选择列表
+    (function (){
+        $.ajax({
+            url: "../../php/get_product.php",
+            type: "POST",
+            dataType: "json",
+            success: function(data){
+
+                autoproduct('.productID', data[0]);
+                data.forEach(function (ele) {
+                    this.append("<option value='" + ele + "'>" + ele + "</option>");
+                }, $(".productID"));
+
+            }
+        });
+    })();
+
+
+});
+
+$('#validity').daterangepicker();
+$("#customerName").bigAutocomplete({
+    url: "../../php/auto_customer.php",
+    callback: function(data){
+        var customerId = data.id;
+        $("#customerID").text(customerId);
+        $.ajax({
+            url: "../../php/auto_contact.php",
+            type: "POST",
+            data: {'customerId': customerId},
+            dataType: "json",
+            success: function(data){
+                data.forEach(function(ele){
+                    this.append("<option value='" + ele.id + "'>" + ele.name + "</option>");
+                }, $("#customerContact"));
+            }
+        })
+    }
 });
 
 var currency = "RMB";
@@ -38,6 +58,24 @@ $("#currencyUSD").click(function () {
     currency = "USD";
 });
 
+//自动填充产品信息
+function autoproduct(ele, key){
+    var key = key || $(ele).val();
+    var disc = $(ele).parent().parent().find(".productDisc");
+    var orig_price = $(ele).parent().parent().find(".productOriginalPrice");
+    $.ajax({
+        url: "../../php/get_product.php",
+        type: "POST",
+        data: {'key': key},
+        dataType: "json",
+        success: function(data){
+            disc.val(data.disc);
+            orig_price.val(new Number(data.price).toFixed(2));
+        }
+    });
+}
+
+
 //格式化单价形式
 function formatOriginalPrice(element) {
     var a  = new Number($(element).val());
@@ -46,6 +84,7 @@ function formatOriginalPrice(element) {
     }
 
 }
+
 
 //自动计算
 function autoCalculate(element) {
@@ -63,7 +102,7 @@ function autoCalculate(element) {
             '2': function () {
                 return 1.17;
             }
-        }
+        };
         if (typeof(rate[val]) === "function"){
             return rate[val]();
         }
@@ -101,7 +140,7 @@ $("#btnAddProductItem").click(function () {
     newColume.find(".productOriginalPrice").val("");
     newColume.find(".productDiscount").val(100);
     newColume.find(".productPrice").text("0.00");
-    newColume.find(".productAmount").val(1);
+    newColume.find(".productAmount").val(0);
     newColume.find(".productTotalPrice").text("0.00");
     $("#tbodyProductItem").append(newColume);
 
