@@ -21,15 +21,16 @@ $("#btnSearch").click(function(){
             }
             else
             {
-                $("#rsmsg").find("#name").text(data.name);
-                $("#rsmsg").find("#uid").text(data.uid);
-                $("#rsmsg").find("#sex").text(data.sex);
-                $("#rsmsg").find("#department").text(data.department);
-                $("#rsmsg").find("#team").text(data.team);
-                $("#rsmsg").find("#title").text(data.title);
-                $("#rsmsg").find("#tele").text(data.tele);
-                $("#rsmsg").find("#email").text(data.email);
-                $("#rsmsg").find("#date").text(data.date);
+                $("#name").text(data.name);
+                $("#uid").text(data.uid);
+                $("#sex").text(data.sex);
+                $("#department").text(data.department);
+                $("#team").text(data.team);
+                $("#title").text(data.title);
+                $("#tele").text(data.tele);
+                $("#email").text(data.email);
+                $("#date").text(data.date);
+                $("#sendMail").attr('href', 'mailto:' + data.email);
                 $("#divSearchSpace").removeClass("col-md-4").addClass("col-md-12");
                 $("#divSearchBoxList").removeClass("col-md-12").addClass("col-md-4");
                 $("#divSearchBoxResult").show();

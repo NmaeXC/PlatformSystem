@@ -194,7 +194,7 @@
         </section>
         <section class="content tab-content">
             <div class="row">
-                <div class="col-md-10 col-md-offset-1"  id="content">
+                <div class="col-md-12"  id="content">
                     <div class="box box-primary">
                         <div class="box-header" style="text-align:center">
                             <h2>报销单</h2>
@@ -224,14 +224,15 @@
                                                     <tr>
                                                         <th class="notehh" style="width: 15%">类型</th>
                                                         <th class="notehh" style="width: 15%">时间</th>
-                                                        <th class="notehh" style="width: 15%">地点</th>
-                                                        <th class="notehh" style="width: 15%">金额</th>
+                                                        <th class="notehh" style="width: 10%">地点</th>
+                                                        <th class="notehh" style="width: 10%">金额</th>
                                                         <th class="notehh" style="width: 10%">附件数</th>
                                                         <th class="notehh" style="width: 30%">备注</th>
+                                                        <th class="notehh" style="width: 5%"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbodyNewExpenseAccount">
-                                                    <tr id="trNewExpenseAccount_0">
+                                                    <tr id="trNewExpenseAccount_0" class="hidden">
                                                         <td>
                                                             <select class="form-control expenseType expenseType" name="expenseType">
                                                                 <option value="1">交通费</option>
@@ -271,6 +272,9 @@
                                                         <td>
                                                             <textarea class="form-control expenseRemark" rows="1" name="expenseRemark"></textarea>
                                                         </td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-circle" onclick="removeColumn(this)"><i class="fa  fa-minus"></i></button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -297,7 +301,7 @@
                                 </div>
                                 <div class="col-md-2 col-md-offset-2" align="center">
                                     <button type="button" id="btnSaveDraft" class="btn btn-defult btn-lg btn-block">
-                                        保存草稿(暂不支持)
+                                        打印预览(暂不支持)
                                     </button>
                                 </div>
                             </div>
