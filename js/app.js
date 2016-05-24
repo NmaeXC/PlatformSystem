@@ -129,7 +129,7 @@ function alertMsg(msg, type)
 {
     var content = "<div id='divAlert' class='alert alert-" + type + "'>" +
         "<a href='#' class='close' data-dismiss='alert'>&times;</a> " +
-        "<strong>" + type + "</strong>" + msg +
+        "<strong>" + msg + "</strong>" +
         "</div>";
     $("section.tab-content").first().before(content);
 }

@@ -15,14 +15,13 @@ if(!isset($_POST['customerId']))
     exit("Error");
 }
 $customerId = $_POST['customerId'];
-$sql = "SELECT id, name FROM customer_contact WHERE customer_id = '{$customerId}'";
+$sql = "SELECT id, name FROM customer_contact WHERE CONCAT(customer_id_0, customer_id) = '{$customerId}'";
 $rs_sql = $mysqli -> query($sql);
 $data = array();
-$x = 0;
+
 while($rs = mysqli_fetch_array($rs_sql))
 {
-    $data[$x] = $rs;
-    $x ++;
+    array_push($data, $rs);
 }
 
 echo json_encode($data);

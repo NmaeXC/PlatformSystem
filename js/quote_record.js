@@ -36,7 +36,7 @@ $(document).ready(function () {
                             break;
                         default:
                             state = "<span class='label label-danger'>Error</span>";
-                            break;c
+                            break;
                     }
                     $("<td></td>").html(state).appendTo("#" + trID);
                     $("<td></td>").html("<a role='button' onclick=quoteDetail(" + x + ",'" + data[x].contact_id + "')><span class='badge bg-light-blue'>More..</span>").appendTo("#" + trID)

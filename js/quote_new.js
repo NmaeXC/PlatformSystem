@@ -13,7 +13,6 @@ $(document).ready(function () {
             type: "POST",
             dataType: "json",
             success: function(data){
-
                 autoproduct('.productID', data[0]);
                 data.forEach(function (ele) {
                     this.append("<option value='" + ele + "'>" + ele + "</option>");
@@ -150,54 +149,60 @@ $("#btnAddProductItem").click(function () {
 //保存
 $("#btnSave").click(function () {
     //验证填写是否符合规范
-
-
-    var customer = {
-        id: $("#customerID").text(),
-        contact: $("#customerContact").val()
+    if($("#customerID").text() === ""){
+        alertMsg("请填写目标客户", "warning");
     }
+    else if($("#validity").val() === ""){
+        alertMsg("请填写有效期区间", "warning");
+    }
+    else{
+        var customer = {
+            id: $("#customerID").text(),
+            contact: $("#customerContact").val()
+        };
 
-    var validity = $("#validity").val().split(" - ");
-    var product = [];
-    for(var i = 0; i < productItemColumn; i += 1)
-    {
-        if ($("#trProductItem_" + i).find(".productID").val() != "")
+        var validity = $("#validity").val().split(" - ");
+        var product = [];
+        for(var i = 0; i < productItemColumn; i += 1)
         {
-            product[i] = {
-                id: $("#trProductItem_" + i).find(".productID").val(),
-                disc: $("#trProductItem_" + i).find(".productDisc").val(),
-                origPrice: $("#trProductItem_" + i).find(".productOriginalPrice").val(),
-                discount: $("#trProductItem_" + i).find(".productDiscount").val(),
-                taxRate: $("#trProductItem_" + i).find(".productTaxRate").val(),
-                amount: $("#trProductItem_" + i).find(".productAmount").val()
+            if ($("#trProductItem_" + i).find(".productID").val() != null)
+            {
+                product[i] = {
+                    id: $("#trProductItem_" + i).find(".productID").val(),
+                    disc: $("#trProductItem_" + i).find(".productDisc").val(),
+                    origPrice: $("#trProductItem_" + i).find(".productOriginalPrice").val(),
+                    discount: $("#trProductItem_" + i).find(".productDiscount").val(),
+                    taxRate: $("#trProductItem_" + i).find(".productTaxRate").val(),
+                    amount: $("#trProductItem_" + i).find(".productAmount").val()
+                }
             }
         }
+
+        //console.log(customer);
+        //console.log(validity);
+        //console.log(product);
+
+        $.ajax({
+            url: "../../php/quote_save.php",
+            data: {customer: JSON.stringify(customer),
+                validity: validity,
+                currency: currency,
+                product: JSON.stringify(product)
+            },
+            type : "POST",
+            cache : false,
+            success: function (data) {
+                if (data == 0)
+                {
+                    alertMsg("报价单保存成功！", "success");
+                }
+                else
+                {
+                    alertMsg("报价单保存失败", "danger");
+                }
+            }
+        });
     }
-
-    //console.log(customer);
-    //console.log(validity);
-    //console.log(product);
-
-    $.ajax({
-        url: "../../php/quote_save.php",
-        data: {customer: JSON.stringify(customer),
-            validity: validity,
-            currency: currency,
-            product: JSON.stringify(product)
-        },
-        type : "POST",
-        cache : false,
-        success: function (data) {
-            if (data == 0)
-            {
-                alertMsg("报价单保存成功！", "success");
-            }
-            else
-            {
-                alertMsg("报价单保存失败", "warning");
-            }
-        }
-    })
 });
 
 

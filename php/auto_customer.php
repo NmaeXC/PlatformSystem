@@ -11,7 +11,7 @@ $mysqli = new mysqli("localhost", "root", "Ilovewow123", "db_customer");
 $mysqli->query("set names 'utf8'");
 
 $keyword = "%".$_POST["keyword"]."%";
-$sql = "SELECT name title, id FROM customer_info WHERE name LIKE '{$keyword}'";
+$sql = "SELECT name title, CONCAT(id_0, id) id FROM customer_info WHERE name LIKE '{$keyword}'";
 $rs_sql = $mysqli -> query($sql);
 
 $data = array();

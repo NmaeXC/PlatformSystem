@@ -149,7 +149,7 @@
                         <i class="fa fa-group"></i><span>通讯录</span>
                     </a>
                 </li>
-                <li class="treeview active">
+                <li class="treeview">
                     <a href="">
                         <i class="fa fa-coffee"></i>
                         <span>请假系统</span>
@@ -171,6 +171,39 @@
                         <li><a href="../expense/expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
                         <li><a href="../expense/expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
                         <li><a href="../expense/expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-money"></i>
+                        <span>报价系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../quote/quote_new.html"><i class="fa fa-angle-double-right"></i>新建报价单</a></li>
+                        <li><a href="../quote/quote_record.html"><i class="fa fa-angle-double-right"></i>报价单记录</a></li>
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="">
+                        <i class="fa fa-smile-o"></i>
+                        <span>客户系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="customer.html"><i class="fa fa-angle-double-right"></i>客户管理</a></li>
+                        <li><a href="customer_new.html"><i class="fa fa-angle-double-right"></i>新建客户</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-gavel"></i>
+                        <span>产品系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../product/product.html"><i class="fa fa-angle-double-right"></i>产品管理</a></li>
+                        <li><a href="../product/product_new.html"><i class="fa fa-angle-double-right"></i>新建产品</a></li>
                     </ul>
                 </li>
             </ul>
@@ -207,10 +240,6 @@
                                             <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Customer Name">
                                         </div>
                                         <div class="form-group">
-                                            <label for="customerID">客户号</label>
-                                            <input type="text" class="form-control" id="customerID" name="customerID" placeholder="Customer ID">
-                                        </div>
-                                        <div class="form-group">
                                             <label for="customerTele">电话</label>
                                             <input type="text" class="form-control" id="customerTele" name="customerTele" placeholder="Customer Tele">
                                         </div>
@@ -222,32 +251,26 @@
                                             <label for="customerEmail">电子邮件</label>
                                             <input type="text" class="form-control" id="customerEmail" name="customerEmail" placeholder="Customer E-mail">
                                         </div>
-                                        <div class="box box-solid">
-                                            <div class="box-header">
-                                                <strong style="font-weight: 700">联系人</strong>
-                                            </div>
-                                            <div class="box-body">
-                                                <div class="form-horizontal">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">姓名</label>
-                                                        <div class="col-md-8">
-                                                            <input type="text" class="form-control" id="contactName" name="contactName" placeholder="Contact Name">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">电话</label>
-                                                        <div class="col-md-8">
-                                                            <input type="text" class="form-control" id="contactTele" name="contactTele" placeholder="Contact Tele">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">E-mail</label>
-                                                        <div class="col-md-8">
-                                                            <input type="text" class="form-control" id="contactEmail" name="contactEmail" placeholder="Contact Email">
-                                                        </div>
-                                                    </div>
+                                        <div class="form-group">
+                                            <label>地址</label>
+                                            <div class="row" style="margin-bottom: 7px">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" id="area">
+                                                        <option value="" disabled selected>区域</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" id="province">
+                                                        <option value="" disabled selected>省（直辖市、自治区）</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select class="form-control" id="city" name="addr_code">
+                                                        <option value="" disabled selected>城市</option>
+                                                    </select>
                                                 </div>
                                             </div>
+                                            <textarea class="form-control" rows="2" name="detail_addr" placeholder="Detail Address"></textarea>
                                         </div>
                                     </form>
                                 </div>

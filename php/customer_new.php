@@ -11,15 +11,24 @@ $mysqli = new mysqli("localhost", "root", "Ilovewow123", "db_customer");
 $mysqli->query("set names 'utf8'");
 
 $customerName  = $_POST["customerName"];
-$customerID  = $_POST["customerID"];
 $customerTele  = $_POST["customerTele"];
 $customerFox  = $_POST["customerFox"];
 $customerEmail  = $_POST["customerEmail"];
-$contactName = $_POST["contactName"];
-$contactTele = $_POST["contactTele"];
-$contactEmail = $_POST["contactEmail"];
+$customerID_0 = $_POST["addr_code"];
+$detail_addr = $_POST["detail_addr"];
 
-$sql = "INSERT INTO customer_info (id, name, tele, fox, email) VALUES ('{$customerID}', '{$customerName}', '{$customerTele}', '{$customerFox}', '{$customerEmail}')";
+$sql = "SELECT max(id) FROM customer_info WHERE id_0 = '{$customerID_0}'";
+$rs_sql = $mysqli -> query($sql);
+if($rs = mysqli_fetch_array($rs_sql))
+{
+    $customerID = sprintf("%04d", (intval($rs[0]) + 1));
+}
+else
+{
+    exit("Get Previous ID Error");
+}
+
+$sql = "INSERT INTO customer_info (id_0, id, name, tele, fox, email, detail_addr) VALUES ('{$customerID_0}', '{$customerID}', '{$customerName}', '{$customerTele}', '{$customerFox}', '{$customerEmail}', '{$detail_addr}')";
 //echo $sql;
 $rs = $mysqli -> query($sql);
 
@@ -28,12 +37,6 @@ if(mysqli_affected_rows($mysqli) <= 0)
     exit("INSERT INTO customer_info Error");
 }
 
-$sql = "INSERT INTO customer_contact (customer_id, name, tele, email) VALUES ('{$customerID}', '{$contactName}', '{$contactTele}', '{$contactEmail}')";
-$rs = $mysqli -> query($sql);
 
-if(mysqli_affected_rows($mysqli) <= 0)
-{
-    exit("INSERT INTO contact Error");
-}
 
 echo 0;
