@@ -1,11 +1,11 @@
-。<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>报价|新建</title>
+    <title>报价|详情</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +21,9 @@
         .notehh{
             width: 25%;
             padding: 2px 0px;
+            text-align: center;
+        }
+        #tbody_products td{
             text-align: center;
         }
     </style>
@@ -181,8 +184,8 @@
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="quote_new.html"><i class="fa fa-angle-double-right"></i>新建报价单</a></li>
-                        <li><a href="quote_record.html"><i class="fa fa-angle-double-right"></i>报价单记录</a></li>
+                        <li><a href="../quote/quote_new.html"><i class="fa fa-angle-double-right"></i>新建报价单</a></li>
+                        <li><a href="../quote/quote_record.html"><i class="fa fa-angle-double-right"></i>报价单记录</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -218,152 +221,143 @@
         <section class="content-header">
             <h1>
                 <span id="hh1">报价系统</span>
-                <small id="hh2">新建报价单</small>
+                <small id="hh2">报价单详情</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="../../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">New Quote Note</li>
+                <li class="active">Quote Note Detail</li>
             </ol>
         </section>
         <section class="content tab-content">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="box box-success">
+                    <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">客户信息</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-primary btn-sm" id="editCustomer"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-default btn-sm disabled" id="saveCustomer"><i class="fa fa-save"></i></button>
+                            </div>
                         </div>
                         <div class="box-body">
-                            <div class="row" style="margin-bottom: 5px">
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="customerName" placeholder="Customer Name">
-                                        <a href="../customer/customer_new.html" class="input-group-addon"><i class="fa fa-plus"></i></a>
-                                    </div>
-                                </div>
-                                <div class="col-md-1"  style="margin-top: 8px; padding-right: 0px;">
-                                    <strong class="text-right">联系人: </strong>
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="form-control" id="customerContact"></select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="text-align: center">
-                                    客户号：
-                                </div>
-                                <div class="col-md-4">
-                                    <p id="customerID"></p>
-                                </div>
-                            </div>
+                            <table class="table" border="0">
+                                <tr>
+                                    <th width="20%">客户名称</th>
+                                    <td>
+                                        <input id="customer_name" class="form-control" style="width: 50%" disabled>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>客户号</th>
+                                    <td id="customer_id"></td>
+                                </tr>
+                                <tr>
+                                    <th>联系人</th>
+                                    <td>
+                                        <select id="contact_name" class="form-control" style="width: 40%" disabled></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>电话</th>
+                                    <td id="contact_tele"></td>
+                                </tr>
+                                <tr>
+                                    <th>电子邮件</th>
+                                    <td id="contact_email"></td>
+                                </tr>
+                                <tr>
+                                    <th>地址</th>
+                                    <td id="customer_addr"></td>
+                                </tr>
+                            </table>
                         </div>
-                    </div><!-- /.box -->
+                    </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="box box-info">
+                    <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">报价单有效期</h3>
+                            <h3 class="box-title">报价单信息</h3>
+                            <div class="box-tools pull-right">
+                                <button title="" class="btn btn-primary btn-sm" id="editQuote"><i class="fa fa-edit"></i></button>
+                                <button title="" class="btn btn-default btn-sm disabled" id="saveQuote"><i class="fa fa-save"></i></button>
+                            </div>
                         </div>
                         <div class="box-body">
-                            <div class="form-group" style="padding-bottom: 11px">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" class="form-control pull-right" id="validity">
-                                </div><!-- /.input group -->
-                            </div>
+                            <table class="table">
+                                <tr>
+                                    <th width="20%">报价单号</th>
+                                    <td id="id"></td>
+                                </tr>
+                                <tr>
+                                    <th>报价人</th>
+                                    <td class="nameUser"></td>
+                                </tr>
+                                <tr>
+                                    <th>报价人电话</th>
+                                    <td class="teleUser"></td>
+                                </tr>
+                                <tr>
+                                    <th>报价人电子邮件</th>
+                                    <td class="emailUser"></td>
+                                </tr>
+                                <tr>
+                                    <th>报价有效期</th>
+                                    <td>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="validity" disabled>
+                                        </div><!-- /.input group -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>币种</th>
+                                    <td>
+                                        <select id="currency" class="form-control" style="width: 30%" disabled>
+                                            <option value="RMB">RMB(¥)</option>
+                                            <option value="USD">USD($)</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">产品</h3>
+                            <h3 class="box-title">产品信息</h3>
                             <div class="box-tools pull-right">
-                                <div class="btn-group" data-toggle="btn-toggle">
-                                    <button id="currencyRMB" type="button" class="btn btn-primary btn-xs active" data-toggle="on">RMB</button>
-                                    <button id="currencyUSD" type="button" class="btn btn-primary btn-xs" data-toggle="off">USD</button>
-                                </div>
+                                <button title="" class="btn btn-primary btn-sm" id="editProduct"><i class="fa fa-edit"></i></button>
+                                <button title="" class="btn btn-default btn-sm disabled" id="saveProduct"><i class="fa fa-save"></i></button>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table class="table" style="width: 100%">
+                            <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th class="notehh" style="width: 5%"><small>序号</small></th>
                                     <th class="notehh" style="width: 15%"><small>产品号</small></th>
                                     <th class="notehh" style="width: 25%"><small>产品详细说明</small></th>
-                                    <th class="notehh" style="width: 10%"><small>原价(<span class="rmb-usd">¥</span></small>)</th>
+                                    <th class="notehh" style="width: 10%"><small>原价(<span class="currency">¥</span></small>)</th>
                                     <th class="notehh" style="width: 10%"><small>折扣</small></th>
                                     <th class="notehh" style="width: 10%"><small>税率</small></th>
-                                    <th class="notehh" style="width: 10%"><small>单价(<span class="rmb-usd">¥</span></small>)</th>
+                                    <th class="notehh" style="width: 10%"><small>单价(<span class="currency">¥</span></small>)</th>
                                     <th class="notehh" style="width: 5%"><small>数量</small></th>
-                                    <th class="notehh" style="width: 10%"><small>总价(<span class="rmb-usd">¥</span></small>)</th>
+                                    <th class="notehh" style="width: 10%"><small>总价(<span class="currency">¥</span></small>)</th>
                                 </tr>
                                 </thead>
-                                <tbody id="tbodyProductItem">
-                                <tr id="trProductItem_0">
-                                    <td class="No" style="text-align: center; padding-top: 13px" >
-                                        1.
-                                    </td>
-                                    <td>
-                                        <select class="form-control productID" name="productID" onchange="autoproduct(this)" ></select>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control productDisc" name="productDisc">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control productOriginalPrice" name="productOriginalPrice" onchange="autoCalculate(this)" onblur="formatOriginalPrice(this)">
-                                    </td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="number" class="form-control productDiscount" name="productDiscount" value="100" onchange="autoCalculate(this.parentNode)">
-                                            <span class="input-group-addon">%</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <select class="form-control productTaxRate" name="productTaxRate" onchange="autoCalculate(this)">
-                                            <option value="0">0%</option>
-                                            <option value="1">6%</option>
-                                            <option value="2">17%</option>
-                                        </select>
-                                    </td>
-                                    <td style="text-align: center; padding-top: 13px" class="productPrice">
-                                        0.00
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control productAmount" name="productAmount" value="0" onchange="autoCalculate(this)">
-                                    </td>
-                                    <td style="text-align: center; padding-top: 13px" class="productTotalPrice">
-                                        0.00
-                                    </td>
-                                </tr>
+                                <tbody id="tbody_products">
                                 </tbody>
                             </table>
-                            <hr style="height:1px;border:none;border-top:2px solid lightgray;" />
-                            <div style="text-align: right">
-                                <button class="btn btn-primary" id="btnAddProductItem">
-                                    <span class="glyphicon glyphicon-plus"></span> 添加
-                                </button>
-                            </div>
-                            <p class="text-right" style="margin-top: 30px">总计：<span><strong class="text-primary" style="font-size: x-large"><span class="rmb-usd">¥</span><span id="sumOfTotalPrice">0.00</span></strong></span></p>
                         </div>
-                        <div class="box-footer clearfix">
-                            <div class="row" style="margin-bottom: 15px">
-                                <div class="col-md-offset-3 col-md-2" align="center">
-                                    <button type="button" id="btnSave" class="btn btn-primary btn-lg btn-block">
-                                        <i class="fa  fa-save"></i> &nbsp; 保存
-                                    </button>
-                                </div>
-                                <div class="col-md-2 col-md-offset-2">
-                                    <button type="button" id="btnPrint" class="btn btn-lg btn-block" onclick="window.print();">
-                                        <i class="fa fa-print"></i> &nbsp; 打印
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="box-footer">
+                            <p class="text-right">总计：<span><strong class="text-primary" style="font-size: x-large"><span class="currency">¥</span><span id="sum">0.00</span></strong></span></p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
         <!-- Main content -->
@@ -380,6 +374,6 @@
 <script src="../../js/daterangepicker.js"></script>
 <script src="../../js/jquery.bigautocomplete.js"></script>
 <script src="../../js/app.js"></script>
-<script src="../../js/quote_new.js"></script>
+<script src="../../js/quote_detail.js"></script>
 </body>
 </html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>客户|管理</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css">
+    <link href="../../css/jquery.bigautocomplete.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        [parentpane]{}
+        .blur{
+            -webkit-filter:blur(3px);
+        }
+        th.notehh,td.notehh{
+            width: 25%;
+            padding: 2px 0px;
+            text-align: center;
+        }
+        .info-list > div{
+            padding: 5px 20px;
+        }
+        .info-list-label{
+            text-align: right;
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="skin-blue">
+<!-- header logo: style can be found in header.less -->
+
+<header class="header">
+    <a href="../../index.html" class="logo">
+        <!-- Add the class icon to your logo image or logo icon to add the margining -->
+        Synthflex
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
+
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-right: 15px">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="nameUser"></span><i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header bg-light-blue">
+                            <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
+                            <p>
+                                <span class="nameUser"></span> - <span class="titleUser"></span>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="col-xs-6 text-center">
+                                <a href="../profile.html">我的资料</a>
+                            </div>
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnLogout">注销</a>
+                            </div>
+                        </li>
+                        <!-- Menu Footer-->
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>请您登录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" name="LoginForm" id="LoginForm" method="post" action="../../php/login.php" onSubmit="return InputCheck(this)">
+                    <div class="form-group ">
+                        <label for="username" class="col-md-2 col-md-offset-2 control-label">账号</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入账号" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-2 col-md-offset-2 control-label">密码</label>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnLogin">
+                    登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper row-offcanvas row-offcanvas-left" id="main">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="left-side sidebar-offcanvas">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="../../img/easy.jpg" class="img-circle imgUse" alt="User Image" />
+                </div>
+                <div class="pull-left info">
+                    <p>您好, <span id="givenName"></span></p>
+
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                    <span class="input-group-btn">
+                        <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul id="guide" class="sidebar-menu nav">
+                <li>
+                    <a href="../../index.html">
+                        <i class="fa fa-laptop"></i> <span>主页面</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../addressbook.html">
+                        <i class="fa fa-group"></i><span>通讯录</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-coffee"></i>
+                        <span>请假系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../leave/leave_new.html"><i class="fa fa-angle-double-right"></i>新建请假条</a></li>
+                        <li><a href="../leave/leave_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="../leave/leave_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-money"></i>
+                        <span>报销系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../expense/expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
+                        <li><a href="../expense/expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="../expense/expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-money"></i>
+                        <span>报价系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../quote/quote_new.html"><i class="fa fa-angle-double-right"></i>新建报价单</a></li>
+                        <li><a href="../quote/quote_record.html"><i class="fa fa-angle-double-right"></i>报价单记录</a></li>
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="">
+                        <i class="fa fa-smile-o"></i>
+                        <span>客户系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="customer.html"><i class="fa fa-angle-double-right"></i>客户管理</a></li>
+                        <li><a href="customer_new.html"><i class="fa fa-angle-double-right"></i>新建客户</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-gavel"></i>
+                        <span>产品系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../product/product.html"><i class="fa fa-angle-double-right"></i>产品管理</a></li>
+                        <li><a href="../product/product_new.html"><i class="fa fa-angle-double-right"></i>新建产品</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <span id="hh1">客户系统</span>
+                <small id="hh2">查询与管理</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="../../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">New Quote Note</li>
+            </ol>
+        </section>
+        <section class="content tab-content">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="input-group input-group-lg" style="margin-top: 20px; margin-bottom: 40px">
+                        <input type="text" id="key" class="form-control" placeholder="查找 or 新建">
+                        <span class="input-group-btn">
+                            <button id="btnCustomerSearch" class="btn btn-primary" type="button">新建</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="divCustomerInfo" class="box box-primary" style="display: none">
+                <div class="box-header">
+                    <i class="fa fa-globe"></i>
+                    <h2 class="box-title">客户资料</h2>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: center">
+                            <div>
+                                <img src="../../img/customer.jpg" style="width:128px;height:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;">
+                            </div>
+                            <div class="btn-group-vertical" style="margin-top: 50px; width: 30%">
+                                <button class="btn btn-primary btn-lg btn-block" type="button" id="btnRecord"><i class="fa fa-bar-chart-o" style="margin-right: 15px"></i>业务记录</button>
+                                <a class="btn btn-primary btn-lg btn-block" href="" id="sendMail"><i class="fa fa-envelope-o" style="margin-right: 15px"></i>发送邮件</a>
+                                <button class="btn btn-primary btn-lg btn-block" type="button" id="btnEditCustomer"><i class="fa fa-edit" style="margin-right: 15px"></i>修改资料</button>
+                                <button class="btn btn-danger btn-lg btn-block" type="button" id="btnDeleteCustomer"><i class="fa fa-trash-o" style="margin-right: 15px"></i>删除客户</button>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row info-list">
+                                <div class="col-md-2 info-list-label">
+                                    <strong>名称</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    <p id="customer_name">-</p>
+                                </div>
+                                <div class="col-md-2 info-list-label">
+                                    <strong>客户号</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    <p id="customer_id">-</p>
+                                </div>
+                                <div class="col-md-2 info-list-label">
+                                    <strong>联系电话</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    <p id="customer_tele">-</p>
+                                </div>
+                                <div class="col-md-2 info-list-label">
+                                    <strong>电子邮件</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    <p id="customer_email">-</p>
+                                </div>
+                                <div class="col-md-2 info-list-label">
+                                    <strong>详细地址</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <p id="customer_addr">-</p>
+                                </div>
+                            </div>
+                            <hr  >
+                            <div style="text-align: center">
+                                <h4>联系人</h4>
+                                <table id="table" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align: center">#</th>
+                                        <th style="text-align: center">姓名</th>
+                                        <th style="text-align: center">性别</th>
+                                        <th style="text-align: center">联系电话</th>
+                                        <th style="text-align: center">电子邮件</th>
+                                        <th style="text-align: center">编辑</th>
+                                        <th style="text-align: center">删除</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody_contact">
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td id="new_colume_index">n.</td>
+                                        <td>
+                                            <input class="form-control" type="text" id="add_name">
+                                        </td>
+                                        <td>
+                                            <select class="form-control" id="add_sex">
+                                                <option value="男">男</option>
+                                                <option value="女">女</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="add_tele">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="add_email">
+                                        </td>
+                                        <td colspan="2">
+                                            <button id="btnAddContact" class="btn btn-block btn-success"><i class="fa fa-plus"></i></button>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Main content -->
+        <!-- /.content -->
+        <div class="modal fade" id="modalEditContact" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    姓名
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="editName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    性别
+                                </label>
+                                <div class="col-md-7">
+                                    <select class="form-control" id="editSex">
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    联系电话
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="editTele">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    电子邮件
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="editEmail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" id="editSubmit">
+                            提交更改
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+        <div class="modal fade" id="modalEditCustomer" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" id="formEditCustomer">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    名称
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" name="name" id="editCustomerName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    客户号
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" name="id" id="editCustomerId" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    联系电话
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="editCustomerTele" name="tele">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    电子邮件
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="editCustomerEmail" name="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    地址
+                                </label>
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input class="form-control" type="text" id="editCustomerAddr0" disabled>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <textarea rows="3" class="form-control" id="editCustomerAddr1" type="text" name="addr"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" id="btnCustomerSubmit">
+                            提交更改
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </aside><!-- /.right-side -->
+</div><!-- ./wrapper -->
+
+<!-- add new calendar event modal -->
+
+
+<script src="../../js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/daterangepicker.js"></script>
+<script src="../../js/jquery.bigautocomplete.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/customer.js"></script>
+</body>
+</html>

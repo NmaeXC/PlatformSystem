@@ -56,5 +56,5 @@ function quoteDetail(x, contact) {
     var item = $("#trQuoteHistory" + x);
     var number = item.find("td:eq(1)").text();
     var submitDate = item.find("td:eq(2)").text();
-    window.open("quote_record_detail.html?x=" + number + "&c=" + contact);
+    window.open("quote_detail.html?x=" + number + "&c=" + contact);
 }
