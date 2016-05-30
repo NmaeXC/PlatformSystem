@@ -3,6 +3,8 @@
  */
 
 (function () {
+    $(".modal").modal("show");
+
     var number = getQueryString("x");
     var contact = getQueryString("c");
     if (number !== null)
@@ -52,6 +54,17 @@
                 {
                     var trID = "tr" + i;
                     $("<tr>").attr('id', trID).appendTo("#tbody_products");
+                    $("<td class='hidden'></td>").html("<div class='btn-group'>" +
+                        "<button type='button' class='btn btn-success btn-flat'><i class='fa fa-pencil'></i></button>" +
+                        "<button type='button' class='btn btn-danger btn-flat'><i class='fa fa-trash-o'></i></button>" +
+                        "</div>")
+                        .find("button:eq(0)").click(data.product[i], function (e) {
+                        editProductItem(e.data);
+                    }).end()
+                        .find("button:eq(1)").click(data.product[i].product_id, function (e) {
+                        deleteProductItem(e.data);
+                    }).end()
+                        .appendTo("#" + trID);
                     $("<td></td>").text((parseInt(i) + 1) + ".").appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].product_id).appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].disc).appendTo("#" + trID);
@@ -65,6 +78,7 @@
                     $("<td></td>").text(data.products[i].amount).appendTo("#" + trID);
                     var totalPrice = price * (new Number(data.products[i].amount));
                     $("<td></td>").text(totalPrice.toFixed(2)).appendTo("#" + trID);
+
                     sum += totalPrice;
                 }
                 if(!isNaN(sum))
@@ -76,7 +90,7 @@
                     $("#sum").text("数据有误");
                 }
             }
-        })
+        });
     }
 
     function nullornot(str){
@@ -213,10 +227,95 @@
             else {
                 alertMsg("已保存，并无修改", "success");
             }
+
+            $(this).addClass("disabled");
+            $("#editQuote").removeClass("disabled");
+            $("#validity").attr("disabled",true);
+            $("#currency").attr("disabled",true);
         });
 
     });
+    
+    //修改产品信息
+    $("#editProduct").click(function () {
+        $("#tbody_products").find(".hidden").removeClass("hidden").addClass("editing");
 
+    });
 
+    //保存产品信息修改
+    $("#saveProduct").click(function () {
+        $("#tbody_products").find(".editing").removeClass("editing").addClass("hidden");
+    });
+
+    //修改产品条目
+    function editProductItem(data) {
+        var taxRate = new Number(data.tax_rate);
+        var price = new Number(data.orig_price) * (new Number(data.discount) / 100) * (taxRate + 1);
+        var totalPrice = price * (new Number(data.products[i].amount));
+
+        $("#edit_item_id").val(data.product_id);
+        $("#edit_item_disc").val(data.disc);
+        $("#edit_item_oprice").val(data.orig_price);
+        $("#edit_item_discount").val(data.discount);
+        $("#edit_item_tax").val(taxRate * 100);
+        $("#edit_item_price").val(price.toFixed(2));
+        $("#edit_item_amount").val(data.amount);
+        $("#edit_item_tprice").val(totalPrice);
+        
+        $("#btnProductItemSubmit").click(data, function (e) {
+            if($("#edit_item_id").val() !== e.data.product_id
+                || $("#edit_item_disc").val() !== e.data.disc
+                || $("#edit_item_oprice").val() !== e.data.orig_price
+                || $("#edit_item_discount").val() !== e.data.discount
+                || $("#edit_item_tax").val() !== (new Number(e.data.tax_rate) * 100)
+                || $("#edit_item_amount").val() !== data.amount){
+
+                $.ajax({
+                    url: "../../php/quote_edit_product.php",
+                    type: "POST",
+                    data: $("#formProductItem").serialize() + "&product_id=" + e.data.product_id + "&quote=" + number,
+                    success: function(data){
+                        if (data === "0"){
+                            alertMsg("已保存，修改成功", "success");
+                        }
+                        else{
+                            alertMsg("保存失败", "danger");
+                        }
+                    }
+                });
+            }
+            else {
+                alertMsg("已保存，并无修改", "success");
+            }
+            location.reload();
+        });
+    }
+
+    //删除产品条目
+    function deleteProductItem(id) {
+        var okay = confirm('是否确定删除，删除后将无法恢复！');
+        if (okay) {
+            // 用户按下“确定”
+            $.ajax({
+                url: "../../php/quote_edit_product.php",
+                type : "POST",
+                data : {'delete': 1, 'product_id': id, 'quote': number},
+                cache : false,
+                success: function(data){
+                    if(data === "0")
+                    {
+                        alertMsg("删除成功", "success");
+                        location.reload();
+                    }
+                    else
+                    {
+                        alertMsg("删除失败", "danger");
+                    }
+                }
+            });
+        } else {
+            // 用户按下“取消”
+        }
+    }
 
 })();

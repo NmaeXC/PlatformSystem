@@ -6,6 +6,9 @@
  * Time: 17:50
  */
 
+include "comm.php";
+include "conn.php";
+
 $validity_start = $_POST["validity"][0];
 $validity_end = $_POST["validity"][1];
 $currency = $_POST['c'];

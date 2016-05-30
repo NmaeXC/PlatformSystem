@@ -278,8 +278,8 @@
                         <div class="box-header">
                             <h3 class="box-title">报价单信息</h3>
                             <div class="box-tools pull-right">
-                                <button title="" class="btn btn-primary btn-sm" id="editQuote"><i class="fa fa-edit"></i></button>
-                                <button title="" class="btn btn-default btn-sm disabled" id="saveQuote"><i class="fa fa-save"></i></button>
+                                <button class="btn btn-primary btn-sm" id="editQuote"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-default btn-sm disabled" id="saveQuote"><i class="fa fa-save"></i></button>
                             </div>
                         </div>
                         <div class="box-body">
@@ -303,7 +303,7 @@
                                 <tr>
                                     <th>报价有效期</th>
                                     <td>
-                                        <div class="input-group">
+                                        <div class="input-group col-md-6">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
@@ -337,6 +337,7 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
+                                    <th class="notehh hidden"></th>
                                     <th class="notehh" style="width: 5%"><small>序号</small></th>
                                     <th class="notehh" style="width: 15%"><small>产品号</small></th>
                                     <th class="notehh" style="width: 25%"><small>产品详细说明</small></th>
@@ -365,7 +366,94 @@
     </aside><!-- /.right-side -->
 </div><!-- ./wrapper -->
 
-<!-- add new calendar event modal -->
+<!-- add new event modal -->
+<div id="modalEditProductItem" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>修改产品条目</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="formProductItem">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">产品号</label>
+                        <div class="col-md-3">
+                            <input class="form-control" type="text" name="id" id="edit_item_id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">产品详细说明</label>
+                        <div class="col-md-7">
+                            <textarea rows="2" class="form-control" type="text" name="disc" id="edit_item_disc"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">原价</label>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="price" id="edit_item_oprice">
+                                <span class="input-group-addon">¥</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">折扣</label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="discount" id="edit_item_discount">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">税率</label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="tax" id="edit_item_tax">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">税后单价</label>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="edit_item_price" disabled>
+                                <span class="input-group-addon">¥</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">数量</label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="form-control" type="number" name="amount" id="edit_item_amount">
+                                <span class="input-group-addon">个</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">总价</label>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="edit_item_tprice" disabled>
+                                <span class="input-group-addon">¥</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="btnProductItemSubmit">
+                    提交更改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="../../js/jquery.js"></script>
