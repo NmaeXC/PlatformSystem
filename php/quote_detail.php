@@ -41,9 +41,8 @@ else
 }
 
 //返回报价单的产品列表
-$sql = "SELECT quote_products.product_id, product_info.disc,  quote_products.orig_price, quote_products.discount, tax_rate.value tax_rate, quote_products.amount FROM db_platform.quote_products LEFT JOIN db_product.product_info ON db_platform.quote_products.product_id = db_product.product_info.id LEFT JOIN db_platform.tax_rate ON db_platform.tax_rate.id = db_platform.quote_products.tax_rate WHERE quote_products.quote_id = '{$quoteId}'";
+$sql = "SELECT quote_products.id, quote_products.product_id, quote_products.name, quote_products.price, quote_products.discount, tax_rate.value tax_rate, quote_products.amount, quote_products.ps FROM quote_products LEFT JOIN tax_rate ON db_platform.tax_rate.id = quote_products.tax_rate WHERE quote_products.quote_id = '{$quoteId}'";
 $rs_sql = $mysqli -> query($sql);
-
 
 $x = 0;
 while($rs = mysqli_fetch_array($rs_sql))

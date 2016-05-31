@@ -3,8 +3,6 @@
  */
 
 (function () {
-    $(".modal").modal("show");
-
     var number = getQueryString("x");
     var contact = getQueryString("c");
     if (number !== null)
@@ -54,31 +52,36 @@
                 {
                     var trID = "tr" + i;
                     $("<tr>").attr('id', trID).appendTo("#tbody_products");
-                    $("<td class='hidden'></td>").html("<div class='btn-group'>" +
-                        "<button type='button' class='btn btn-success btn-flat'><i class='fa fa-pencil'></i></button>" +
-                        "<button type='button' class='btn btn-danger btn-flat'><i class='fa fa-trash-o'></i></button>" +
-                        "</div>")
-                        .find("button:eq(0)").click(data.product[i], function (e) {
+                    $("<td class='hidden'>" +
+                        "<a type='button' class='badge bg-light-blue'><i class='fa fa-pencil'></i></a>" +
+                        "</td>")
+                        .find("a").click(data.products[i], function (e) {
                         editProductItem(e.data);
-                    }).end()
-                        .find("button:eq(1)").click(data.product[i].product_id, function (e) {
+                    }).end().appendTo("#" + trID);
+                    $("<td class='hidden'>" +
+                        "<a type='button' class='badge bg-red'><i class='fa fa-trash-o'></i></a>" +
+                        "</td>")
+                        .find("a").click(data.products[i].product_id, function (e) {
                         deleteProductItem(e.data);
-                    }).end()
-                        .appendTo("#" + trID);
+                    }).end().appendTo("#" + trID);
                     $("<td></td>").text((parseInt(i) + 1) + ".").appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].product_id).appendTo("#" + trID);
-                    $("<td></td>").text(data.products[i].disc).appendTo("#" + trID);
-                    $("<td></td>").text(data.products[i].orig_price).appendTo("#" + trID);
+                    $("<td></td>").text(data.products[i].name).appendTo("#" + trID);
+                    $("<td></td>").text(data.products[i].price).appendTo("#" + trID);
                     var taxRate = new Number(data.products[i].tax_rate);
                     $("<td></td>").text(data.products[i].discount + "%").appendTo("#" + trID);
                     $("<td></td>").text((taxRate * 100) + "%").appendTo("#" + trID);
                     //var price = new Number(data.products[i].orig_price) * (taxRate + 1);
-                    var price = new Number(data.products[i].orig_price) * (new Number(data.products[i].discount) / 100) * (taxRate + 1);
+                    var price = new Number(data.products[i].price) * (new Number(data.products[i].discount) / 100) * (taxRate + 1);
                     $("<td></td>").text(price.toFixed(2)).appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].amount).appendTo("#" + trID);
                     var totalPrice = price * (new Number(data.products[i].amount));
                     $("<td></td>").text(totalPrice.toFixed(2)).appendTo("#" + trID);
-
+                    $("<td><a type='button' class='badge bg-light-blue' data-placement='bottom' data-toggle='popover'><i class='fa fa-building-o'></i></a></td>")
+                        .find('a').popover({
+                        title: "备注",
+                        content: data.products[i].ps
+                    }).end().appendTo("#" + trID);
                     sum += totalPrice;
                 }
                 if(!isNaN(sum))
@@ -230,37 +233,58 @@
 
             $(this).addClass("disabled");
             $("#editQuote").removeClass("disabled");
-            $("#validity").attr("disabled",true);
-            $("#currency").attr("disabled",true);
+            $("#validity").attr("disabled", true);
+            $("#currency").attr("disabled", true);
         });
 
     });
     
     //修改产品信息
     $("#editProduct").click(function () {
-        $("#tbody_products").find(".hidden").removeClass("hidden").addClass("editing");
+        $("#table_products").find(".hidden").removeClass("hidden").addClass("editing");
 
     });
 
     //保存产品信息修改
     $("#saveProduct").click(function () {
-        $("#tbody_products").find(".editing").removeClass("editing").addClass("hidden");
+        $("#table_products").find(".editing").removeClass("editing").addClass("hidden");
     });
 
     //修改产品条目
     function editProductItem(data) {
         var taxRate = new Number(data.tax_rate);
-        var price = new Number(data.orig_price) * (new Number(data.discount) / 100) * (taxRate + 1);
-        var totalPrice = price * (new Number(data.products[i].amount));
+        var price = new Number(data.price) * (new Number(data.discount) / 100) * (taxRate + 1);
+        var totalPrice = price * (new Number(data.amount));
 
         $("#edit_item_id").val(data.product_id);
-        $("#edit_item_disc").val(data.disc);
-        $("#edit_item_oprice").val(data.orig_price);
+        $("#edit_item_name").val(data.name);
+        $("#edit_item_oprice").val(data.price);
         $("#edit_item_discount").val(data.discount);
-        $("#edit_item_tax").val(taxRate * 100);
+        $("#edit_item_tax").val(function(val){
+            var rate = {
+                '0': function () {
+                    return 0;
+                },
+                '0.06': function () {
+                    return 1;
+                },
+                '0.17': function () {
+                    return 2;
+                }
+            };
+            if (typeof(rate[val]) === "function"){
+                return rate[val]();
+            }
+            else
+            {
+                return NaN;
+                console.log("taxRate Input Error");
+            }
+        }(data.tax_rate));
         $("#edit_item_price").val(price.toFixed(2));
         $("#edit_item_amount").val(data.amount);
         $("#edit_item_tprice").val(totalPrice);
+        $("#edit_item_ps").val(data.ps);
         
         $("#btnProductItemSubmit").click(data, function (e) {
             if($("#edit_item_id").val() !== e.data.product_id
@@ -268,12 +292,13 @@
                 || $("#edit_item_oprice").val() !== e.data.orig_price
                 || $("#edit_item_discount").val() !== e.data.discount
                 || $("#edit_item_tax").val() !== (new Number(e.data.tax_rate) * 100)
-                || $("#edit_item_amount").val() !== data.amount){
+                || $("#edit_item_amount").val() !== data.amount
+                || $("#edit_item_ps").val() !== data.ps){
 
                 $.ajax({
                     url: "../../php/quote_edit_product.php",
                     type: "POST",
-                    data: $("#formProductItem").serialize() + "&product_id=" + e.data.product_id + "&quote=" + number,
+                    data: $("#formProductItem").serialize() + "&productID=" + e.data.id + "&quote=" + number,
                     success: function(data){
                         if (data === "0"){
                             alertMsg("已保存，修改成功", "success");
@@ -289,6 +314,42 @@
             }
             location.reload();
         });
+
+        $("#modalEditProductItem").modal('show');
+    }
+
+    //自动计算
+    $("#edit_item_oprice").change(autoCalculate);
+    $("#edit_item_discount").change(autoCalculate);
+    $("#edit_item_tax").change(autoCalculate);
+    function autoCalculate() {
+        var originalPrice = new Number($("#edit_item_oprice").val());
+        var discount = new Number($("#edit_item_discount").val());
+        var taxRate = function(val){
+            var rate = {
+                '0': function () {
+                    return 1;
+                },
+                '1': function () {
+                    return 1.06;
+                },
+                '2': function () {
+                    return 1.17;
+                }
+            };
+            if (typeof(rate[val]) === "function"){
+                return rate[val]();
+            }
+            else
+            {
+                return NaN;
+                console.log("taxRate Input Error");
+            }
+        }($("#edit_item_tax").val());
+        var amount = new Number($("#edit_item_amount").val());
+        var price = originalPrice * (discount / 100) * taxRate;
+        $("#edit_item_price").val(price.toFixed(2));
+        $("#edit_item_tprice").val((price * amount).toFixed(2));
     }
 
     //删除产品条目

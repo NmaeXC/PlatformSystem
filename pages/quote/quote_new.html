@@ -292,13 +292,15 @@
                                 <tr>
                                     <th class="notehh" style="width: 5%"><small>序号</small></th>
                                     <th class="notehh" style="width: 15%"><small>产品号</small></th>
-                                    <th class="notehh" style="width: 25%"><small>产品详细说明</small></th>
+                                    <th class="notehh" style="width: 15%"><small>产品名称</small></th>
                                     <th class="notehh" style="width: 10%"><small>原价(<span class="rmb-usd">¥</span></small>)</th>
                                     <th class="notehh" style="width: 10%"><small>折扣</small></th>
                                     <th class="notehh" style="width: 10%"><small>税率</small></th>
                                     <th class="notehh" style="width: 10%"><small>单价(<span class="rmb-usd">¥</span></small>)</th>
                                     <th class="notehh" style="width: 5%"><small>数量</small></th>
                                     <th class="notehh" style="width: 10%"><small>总价(<span class="rmb-usd">¥</span></small>)</th>
+                                    <th class="notehh" style="width: 5%"><small>添加备注</small></th>
+                                    <th class="notehh" style="width: 5%"><small>删除</small></th>
                                 </tr>
                                 </thead>
                                 <tbody id="tbodyProductItem">
@@ -307,10 +309,10 @@
                                         1.
                                     </td>
                                     <td>
-                                        <select class="form-control productID" name="productID" onchange="autoproduct(this)" ></select>
+                                        <input class="form-control productID" name="productID">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control productDisc" name="productDisc">
+                                        <input type="text" class="form-control productName" name="productName">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control productOriginalPrice" name="productOriginalPrice" onchange="autoCalculate(this)" onblur="formatOriginalPrice(this)">
@@ -336,6 +338,29 @@
                                     </td>
                                     <td style="text-align: center; padding-top: 13px" class="productTotalPrice">
                                         0.00
+                                    </td>
+                                    <td style="text-align: center; padding-top: 13px">
+                                        <a type='button' class='badge bg-light-blue' onclick="addPS(this)"><i class='fa fa-building-o'></i></a>
+                                        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4>备注</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <textarea class="form-control productPS" rows="4"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                            确定
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="text-align: center; padding-top: 13px">
+                                        <a type='button' class='badge bg-red'><i class='fa fa-trash-o'></i></a>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -7,20 +7,20 @@ $(document).ready(function () {
     freshMyPage();
 
     //初始化产品选择列表
-    (function (){
-        $.ajax({
-            url: "../../php/get_product.php",
-            type: "POST",
-            dataType: "json",
-            success: function(data){
-                autoproduct('.productID', data[0]);
-                data.forEach(function (ele) {
-                    this.append("<option value='" + ele + "'>" + ele + "</option>");
-                }, $(".productID"));
-
-            }
-        });
-    })();
+    //(function (){
+    //    $.ajax({
+    //        url: "../../php/get_product.php",
+    //        type: "POST",
+    //        dataType: "json",
+    //        success: function(data){
+    //            autoproduct('.productID', data[0]);
+    //            data.forEach(function (ele) {
+    //                this.append("<option value='" + ele + "'>" + ele + "</option>");
+    //            }, $(".productID"));
+    //
+    //        }
+    //    });
+    //})();
 
 
 });
@@ -58,21 +58,21 @@ $("#currencyUSD").click(function () {
 });
 
 //自动填充产品信息
-function autoproduct(ele, key){
-    var key = key || $(ele).val();
-    var disc = $(ele).parent().parent().find(".productDisc");
-    var orig_price = $(ele).parent().parent().find(".productOriginalPrice");
-    $.ajax({
-        url: "../../php/get_product.php",
-        type: "POST",
-        data: {'key': key},
-        dataType: "json",
-        success: function(data){
-            disc.val(data.disc);
-            orig_price.val(new Number(data.price).toFixed(2));
-        }
-    });
-}
+//function autoproduct(ele, key){
+//    var key = key || $(ele).val();
+//    var disc = $(ele).parent().parent().find(".productDisc");
+//    var orig_price = $(ele).parent().parent().find(".productOriginalPrice");
+//    $.ajax({
+//        url: "../../php/get_product.php",
+//        type: "POST",
+//        data: {'key': key},
+//        dataType: "json",
+//        success: function(data){
+//            disc.val(data.disc);
+//            orig_price.val(new Number(data.price).toFixed(2));
+//        }
+//    });
+//}
 
 
 //格式化单价形式
@@ -129,19 +129,28 @@ function autoCalculate(element) {
     }
 }
 
+//添加备注
+function addPS(ele){
+    $(ele).next().modal('show');
+}
+
 //添加一行产品
 var productItemColumn = 1;  //产品列表的行数
 $("#btnAddProductItem").click(function () {
-    var newColume = $("#trProductItem_0").clone().attr('id', 'trProductItem_' + productItemColumn);
-    newColume.find(".No").text((productItemColumn + 1) + ".");
-    newColume.find(".productID").val("");
-    newColume.find(".productDisc").val("");
-    newColume.find(".productOriginalPrice").val("");
-    newColume.find(".productDiscount").val(100);
-    newColume.find(".productPrice").text("0.00");
-    newColume.find(".productAmount").val(0);
-    newColume.find(".productTotalPrice").text("0.00");
-    $("#tbodyProductItem").append(newColume);
+    $("#trProductItem_0").clone().attr('id', 'trProductItem_' + productItemColumn).find(".No").text((productItemColumn + 1) + ".").end()
+        .find(".productID").val("").end()
+        .find(".productName").val("").end()
+        .find(".productOriginalPrice").val("").end()
+        .find(".productDiscount").val(100).end()
+        .find(".productPrice").text("0.00").end()
+        .find(".productAmount").val(0).end()
+        .find(".productTotalPrice").text("0.00").end()
+        .find("[data-toggle='popover']").popover({
+            html : true,
+            title: "备注",
+            content: ""
+        }).end()
+        .appendTo("#tbodyProductItem");
 
     productItemColumn += 1;
 });
@@ -169,11 +178,12 @@ $("#btnSave").click(function () {
             {
                 product[i] = {
                     id: $("#trProductItem_" + i).find(".productID").val(),
-                    disc: $("#trProductItem_" + i).find(".productDisc").val(),
+                    name: $("#trProductItem_" + i).find(".productName").val(),
                     origPrice: $("#trProductItem_" + i).find(".productOriginalPrice").val(),
                     discount: $("#trProductItem_" + i).find(".productDiscount").val(),
                     taxRate: $("#trProductItem_" + i).find(".productTaxRate").val(),
-                    amount: $("#trProductItem_" + i).find(".productAmount").val()
+                    amount: $("#trProductItem_" + i).find(".productAmount").val(),
+                    ps: $("#trProductItem_" + i).find(".productPS").val()
                 }
             }
         }

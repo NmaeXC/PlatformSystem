@@ -56,14 +56,16 @@ if(mysqli_affected_rows($mysqli) <= 0)
 {
     exit("INSERT INTO quote Error");
 }
-foreach($product as $item)
+foreach($product as $key=>$item)
 {
     $product_id = $item -> id;
+    $product_name = $item -> name;
     $product_origPrice = $item -> origPrice;
     $product_discount = $item -> discount;
     $product_taxRate = $item -> taxRate;
     $product_amount = $item -> amount;
-    $sql = "INSERT INTO quote_products (quote_id, product_id, orig_price, discount, tax_rate, amount) VALUES ('{$id}', '{$product_id}', '{$product_origPrice}', '{$product_discount}', '{$product_taxRate}', '{$product_amount}')";
+    $product_ps = $item -> ps;
+    $sql = "INSERT INTO quote_products (id, quote_id, product_id, name, price, discount, tax_rate, amount, ps) VALUES ('{$key}', '{$id}', '{$product_id}', '{$product_name}', '{$product_origPrice}', '{$product_discount}', '{$product_taxRate}', '{$product_amount}', '{$product_ps}')";
 
     $rs = $mysqli -> query($sql);
 
