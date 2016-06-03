@@ -242,12 +242,15 @@
     //修改产品信息
     $("#editProduct").click(function () {
         $("#table_products").find(".hidden").removeClass("hidden").addClass("editing");
-
+        $(this).addClass("disabled");
+        $("#saveProduct").removeClass("disabled");
     });
 
     //保存产品信息修改
     $("#saveProduct").click(function () {
         $("#table_products").find(".editing").removeClass("editing").addClass("hidden");
+        $(this).addClass("disabled");
+        $("#editProduct").removeClass("disabled");
     });
 
     //修改产品条目

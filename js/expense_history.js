@@ -63,7 +63,7 @@ $(document).ready(function () {
             }
             else
             {
-                $("<tr><td colspan='6'>你还没有报销单纪录哦~</td></tr>").appendTo("#tbodyExpenseHisotry");
+                $("<tr><td colspan='6'>你还没有报销单纪录~</td></tr>").appendTo("#tbodyExpenseHisotry");
             }
         }
     })

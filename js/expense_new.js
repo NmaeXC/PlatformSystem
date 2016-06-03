@@ -128,14 +128,16 @@ $("#btnSubmitExpenseAccount").click(function(){
     else
     {
         var expenseList = new Array();
-        $("#tbodyNewExpenseAccount").chilren().each(function(){
-            var expenseAmount = $(this).find(".expenseAmount").val();
-            var expenseType = $(this).find(".expenseType").val();
-            var expenseDate = $(this).find(".expenseDate").val();
-            var expenseAttachment = $(this).find(".expenseAttachment").val();
-            var expenseRemark = $(this).find(".expenseRemark").val();
-            var expenseSite = $(this).find(".expenseSite").val();
-            column = expenseList.push({'type' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
+        $("#tbodyNewExpenseAccount").children().each(function(){
+            if (!$(this).hasClass('hidden')){
+                var expenseAmount = $(this).find(".expenseAmount").val();
+                var expenseType = $(this).find(".expenseType").val();
+                var expenseDate = $(this).find(".expenseDate").val();
+                var expenseAttachment = $(this).find(".expenseAttachment").val();
+                var expenseRemark = $(this).find(".expenseRemark").val();
+                var expenseSite = $(this).find(".expenseSite").val();
+                column = expenseList.push({'type' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
+            }
         });
 
         $.ajax({

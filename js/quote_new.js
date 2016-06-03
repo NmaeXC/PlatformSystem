@@ -134,6 +134,7 @@ function addPS(ele){
     $(ele).next().modal('show');
 }
 
+
 //添加一行产品
 var productItemColumn = 1;  //产品列表的行数
 $("#btnAddProductItem").click(function () {
@@ -149,6 +150,9 @@ $("#btnAddProductItem").click(function () {
             html : true,
             title: "备注",
             content: ""
+        }).end()
+        .find(".removeItem").click(productItemColumn, function (e) {
+            $("#trProductItem_" + e.data).remove();
         }).end()
         .appendTo("#tbodyProductItem");
 
