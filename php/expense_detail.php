@@ -14,7 +14,7 @@ $username = $_SESSION["username"];
 $expenseId = $_POST['detailNumber'];
 $data = array();
 
-$sql = "SELECT user.name, user.uid, user.department, user.title FROM user LEFT JOIN expense ON user.uid = expense.uid WHERE expense.number = '{$expenseId}'";
+$sql = "SELECT user.name, user.uid, user.department, user.title, expense.state FROM user LEFT JOIN expense ON user.uid = expense.uid WHERE expense.number = '{$expenseId}'";
 $rs_sql = $mysqli -> query($sql);
 if($rs = mysqli_fetch_array($rs_sql))
 {

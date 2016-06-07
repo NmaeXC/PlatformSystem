@@ -15,7 +15,7 @@ if(isset($_POST["init"]))
     //初始化页面
     $username = $_SESSION["username"];
 
-    $sql = "SELECT number, c_u.name, submitDate FROM expense LEFT JOIN user s_u ON accepted = s_u.uid LEFT JOIN user c_u ON c_u.uid = expense.uid WHERE state = 2 AND s_u.username = '{$username}'";
+    $sql = "SELECT number, c_u.name, submitDate, expense.state FROM expense LEFT JOIN user s_u ON accepted = s_u.uid LEFT JOIN user c_u ON c_u.uid = expense.uid WHERE state != 1 AND s_u.username = '{$username}'";
     $rs_sql = $mysqli -> query($sql);
     $data = array();
     $x = 0;

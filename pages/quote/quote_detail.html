@@ -167,7 +167,7 @@
                 </li>
                 <li class="treeview">
                     <a href="">
-                        <i class="fa fa-money"></i>
+                        <i class="fa fa-ticket"></i>
                         <span>报销系统</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
@@ -352,15 +352,25 @@
                                 </tr>
                                 </thead>
                                 <tbody id="tbody_products">
+
                                 </tbody>
                             </table>
                         </div>
                         <div class="box-footer">
+                            <button class="btn btn-success text-left hidden" id="btnAddProduct">
+                                <i class="fa fa-plus" style="margin-right: 15px"></i>
+                                添加
+                            </button>
                             <p class="text-right">总计：<span><strong class="text-primary" style="font-size: x-large"><span class="currency">¥</span><span id="sum">0.00</span></strong></span></p>
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div class="col-md-12" style="text-align: center">
+                <button class="btn btn-primary btn-lg" id="btnPrint">
+                    <i class="fa fa-print" style="margin-right: 15px"></i>
+                    打印
+                </button>
             </div>
         </section>
         <!-- Main content -->
@@ -466,6 +476,7 @@
         </div>
     </div>
 </div>
+
 
 
 <script src="../../js/jquery.js"></script>

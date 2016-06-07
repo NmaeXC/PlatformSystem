@@ -167,7 +167,7 @@
                 </li>
                 <li class="treeview active">
                     <a href="">
-                        <i class="fa fa-money"></i>
+                        <i class="fa fa-ticket"></i>
                         <span>报销系统</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
@@ -175,6 +175,39 @@
                         <li><a href="expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
                         <li><a href="expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
                         <li><a href="expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-money"></i>
+                        <span>报价系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../quote/quote_new.html"><i class="fa fa-angle-double-right"></i>新建报价单</a></li>
+                        <li><a href="../quote/quote_record.html"><i class="fa fa-angle-double-right"></i>报价单记录</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-smile-o"></i>
+                        <span>客户系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../customer/customer.html"><i class="fa fa-angle-double-right"></i>客户管理</a></li>
+                        <li><a href="../customer/customer_new.html"><i class="fa fa-angle-double-right"></i>新建客户</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-gavel"></i>
+                        <span>产品系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../product/product.html"><i class="fa fa-angle-double-right"></i>产品管理</a></li>
+                        <li><a href="../product/product_new.html"><i class="fa fa-angle-double-right"></i>新建产品</a></li>
                     </ul>
                 </li>
             </ul>
@@ -287,12 +320,20 @@
                             </table>
                         </div>
                         <div class="box-footer">
+                            <button class="btn btn-success text-left hidden" id="btnAddItem">
+                                <i class="fa fa-plus" style="margin-right: 15px"></i>
+                                添加
+                            </button>
                             <p class="text-right">总计：<span><strong class="text-primary" style="font-size: x-large"><span class="currency">¥</span><span id="sum">0.00</span></strong></span></p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center">
-                    <button class="btn btn-primary btn-lg" id="btnPrint">
+                    <button class="btn btn-primary btn-lg hidden" id="btnSubmit">
+                        <i class="fa fa-arrow-up" style="margin-right: 15px"></i>
+                        提交
+                    </button>
+                    <button class="btn btn-primary btn-lg hidden" id="btnPrint">
                         <i class="fa fa-print" style="margin-right: 15px"></i>
                         打印
                     </button>
@@ -355,7 +396,7 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input class="form-control" type="text" name="amount" id="edit_item_amount">
-                                <span class="input-group-addon">%</span>
+                                <span class="input-group-addon">¥</span>
                             </div>
                         </div>
                     </div>

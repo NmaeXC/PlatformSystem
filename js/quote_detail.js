@@ -3,6 +3,8 @@
  */
 
 (function () {
+    freshMyPage();
+
     var number = getQueryString("x");
     var contact = getQueryString("c");
     if (number !== null)
@@ -61,7 +63,7 @@
                     $("<td class='hidden'>" +
                         "<a type='button' class='badge bg-red'><i class='fa fa-trash-o'></i></a>" +
                         "</td>")
-                        .find("a").click(data.products[i].product_id, function (e) {
+                        .find("a").click(data.products[i].id, function (e) {
                         deleteProductItem(e.data);
                     }).end().appendTo("#" + trID);
                     $("<td></td>").text((parseInt(i) + 1) + ".").appendTo("#" + trID);
@@ -242,12 +244,14 @@
     //修改产品信息
     $("#editProduct").click(function () {
         $("#table_products").find(".hidden").removeClass("hidden").addClass("editing");
+        $("#btnAddProduct").removeClass("hidden").addClass("editing");
         $(this).addClass("disabled");
         $("#saveProduct").removeClass("disabled");
     });
 
     //保存产品信息修改
     $("#saveProduct").click(function () {
+        $("#btnAddProduct").removeClass("editing").addClass("hidden");
         $("#table_products").find(".editing").removeClass("editing").addClass("hidden");
         $(this).addClass("disabled");
         $("#editProduct").removeClass("disabled");
@@ -315,11 +319,50 @@
             else {
                 alertMsg("已保存，并无修改", "success");
             }
-            location.reload();
-        });
+            $("#modalEditProductItem").modal('hide');
+            setTimeout("location.reload();", 1000);
+
+    });
 
         $("#modalEditProductItem").modal('show');
     }
+
+    //添加一行产品
+    $("#btnAddProduct").click(function () {
+        $("#edit_item_id").val('');
+        $("#edit_item_name").val('');
+        $("#edit_item_oprice").val('0.00');
+        $("#edit_item_discount").val('100');
+        $("#edit_item_tax").val(0);
+        $("#edit_item_price").val('0.00');
+        $("#edit_item_amount").val(0);
+        $("#edit_item_tprice").val('0.00');
+        $("#edit_item_ps").val('');
+        $("#btnProductItemSubmit").unbind().click(function () {
+            $.ajax({
+                url: "../../php/quote_edit_product.php",
+                type: "POST",
+                data: $("#formProductItem").serialize() + "&quote=" + number,
+                success: function(data){
+                    if (data === "0"){
+                        alertMsg("已保存，添加成功", "success");
+                    }
+                    else{
+                        alertMsg("添加失败", "danger");
+                    }
+                }
+            });
+        });
+        $("#modalEditProductItem").modal('hide');
+        setTimeout("location.reload();", 1000);
+    });
+
+
+    //打印
+    $("#btnPrint").click(function () {
+        window.open("quote_print.html?x=" + number + "&c=" + contact);
+    });
+
 
     //自动计算
     $("#edit_item_oprice").change(autoCalculate);
@@ -363,7 +406,7 @@
             $.ajax({
                 url: "../../php/quote_edit_product.php",
                 type : "POST",
-                data : {'delete': 1, 'product_id': id, 'quote': number},
+                data : {'delete': 1, 'productID': id, 'quote': number},
                 cache : false,
                 success: function(data){
                     if(data === "0")

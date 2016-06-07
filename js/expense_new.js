@@ -162,40 +162,6 @@ $("#btnSubmitExpenseAccount").click(function(){
 
             }
         });
-
-
-        ////处理数据
-        //
-        //
-        //
-        //if (expenseAmount == 0){
-        //    alert("请至少填写一个有效报销单条目后提交");
-        //}
-        //else
-        //{
-        //    var i = 0;
-        //    while(expenseAmount != 0 && i < column)
-        //    {
-        //        expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
-        //        ++i;
-        //        var expenseAmount = $("#trNewExpenseAccount_" + i).find(".expenseAmount").val();
-        //        var expenseType = $("#trNewExpenseAccount_" + i).find(".expenseType").val();
-        //        var expenseDate = $("#trNewExpenseAccount_" + i).find(".expenseDate").val();
-        //        var expenseAttachment = $("#trNewExpenseAccount_" + i).find(".expenseAttachment").val();
-        //        var expenseRemark = $("#trNewExpenseAccount_" + i).find(".expenseRemark").val();
-        //        var expenseSite = $("#trNewExpenseAccount_" + i).find(".expenseSite").val();
-        //    }
-        //
-        //    //for (var a in expenseList)
-        //    //{
-        //    //    for(var b in expenseList[a])
-        //    //    {
-        //    //        alert(expenseList[a][b]);
-        //    //    }
-        //    //}
-        //
-        //
-        //}
     }
 
 
@@ -208,53 +174,98 @@ $("#btnSubmitExpenseAccount").click(function(){
 
 
 //保存草稿
-//$("#btnSaveDraft").click(function(){
-//    if (error != 0)
-//    {
-//        $("#expenseTip").text("输入有误！请更正后重新保存。");
-//    }
-//    else
-//    {
-//        //处理数据
-//        var expenseList = new Array();
-//        var expenseAmount = $("#trNewExpenseAccount_0").find(".expenseAmount").val();
-//        var expenseType = $("#trNewExpenseAccount_0").find(".expenseType").val();
-//        var expenseDate = $("#trNewExpenseAccount_0").find(".expenseDate").val();
-//        var expenseAttachment = $("#trNewExpenseAccount_0").find(".expenseAttachment").val();
-//        var expenseRemark = $("#trNewExpenseAccount_0").find(".expenseRemark").val();
-//
-//        var i = 0;
-//        while(i < column)
-//        {
-//            expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
-//            ++i;
-//            var expenseAmount = $("#trNewExpenseAccount_" + i).find(".expenseAmount").val();
-//            var expenseType = $("#trNewExpenseAccount_" + i).find(".expenseType").val();
-//            var expenseDate = $("#trNewExpenseAccount_" + i).find(".expenseDate").val();
-//            var expenseAttachment = $("#trNewExpenseAccount_" + i).find(".expenseAttachment").val();
-//            var expenseRemark = $("#trNewExpenseAccount_" + i).find(".expenseRemark").val();
-//        }
-//
-//
-//        $.ajax({
-//            url : "../../php/expenseSaveDraft.php",
-//            type : "POST",
-//            cache : false,
-//            data : {'expenseList' : JSON.stringify(expenseList)},
-//            //async : false,
-//            dataType : 'json',
-//            success : function(data){
-//                if(data == "0")
-//                {
-//                    alert("保存成功!");
-//                }
-//                else
-//                {
-//                    alert("保存失败，请重试...");
-//                }
-//
-//            }
-//        })
-//
-//    }
-//});
+$("#btnSaveDraft").click(function(){
+
+    var column = 0;
+
+    if (error != 0)
+    {
+        $("#expenseTip").text("输入有误！请更正后重新提交。");
+    }
+    else
+    {
+        var expenseList = new Array();
+        $("#tbodyNewExpenseAccount").children().each(function(){
+            if (!$(this).hasClass('hidden')){
+                var expenseAmount = $(this).find(".expenseAmount").val();
+                var expenseType = $(this).find(".expenseType").val();
+                var expenseDate = $(this).find(".expenseDate").val();
+                var expenseAttachment = $(this).find(".expenseAttachment").val();
+                var expenseRemark = $(this).find(".expenseRemark").val();
+                var expenseSite = $(this).find(".expenseSite").val();
+                column = expenseList.push({'type' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
+            }
+        });
+
+        $.ajax({
+            url : "../../php/expenseSaveDraft.php",
+            type : "POST",
+            cache : false,
+            data : {'expenseList' : JSON.stringify(expenseList)},
+            async : false,
+            dataType : 'json',
+            success : function(data){
+                if(data == "0")
+                {
+                    alert("保存成功!");
+                    window.location('expense_history.html');
+                }
+                else
+                {
+                    alert("保存失败，请重试...");
+                }
+
+            }
+        });
+    }
+
+
+    //if (error != 0)
+    //{
+    //    $("#expenseTip").text("输入有误！请更正后重新保存。");
+    //}
+    //else
+    //{
+    //    //处理数据
+    //    var expenseList = new Array();
+    //    var expenseAmount = $("#trNewExpenseAccount_0").find(".expenseAmount").val();
+    //    var expenseType = $("#trNewExpenseAccount_0").find(".expenseType").val();
+    //    var expenseDate = $("#trNewExpenseAccount_0").find(".expenseDate").val();
+    //    var expenseAttachment = $("#trNewExpenseAccount_0").find(".expenseAttachment").val();
+    //    var expenseRemark = $("#trNewExpenseAccount_0").find(".expenseRemark").val();
+    //
+    //    var i = 0;
+    //    while(i < column)
+    //    {
+    //        expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
+    //        ++i;
+    //        var expenseAmount = $("#trNewExpenseAccount_" + i).find(".expenseAmount").val();
+    //        var expenseType = $("#trNewExpenseAccount_" + i).find(".expenseType").val();
+    //        var expenseDate = $("#trNewExpenseAccount_" + i).find(".expenseDate").val();
+    //        var expenseAttachment = $("#trNewExpenseAccount_" + i).find(".expenseAttachment").val();
+    //        var expenseRemark = $("#trNewExpenseAccount_" + i).find(".expenseRemark").val();
+    //    }
+    //
+    //
+    //    $.ajax({
+    //        url : "../../php/expenseSaveDraft.php",
+    //        type : "POST",
+    //        cache : false,
+    //        data : {'expenseList' : JSON.stringify(expenseList)},
+    //        //async : false,
+    //        dataType : 'json',
+    //        success : function(data){
+    //            if(data == "0")
+    //            {
+    //                alert("保存成功!");
+    //            }
+    //            else
+    //            {
+    //                alert("保存失败，请重试...");
+    //            }
+    //
+    //        }
+    //    })
+    //
+    //}
+});

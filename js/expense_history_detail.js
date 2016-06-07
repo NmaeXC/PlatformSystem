@@ -5,6 +5,16 @@
 (function () {
     freshMyPage();
 
+    $('.form_date').datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+
     var number = getQueryString("x");
     var submitDate = getQueryString("d");
     if (number !== null)
@@ -24,6 +34,38 @@
             dataType: "json",
             data : {'detailNumber' : number},
             success: function (data) {
+                switch (data.userInfo.state){
+                    case "1" :
+                        //编辑中
+                        $("#btnSubmit").removeClass('hidden');
+                        break;
+                    case "2" :
+                        //待审核
+                        $("#btnPrint").removeClass('hidden');
+                        break;
+                    case "3" :
+                        //同意
+                        $('#btnPrint').removeClass('hidden');
+                        $("#editItem").addClass('hidden');
+                        break;
+                    case "4" :
+                        //驳回
+                        $('#btnPrint').removeClass('hidden');
+                        $("#editItem").addClass('hidden');
+                        break;
+                    case "5" :
+                        //已付款
+
+                        break;
+                    case "6" :
+                        //已撤销
+
+                        break;
+                    default:
+                        alert("报销单状态异常");
+                        break;
+                }
+
                 $("#number").text(number);
                 $("#submitDate").text(submitDate);
                 $("#name").text(data.userInfo.name);
@@ -32,7 +74,6 @@
                 $("#title").text(data.userInfo.title);
                 //var today = new Date();
                 //$("#today").text(today.getFullYear() + "年" + (today.getMonth()+1) + "月" + today.getDate() + "日");
-
                 var sum = new Number(0);
 
                 for(var i in data.item)
@@ -75,12 +116,14 @@
     //修改条目信息
     $("#editItem").click(function () {
         $("#table_item").find(".hidden").removeClass("hidden").addClass("editing");
+        $("#btnAddItem").removeClass("hidden").addClass("editing");
         $(this).addClass("disabled");
         $("#saveItem").removeClass("disabled");
     });
 
     //保存条目修改
     $("#saveItem").click(function () {
+        $("#btnAddItem").find(".editing").removeClass("editing").addClass("hidden");
         $("#table_item").find(".editing").removeClass("editing").addClass("hidden");
         $(this).addClass("disabled");
         $("#editItem").removeClass("disabled");
@@ -160,9 +203,59 @@
         }
     }
 
+    //添加一行
+    $("#btnAddItem").click(function () {
+        $("#edit_item_date").val('');
+        $("#edit_item_site").val('');
+        $("#edit_item_type").val(1);
+        $("#edit_item_amount").val(0);
+        $("#edit_item_attachment").val('');
+        $("#edit_item_remark").val('');
+
+        $("#btnItemSubmit").unbind().click(function (e) {
+            $.ajax({
+                url: "../../php/expense_edit_item.php",
+                type: "POST",
+                data: $("#formItem").serialize() + "&expenseID=" + number
+                + "&add=true",
+                success: function(data){
+                    if (data === "0"){
+                        alert("添加成功");
+                        window.location.reload();
+                    }
+                    else{
+                        alertMsg("添加失败", "danger");
+                    }
+                }
+            });
+            $("#modalEditItem").modal('hide');
+            setTimeout("location.reload();", 1000);
+        });
+
+        $("#modalEditItem").modal('show');
+    });
+
     //点击打印按钮
     $("#btnPrint").click(function(){
         window.open("expense_print.html?x=" + number + "&d=" + submitDate);
+    });
+
+    //提交
+    $("#btnSubmit").click(function () {
+        $.ajax({
+            url: "../../php/expenseSaveDraft.php",
+            type: "POST",
+            data: {'submit': true, 'expenseID': number},
+            success: function(data){
+                if (data === "0"){
+                    alert("提交成功");
+                    window.location('expense_history.html');
+                }
+                else{
+                    alertMsg("提交失败", "danger");
+                }
+            }
+        });
     });
 
     //获取页面参数name
