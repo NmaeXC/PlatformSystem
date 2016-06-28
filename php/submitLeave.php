@@ -8,8 +8,11 @@
 
 		// print_r($_FILES["LeaveFile"]);
 
-		$startTime = $_POST["startTime"];
-		$endTime = $_POST["endTime"];
+//		$startTime = $_POST["startTime"];
+//		$endTime = $_POST["endTime"];
+		$time =explode(' - ', $_POST['time_interval']);
+		$startTime = $time[0];
+		$endTime = $time[1];
 		$reason = $_POST["reason"];
 		$remark = $_POST["remark"];
 
@@ -31,66 +34,79 @@
 		}
 
 		$days=abs((strtotime($endTime)-strtotime($startTime))/86400);
-		
 
-		$rs_sql = $mysqli -> query("SELECT top, uid FROM user WHERE username = '{$username}'");
-		if (mysqli_num_rows($rs_sql) > 0) 
-		{
-			$rs = mysqli_fetch_array($rs_sql);
-			$uid = $rs["uid"];
-			$accepted = $uid;
-			if (($top = $rs["top"])!= null) 
-			{
-				if($days <= 2)
-				{
-					$accepted = $top;
-				}
-				else 
-				{
-					$rs_sql = $mysqli -> query("SELECT top, uid FROM user WHERE username = '{$top}'");
-					if(mysqli_num_rows($rs_sql) > 0)
-					{
-						$rs = mysqli_fetch_array($rs_sql);
-						$accepted = $top;
-						if (($topTop = $rs["top"])!= null)
-						{
-							if($days <= 5)
-							{
-								$accepted = $topTop;
-							}
-							else
-							{
-								$rs_sql = $mysqli -> query("SELECT top, uid FROM user WHERE username = '{$topTop}'");
-								if (mysqli_num_rows($rs_sql) > 0) 
-								{
-									$rs = mysqli_fetch_array($rs_sql);
-									if (($topTopTop = $rs["top"])!= null) 
-									{
-										$accepted = $topTopTop;
-									}
-								}
-								else
-								{
-									echo "User's Top's Top Info Error";
-								}
-							}
-						}
-					}
-					else
-					{
-						echo "User's Top Info Error";
-					}
 
-				}
-			}
-		}
-		else
+		//(暂)指定人事部的唐玲玲进行审核
+		$rs_sql = $mysqli -> query("SELECT uid FROM user WHERE department = '人事部' AND name = '唐玲玲'");
+		if($rs = mysqli_fetch_array($rs_sql))
 		{
-			echo "User Info Error";
+			$accepted = $rs[0];
 		}
 
 
-		if (isset($_FILES["LeaveFile"]))
+		$rs_sql = $mysqli -> query("SELECT uid FROM user WHERE username = '{$username}'");
+		if($rs = mysqli_fetch_array($rs_sql)){
+			$uid = $rs[0];
+		}
+
+//		$rs_sql = $mysqli -> query("SELECT top, uid FROM user WHERE username = '{$username}'");
+//		if (mysqli_num_rows($rs_sql) > 0)
+//		{
+//			$rs = mysqli_fetch_array($rs_sql);
+//			$uid = $rs["uid"];
+//			$accepted = $uid;
+//			if (($top = $rs["top"])!= null)
+//			{
+//				if($days <= 2)
+//				{
+//					$accepted = $top;
+//				}
+//				else
+//				{
+//					$rs_sql = $mysqli -> query("SELECT top, uid FROM user WHERE username = '{$top}'");
+//					if(mysqli_num_rows($rs_sql) > 0)
+//					{
+//						$rs = mysqli_fetch_array($rs_sql);
+//						$accepted = $top;
+//						if (($topTop = $rs["top"])!= null)
+//						{
+//							if($days <= 5)
+//							{
+//								$accepted = $topTop;
+//							}
+//							else
+//							{
+//								$rs_sql = $mysqli -> query("SELECT top, uid FROM user WHERE username = '{$topTop}'");
+//								if (mysqli_num_rows($rs_sql) > 0)
+//								{
+//									$rs = mysqli_fetch_array($rs_sql);
+//									if (($topTopTop = $rs["top"])!= null)
+//									{
+//										$accepted = $topTopTop;
+//									}
+//								}
+//								else
+//								{
+//									echo "User's Top's Top Info Error";
+//								}
+//							}
+//						}
+//					}
+//					else
+//					{
+//						echo "User's Top Info Error";
+//					}
+//
+//				}
+//			}
+//		}
+//		else
+//		{
+//			echo "User Info Error";
+//		}
+
+
+		if (!empty($_FILES["LeaveFile"]["tmp_name"]))
 		{
 			$accessory_error = $_FILES["LeaveFile"]["error"];
 			$accessory_type = $_FILES["LeaveFile"]["type"];

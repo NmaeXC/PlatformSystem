@@ -32,7 +32,10 @@
                 $("#title").text(data.userInfo.title);
                 //var today = new Date();
                 //$("#today").text(today.getFullYear() + "年" + (today.getMonth()+1) + "月" + today.getDate() + "日");
-
+                if(data.isConform){
+                    $("#btnConform").removeAttr('disabled');
+                    $("#btnReject").removeAttr('disabled');
+                }
                 var sum = new Number(0);
 
                 for(var i in data.item)
@@ -77,13 +80,13 @@
             dataType : 'json',
             data : {"sum": 1, "conformed":JSON.stringify(conformed), "type": "agree"},
             success : function(data){
-                if(data == '')
+                if(data === 0)
                 {
                     alert('审核成功！');
                 }
                 else
                 {
-                    alert("编号：\n" + data.join("\n") + "\n已经审核,请勿再次操作");
+                    alert("编号：\n" + data.join("\n") + "\n目前的状态不支持您的同意操作");
                 }
             }
         });
@@ -103,13 +106,13 @@
                 dataType : 'json',
                 data : {"sum": 1, "conformed":JSON.stringify(conformed), "type": "reject", "rejectInfo": rejectInfo},
                 success : function(data){
-                    if(data == '')
+                    if(data === 0)
                     {
                         alert('驳回成功！');
                     }
                     else
                     {
-                        alert("编号：\n" + data.join("\n") + "\n已经审核,请勿再次操作");
+                        alert("编号：\n" + data.join("\n") + "\n目前的状态不支持您的驳回操作");
                     }
                 }
             });

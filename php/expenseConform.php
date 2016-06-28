@@ -9,12 +9,11 @@
 include "comm.php";
 include "conn.php";
 
+$username = $_SESSION["username"];
 
 if(isset($_POST["init"]))
 {
     //初始化页面
-    $username = $_SESSION["username"];
-
     $sql = "SELECT number, c_u.name, submitDate, expense.state FROM expense LEFT JOIN user s_u ON accepted = s_u.uid LEFT JOIN user c_u ON c_u.uid = expense.uid WHERE state != 1 AND s_u.username = '{$username}'";
     $rs_sql = $mysqli -> query($sql);
     $data = array();
@@ -23,6 +22,18 @@ if(isset($_POST["init"]))
     {
         $data[$x] = $rs;
         $x++;
+    }
+
+
+    //财务审核人员将额外获取已通过上司审核的报销单（财务审核人员暂定为username=l0002）
+    if($username == 'l0002') {
+        $sql = "SELECT number, user.name, submitDate, state FROM expense LEFT JOIN user ON user.uid = expense.uid WHERE state !=1 AND state != 2 AND expense.accepted != '{$username}'";
+        $rs_sql = $mysqli -> query($sql);
+        while($rs = mysqli_fetch_array($rs_sql))
+        {
+            $data[$x] = $rs;
+            $x++;
+        }
     }
     $data['sum'] = $x;
     $data_json = json_encode($data);
@@ -67,10 +78,10 @@ else
     {
         foreach ($conformed as $value) {
             $mysqli -> query("UPDATE expense SET state = 3 WHERE number = '{$value}' AND state = 2");
-            if(mysqli_affected_rows($mysqli) <= 0)
-            {
-                $ret[] = $value;
-            }
+//            if(mysqli_affected_rows($mysqli) <= 0)
+//            {
+//                $ret[] = $value;
+//            }
         }
 
     }
@@ -78,11 +89,11 @@ else
     {
         foreach ($conformed as $value) {
             $mysqli -> query("UPDATE expense SET state = 4 WHERE number = '{$value}' AND state = 2");
-            if(mysqli_affected_rows($mysqli) <= 0)
-            {
-                $ret[] = $value;
-            }
-            else
+//            if(mysqli_affected_rows($mysqli) <= 0)
+//            {
+//                $ret[] = $value;
+//            }
+            if(mysqli_affected_rows($mysqli) > 0)
             {
                 //驳回后向用户发送提请邮件
                 $sql_rs = $mysqli -> query("SELECT submitUser.name submitName, submitUser.email submitEmail, acceptedUser.name acceptedName from user submitUser, expense, user acceptedUser WHERE submitUser.uid = expense.uid AND acceptedUser.uid = expense.accepted AND expense.number = '{$value}'");
@@ -106,7 +117,42 @@ else
 
     }
 
-    $ret_json = json_encode($ret);
-    echo $ret_json;
+    if($username == 'l0002')
+    {
+        if($type == "agree")
+        {
+            foreach ($conformed as $value) {
+                $mysqli -> query("UPDATE expense SET state = 5 WHERE number = '{$value}' AND state = 3");
+            }
+        }
+        else
+        {
+            foreach ($conformed as $value) {
+                $mysqli -> query("UPDATE expense SET state = 4 WHERE number = '{$value}' AND state = 3");
+                if(mysqli_affected_rows($mysqli) > 0)
+                {
+                    //驳回后向用户发送提请邮件
+                    $sql_rs = $mysqli -> query("SELECT submitUser.name submitName, submitUser.email submitEmail, acceptedUser.name acceptedName from user submitUser, expense, user acceptedUser WHERE submitUser.uid = expense.uid AND acceptedUser.uid = expense.accepted AND expense.number = '{$value}'");
+                    if ($rs = mysqli_fetch_array($sql_rs))
+                    {
+                        $mailTo = $rs["submitEmail"];
+                        $acceptedName = $rs["acceptedName"];
+                        $submitName = $rs["submitName"];
+                        $subject = "报销单驳回提醒（来自：".$acceptedName.":".$_POST["rejectInfo"]."）";
+                        $body = "尊敬的".$submitName."：\n    您提交的报销单(".$value.")未能通过审核。(点击进入个人历史记录查看  http://10.0.0.2:880/PlatformSystem/pages/expense/expense_history.html)。";
+                        mail($mailTo, $subject, $body);
+                    }
+                    else
+                    {
+                        echo "send Email Error";
+                    }
+                }
+            }
+        }
+    }
+    echo '0';
+
+//    $ret_json = json_encode($ret);
+//    echo $ret_json;
 
 }

@@ -15,7 +15,7 @@
 */
 !function ($) {
 
-    var DateRangePicker = function (element, options, cb) {
+    var DateRangePicker = function (element, options, cb, onchangefunc) {
         var hasOptions = typeof options == 'object';
         var localeObject;
 
@@ -43,10 +43,10 @@
         this.separator = ' - ';
 
         this.locale = {
-            applyLabel: 'Apply',
-            cancelLabel: 'Cancel',
-            fromLabel: 'From',
-            toLabel: 'To',
+            applyLabel: '确定',
+            cancelLabel: '取消',
+            fromLabel: '自',
+            toLabel: '至',
             weekLabel: 'W',
             customRangeLabel: 'Custom Range',
             daysOfWeek: moment()._lang._weekdaysMin.slice(),
@@ -55,7 +55,7 @@
         };
 
         this.cb = function () { };
-
+        this.onchangefunc = onchangefunc;   //为了添加数据变化监听事件而添加的参数
         // by default, the daterangepicker element is placed at the bottom of HTML body
         this.parentEl = 'body';
 
@@ -563,6 +563,7 @@
 
         clickApply: function (e) {
             this.updateInputText();
+            this.onchangefunc();    //为了在每次选择时间段后执行而添加的事件
             this.hide();
         },
 
@@ -871,11 +872,11 @@
 
     };
 
-    $.fn.daterangepicker = function (options, cb) {
+    $.fn.daterangepicker = function (options, cb, onchangefunc) {
         this.each(function () {
             var el = $(this);
             if (!el.data('daterangepicker'))
-                el.data('daterangepicker', new DateRangePicker(el, options, cb));
+                el.data('daterangepicker', new DateRangePicker(el, options, cb, onchangefunc));
         });
         return this;
     };

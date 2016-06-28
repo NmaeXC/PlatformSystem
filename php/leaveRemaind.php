@@ -10,24 +10,57 @@ include "comm.php";
 include "conn.php";
 $username = $_SESSION["username"];
 
-$sql = "SELECT SUM(TO_DAYS(endTime) - TO_DAYS(startTime)) FROM `leavenote` LEFT JOIN user ON leavenote.uid = user.uid WHERE user.username = '{$username}' AND (leavenote.state = '同意' OR leavenote.state = '未处理') AND leavenote.reason = '年休假'";
+$sql = "SELECT endTime, startTime FROM `leavenote` LEFT JOIN user ON leavenote.uid = user.uid WHERE user.username = '{$username}' AND (leavenote.state = '同意' OR leavenote.state = '未处理') AND leavenote.reason = '年休假'";
 $rs_sql = $mysqli -> query($sql);
-if($rs = mysqli_fetch_array($rs_sql))
+$month = date("n");
+$remain = $month * 16;
+while($rs = mysqli_fetch_array($rs_sql))
 {
-    $remain = $rs[0];
-    $month = date("n");
-    if($month < 8)
-    {
-        echo $month - $remain;
-    }
-    else
-    {
-        echo 8 - $remain;
+    $start = split("[- :]",$rs['startTime']);
+    $end = split("[- :]",$rs['endTime']);
+    $m1 = intval($start[3]) * 60 + intval($start[4]);
+    $m2 = intval($end[3]) * 60 + intval($end[4]);
+    //确定与工作时间相交的时间区间
+    if ($m1 <= (8 * 60 + 30) || $m1 >= 18 * 60){
+        $m1 = 0;
+    }else if ($m1 >= (12 * 60) && $m1 <= (13 * 60 + 30)){
+        $m1 = 3.5;
+    }else if($m1 <= (12 * 60)){
+        $m1 = ($m1 - (8 * 60 + 30)) / 60;
+    }else{
+        $m1 = ($m1 - (8 * 60 + 30) - (1.5 * 60)) / 60;
     }
 
+    if ($m2 <= (8 * 60 + 30) || $m2 >= 18 * 60){
+        $m2 = 0;
+    }else if ($m2 >= (12 * 60) && $m2 <= (13 * 60 + 30)){
+        $m2 = 3.5;
+    }else if($m2 <= (12 * 60)){
+        $m2 = ($m2 - (8 * 60 + 30)) / 60;
+    }else{
+        $m2 = ($m2 - (8 * 60 + 30) - (1.5 * 60)) / 60;
+    }
+
+    $t = ($m2 - $m1) < 0? ($m2 - $m1 + 8) : ($m2 - $m1);
+    $d = (strtotime($rs['endTime']) - strtotime($rs['startTime'])) / (60 * 60);
+
+
+    $remain = $remain - $t - $d;
+
+
+//    $remain = $rs[0];
+//    $month = date("n");
+//    if($month < 8)
+//    {
+//        echo $month - $remain;
+//    }
+//    else
+//    {
+//        echo 8 - $remain;
+//    }
+
 }
-else
-{
-    echo "Query Error";
-}
+
+echo $remain;
+
 

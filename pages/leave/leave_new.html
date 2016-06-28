@@ -11,7 +11,7 @@
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css">
-    <link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="../../css/daterangepicker-bs3.css" rel="stylesheet" type="text/css">
     <style type="text/css">
         [parentpane]{}
         .blur{
@@ -236,7 +236,7 @@
                         </div>
                         <div class="box-body">
                             <div style="margin: 20px">
-                                <table class="table-bordered">
+                                <table class="table-bordered" style="width: 100%;">
                                     <tr>
                                         <td class="notehh"><strong>部门</strong></td>
                                         <td class="notehh departmentUser"></td>
@@ -253,24 +253,11 @@
                                         <td colspan="4" style="padding: 50px">
                                             <form class="form-horizontal" role="form" id="formLeave" >
                                                 <div class="form-group">
-                                                    <label for="start" class="col-md-2 control-label">时间区间</label>
-                                                    <div class="col-md-3">
-                                                        <div id="start" class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                                            <input name="startTime" id="startTime" class="form-control" placeholder="起始日期" size="16" type="text" value="" readonly>
-                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                        </div>
+                                                    <label class="col-md-2 control-label"><i style="color: #F00;padding-right: 4px;">*</i>时间区间</label>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control pull-right" id="time_interval" name="time_interval">
                                                     </div>
-                                                    <div align="center"  class="col-md-2" style="padding: 0px">
-                                                        <img src="../../img/arrow_right.png" style="height: 34px; width: 100px;">
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div id="end" class="input-group date form_date col-md-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                                            <input name="endTime" id="endTime" class="form-control" placeholder="结束日期" size="16" type="text" value="" readonly>
-                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label col-md-2"></label>
@@ -279,7 +266,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="reason" class="col-md-2 control-label">请假原因</label>
+                                                    <label for="reason" class="col-md-2 control-label"><i style="color: #F00;padding-right: 4px;">*</i>请假原因</label>
                                                     <div class="col-md-3">
                                                         <select class="form-control" id="reason" name="reason">
                                                             <option value="病假">病假</option>
@@ -297,7 +284,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-2 control-label">附件</label>
+                                                    <label class="col-md-2 control-label"><i style="color: #F00;padding-right: 4px;">*</i>附件</label>
                                                     <div class="col-md-10">
                                                         <input type="file" id="LeaveFile" name="LeaveFile">
                                                         <p class="text-muted"><small>（文件大小 < 8M，文件类型：jpg/jpeg/png）</small></p>
@@ -347,7 +334,8 @@
 <script src="../../js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../js/bootstrap.min.js"></script>
-<script src="../../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../../js/daterangepicker.js"></script>
+<script src="../../js/jquery.bigautocomplete.js"></script>
 <script src="../../js/app.js"></script>
 <script src="../../js/leave_new.js"></script>
 </body>

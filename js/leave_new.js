@@ -18,28 +18,18 @@ $(document).ready(function () {
 //var startDateChange = 0;
 //var endDateChange = 0;
 var leaveRemainer = 0;
-$("#startTime").change(function () {
-    if (($("#startTime").val() != "") && ($("#endTime").val() != "")){
-        showLeaveNoteTip();
-        if (!$("#leaveRemaindTip").is(":hidden"))
-        {
-            showLeaveRemainTip();
-        }
+
+
+
+$("#time_interval").change(function () {
+    showLeaveNoteTip();
+    if (!$("#leaveRemaindTip").is(":hidden"))
+    {
+        showLeaveRemainTip();
     }
 });
 
-$("#endTime").change(function () {
-    if (($("#startTime").val() != "") && ($("#endTime").val() != "")){
-        showLeaveNoteTip();
-        if (!$("#leaveRemaindTip").is(":hidden"))
-        {
-            showLeaveRemainTip();
-        }
-
-    }
-});
-
-//年休假提示业务
+//年休假提示
 $("#reason").change(function () {
     if ($("#reason").val() == "年休假")
     {
@@ -72,7 +62,7 @@ $("#reason").change(function () {
 });
 
 function showLeaveRemainTip(){
-    $("#leaveRemaindTip").text("提示：您的年休假余额为 " + leaveRemainer + " 天");
+    $("#leaveRemaindTip").text("提示：您的年休假余额为 " + Math.round(leaveRemainer / 24) +  " 天 " + (leaveRemainer % 24) + " 小时");
     if ($("#leaveNoteTip").find("span:eq(0)").text() > leaveRemainer)
     {
         $("#overstep").show();
@@ -85,58 +75,134 @@ function showLeaveRemainTip(){
 }
 
 function showLeaveNoteTip(){
-    var startDate =new Date($("#startTime").val().split("-"));
-    var endDate = new Date($("#endTime").val().split("-"));
-    var cc = (endDate - startDate)/(24 * 60 * 60 * 1000);
-    if(cc <= 0){
+    var time_interval = $("#time_interval").val().split(" - ");
+    var startDate =new Date(time_interval[0]);
+    var endDate = new Date(time_interval[1]);
+    var m1 = startDate.getHours() * 60 + startDate.getMinutes();
+    var m2 = endDate.getHours() * 60 + endDate.getMinutes();
+    //确定与工作时间相交的时间区间
+    if (m1 <= (8 * 60 + 30) || m1 >= 18 * 60){
+        m1 = 0;
+    }else if (m1 >= (12 * 60) && m1 <= (13 * 60 + 30)){
+        m1 = 3.5;
+    }else if(m1 <= (12 * 60)){
+        m1 = (m1 - (8 * 60 + 30)) / 60;
+    }else{
+        m1 = (m1 - (8 * 60 + 30) - (1.5 * 60)) / 60;
+    }
+
+    if (m2 <= (8 * 60 + 30) || m2 >= 18 * 60){
+        m2 = 0;
+    }else if (m2 >= (12 * 60) && m2 <= (13 * 60 + 30)){
+        m2 = 3.5;
+    }else if(m2 <= (12 * 60)){
+        m2 = (m2 - (8 * 60 + 30)) / 60;
+    }else{
+        m2 = (m2 - (8 * 60 + 30) - (1.5 * 60)) / 60;
+    }
+
+    var t = (m2 - m1) < 0? (m2 - m1 + 8) : (m2 - m1);
+
+    //if((m1 <= (12 * 60) && m1 >= (8 * 60 + 30) && m2 <= (12 * 60) && m2 >= (8 * 60 + 30)) || (m1 <= (18 * 60) && m1 >= (13 * 60 + 30) && m2 <= (18 * 60) && m2 >= (13 * 60 + 30))){
+    //    var t = (m2 - m1) % (8 * 60) / 60;
+    //}else{
+    //    if(m1 < m2){
+    //        var t = (m2 - m1 - (60 + 30)) % (8 * 60) / 60;
+    //    }
+    //    else {
+    //        var t = (m2 - m1 + (60 + 30)) % (8 * 60) / 60;
+    //    }
+    //}
+
+    var d = (endDate - startDate)/(24 * 60 * 60 * 1000);
+    if(d <= 0){
         $("#leaveNoteTip").text("结束日期必须大于开始日期！")
     }
     else{
 
-        $("#leaveNoteTip").find("span:eq(0)").text(cc);
+        $("#leaveNoteTip").find("span:eq(0)").text(parseInt(d) + "天" + t + "小时");
     }
     $("#leaveNoteTip").show();
 }
 
 //点击“新建请假单”中的“提交”按钮，提交请假单
 $("#btnSubmitLeave").click(function(){
-    // alert($("#formLeave").serialize());
-    var form_date = new FormData(document.getElementById("formLeave"));
+    //验证表单填写是否合法
+    if ($("#time_interval").val() == "")
+    {
+        //没有填写时间区间
+        alert("请填写时间区间");
+        $("#time_interval").focus();
+    }
+    else if($("#reason").val() == "")
+    {
+        //没有填写请假原因
+        alert("请填写请假原因");
+        $("#reason").focus();
+    }
+    else if ($("#LeaveFile").val() == "")
+    {
+        //没有上传附加
+        alert("请上传附件");
+        $("#LeaveFile").focus();
+    }else
+    {
+        // alert($("#formLeave").serialize());
+        var form_date = new FormData(document.getElementById("formLeave"));
 
-    $.ajax({
-        url : "../../php/submitLeave.php",
-        type : "POST",
-        cache : false,
-        data : form_date ,
-        async : false,
-        processData : false,  // 告诉jQuery不要去处理发送的数据
-        contentType : false,   // 告诉jQuery不要去设置Content-Type请求头
-        success : function(data){
-            if(data == "0")
-            {
-                alert("提交成功!");
-                $("#guide a[href='#leave_history']").tab("show");
-            }
-            else
-            {
-                alert("提交失败，请重试...");
-            }
+        $.ajax({
+            url : "../../php/submitLeave.php",
+            type : "POST",
+            cache : false,
+            data : form_date ,
+            async : false,
+            processData : false,  // 告诉jQuery不要去处理发送的数据
+            contentType : false,   // 告诉jQuery不要去设置Content-Type请求头
+            success : function(data){
+                if(data == "0")
+                {
+                    alert("提交成功!");
+                    $("#guide a[href='#leave_history']").tab("show");
+                }
+                else
+                {
+                    alert("提交失败，请重试...");
+                }
 
-        }
-    })
+            }
+        })
+    }
+
+
+
 });
 
-
-//datetimepicker部件的设置
-$('.form_date').datetimepicker({
-    weekStart: 1,
-    todayBtn: 1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 2,
-    minView: 2,
-    forceParse: 0
+//时间选择控件初始化
+$('#time_interval').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'YYYY-MM-DD HH:mm:ss'},null, function () {
+    showLeaveNoteTip();
+    if (!$("#leaveRemaindTip").is(":hidden"))
+    {
+        showLeaveRemainTip();
+    }
 });
+//$(".applyBtn").click(function () {
+//    showLeaveNoteTip();
+//    if (!$("#leaveRemaindTip").is(":hidden"))
+//    {
+//        showLeaveRemainTip();
+//    }
+//});
+//
+////datetimepicker部件的设置
+//$('.form_date').datetimepicker({
+//    weekStart: 1,
+//    todayBtn: 1,
+//    autoclose: 1,
+//    todayHighlight: 1,
+//    startView: 2,
+//    minView: 2,
+//    forceParse: 0
+//});
 
 
 //$(".form_date").datetimepicker({

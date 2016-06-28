@@ -41,16 +41,19 @@ $(document).ready(function () {
                             state = "<span class='label label-primary'>待审核</span>";
                             break;
                         case "3" :
-                            state = "<span class='label label-success'>同意</span>";
+                            state = "<span class='label label-primary'>待财务审批</span>";
                             break;
                         case "4" :
                             state = "<span class='label label-warning'>驳回</span>";
                             break;
                         case "5" :
-                            state = "<span class='label label-primary'>已付款</span>";
+                            state = "<span class='label label-success'>完成</span>";
                             break;
                         case "6" :
-                            state = "<span class='label label-primary'>已撤销</span>";
+                            state = "<span class='label label-primary'>已付款</span>";
+                            break;
+                        case "7" :
+                            state = "<span class='label label-default'>已撤销</span>";
                             break;
                         default:
                             state = "<span class='label label-danger'>Error</span>";
