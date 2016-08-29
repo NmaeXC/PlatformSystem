@@ -350,11 +350,15 @@
                     else{
                         alertMsg("添加失败", "danger");
                     }
+
+                    setTimeout("location.reload();", 1000);
                 }
             });
+            $("#modalEditProductItem").modal('hide');
+
         });
-        $("#modalEditProductItem").modal('hide');
-        setTimeout("location.reload();", 1000);
+        $("#modalEditProductItem").modal('show');
+
     });
 
 
@@ -368,6 +372,7 @@
     $("#edit_item_oprice").change(autoCalculate);
     $("#edit_item_discount").change(autoCalculate);
     $("#edit_item_tax").change(autoCalculate);
+    $("#edit_item_amount").change(autoCalculate);
     function autoCalculate() {
         var originalPrice = new Number($("#edit_item_oprice").val());
         var discount = new Number($("#edit_item_discount").val());

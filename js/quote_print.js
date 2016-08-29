@@ -62,7 +62,7 @@
                     $("<td></td>").text((parseInt(i) + 1) + ".").appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].product_id).appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].name).appendTo("#" + trID);
-                    $("<td></td>").text(data.products[i].orig_price).appendTo("#" + trID);
+                    $("<td></td>").text(data.products[i].price).appendTo("#" + trID);
                     var taxRate = new Number(data.products[i].tax_rate);
                     //$("<td></td>").text(data.products[i].discount).appendTo("#" + trID);
                     $("<td></td>").text((taxRate * 100) + "%").appendTo("#" + trID);

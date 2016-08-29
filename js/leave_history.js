@@ -74,8 +74,7 @@ function leaveDetail(number){
             $("#detailRemark").text(data.remark);
             var startDate =new Date(data.startTime.split("-"));
             var endDate = new Date(data.endTime.split("-"));
-            var cc = (endDate - startDate)/(24 * 60 * 60 * 1000);
-            $("#detailTime").html(data.startTime + "&nbsp;&nbsp;&nbsp;&nbsp;——&nbsp;&nbsp;&nbsp;&nbsp;" + data.endTime + "&nbsp;&nbsp;（共&nbsp;&nbsp;" + cc + "&nbsp;&nbsp;天）");
+            $("#detailTime").html(data.startTime + "&nbsp;&nbsp;&nbsp;&nbsp;——&nbsp;&nbsp;&nbsp;&nbsp;" + data.endTime + "&nbsp;&nbsp;（共" + Math.round(data.leavetime / 8) +  " 天 " + (data.leavetime % 8).toFixed(1) + " 小时)");
             if (data.attachment == "NONE")
             {
                 $("#detailAttachment").html("未上传")

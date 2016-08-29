@@ -27,7 +27,37 @@
 			$rs_sql = $mysqli -> query($sql);
 			if ($data2 = mysqli_fetch_array($rs_sql))
 			{
-				$data =  $data1 + Array('acceptedName' => $data2[0]);
+				//确定与工作时间相交的时间区间
+				$start = split("[- :]",$data1['startTime']);
+				$end = split("[- :]",$data1['endTime']);
+				$m1 = intval($start[3]) * 60 + intval($start[4]);
+				$m2 = intval($end[3]) * 60 + intval($end[4]);
+
+				if ($m1 <= (8 * 60 + 30) || $m1 >= 18 * 60){
+					$m1 = 0;
+				}else if ($m1 >= (12 * 60) && $m1 <= (13 * 60 + 30)){
+					$m1 = 3.5;
+				}else if($m1 <= (12 * 60)){
+					$m1 = ($m1 - (8 * 60 + 30)) / 60;
+				}else{
+					$m1 = ($m1 - (8 * 60 + 30) - (1.5 * 60)) / 60;
+				}
+
+				if ($m2 <= (8 * 60 + 30) || $m2 >= 18 * 60){
+					$m2 = 0;
+				}else if ($m2 >= (12 * 60) && $m2 <= (13 * 60 + 30)){
+					$m2 = 3.5;
+				}else if($m2 <= (12 * 60)){
+					$m2 = ($m2 - (8 * 60 + 30)) / 60;
+				}else{
+					$m2 = ($m2 - (8 * 60 + 30) - (1.5 * 60)) / 60;
+				}
+
+				$t = ($m2 - $m1) < 0? ($m2 - $m1 + 8) : ($m2 - $m1);
+				$d = floor((strtotime($data1['endTime']) - strtotime($data1['startTime'])) / (60 * 60 * 24)) * 8;
+
+
+				$data =  $data1 + Array('acceptedName' => $data2[0], 'leavetime' => $t + $d);
 				$data_json = json_encode($data);
 				echo $data_json;
 			}

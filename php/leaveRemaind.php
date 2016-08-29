@@ -10,10 +10,16 @@ include "comm.php";
 include "conn.php";
 $username = $_SESSION["username"];
 
+
+//本年剩余
+
 $sql = "SELECT endTime, startTime FROM `leavenote` LEFT JOIN user ON leavenote.uid = user.uid WHERE user.username = '{$username}' AND (leavenote.state = '同意' OR leavenote.state = '未处理') AND leavenote.reason = '年休假'";
 $rs_sql = $mysqli -> query($sql);
 $month = date("n");
-$remain = $month * 16;
+$remain = $month * 16 / 3;
+
+
+
 while($rs = mysqli_fetch_array($rs_sql))
 {
     $start = split("[- :]",$rs['startTime']);
@@ -42,8 +48,8 @@ while($rs = mysqli_fetch_array($rs_sql))
     }
 
     $t = ($m2 - $m1) < 0? ($m2 - $m1 + 8) : ($m2 - $m1);
-    $d = (strtotime($rs['endTime']) - strtotime($rs['startTime'])) / (60 * 60);
-
+//    $d = (strtotime($rs['endTime']) - strtotime($rs['startTime'])) / (60 * 60);
+    $d = floor((strtotime($rs['endTime']) - strtotime($rs['startTime'])) / (60 * 60 * 24)) * 8;
 
     $remain = $remain - $t - $d;
 
@@ -59,6 +65,21 @@ while($rs = mysqli_fetch_array($rs_sql))
 //        echo 8 - $remain;
 //    }
 
+}
+
+//一月一日更新上年剩余 （未完成）
+//if(date("md") == '0101')
+//{
+//    $mysqli -> query("UPDATE leave_balance SET balance = '{re}' WHERE `leavenote`.`id` = 13");
+//}
+
+//上年剩余
+
+$sql = "SELECT balance FROM leave_balance WHERE username = '{$username}'";
+$rs_sql = $mysqli -> query($sql);
+$balance = mysqli_fetch_array($rs_sql)[0];
+if($balance > 0){
+    $remain += $balance;
 }
 
 echo $remain;

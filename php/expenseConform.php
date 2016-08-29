@@ -35,6 +35,19 @@ if(isset($_POST["init"]))
             $x++;
         }
     }
+
+    //统计人员将获得所有已提交的报销单 （统计人员暂定为username=t0011）
+    if($username == 't0011')
+    {
+        $sql = "SELECT number, user.name, submitDate, state FROM expense LEFT JOIN user ON user.uid = expense.uid WHERE state !=1 AND expense.accepted != '{$username}'";
+        $rs_sql = $mysqli -> query($sql);
+        while($rs = mysqli_fetch_array($rs_sql))
+        {
+            $data[$x] = $rs;
+            $x++;
+        }
+    }
+
     $data['sum'] = $x;
     $data_json = json_encode($data);
     echo $data_json;

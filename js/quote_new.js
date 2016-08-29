@@ -138,7 +138,8 @@ function addPS(ele){
 //添加一行产品
 var productItemColumn = 1;  //产品列表的行数
 $("#btnAddProductItem").click(function () {
-    $("#trProductItem_0").clone().attr('id', 'trProductItem_' + productItemColumn).find(".No").text((productItemColumn + 1) + ".").end()
+    var item = $("#trProductItem").clone();
+    item.removeAttr('id').find(".No").text((productItemColumn + 1) + ".").end()
         .find(".productID").val("").end()
         .find(".productName").val("").end()
         .find(".productOriginalPrice").val("").end()
@@ -146,13 +147,17 @@ $("#btnAddProductItem").click(function () {
         .find(".productPrice").text("0.00").end()
         .find(".productAmount").val(0).end()
         .find(".productTotalPrice").text("0.00").end()
-        .find("[data-toggle='popover']").popover({
-            html : true,
-            title: "备注",
-            content: ""
-        }).end()
-        .find(".removeItem").click(productItemColumn, function (e) {
-            $("#trProductItem_" + e.data).remove();
+        .find(".productPS").val("").end()
+        .find(".removeItem").click(item, function (e) {
+            if(productItemColumn > 1){
+
+                $.each(e.data.nextAll(), function () {
+                    var o = $(this).find(".No").text();
+                    $(this).find(".No").text((o - 1) + '.');
+                });
+                e.data.remove();
+                productItemColumn -= 1;
+            }
         }).end()
         .appendTo("#tbodyProductItem");
 
@@ -176,21 +181,37 @@ $("#btnSave").click(function () {
 
         var validity = $("#validity").val().split(" - ");
         var product = [];
-        for(var i = 0; i < productItemColumn; i += 1)
-        {
-            if ($("#trProductItem_" + i).find(".productID").val() != null)
+
+        $.each($(".trProductItem"), function () {
+            if ($(this).find(".productID").val() != null)
             {
-                product[i] = {
-                    id: $("#trProductItem_" + i).find(".productID").val(),
-                    name: $("#trProductItem_" + i).find(".productName").val(),
-                    origPrice: $("#trProductItem_" + i).find(".productOriginalPrice").val(),
-                    discount: $("#trProductItem_" + i).find(".productDiscount").val(),
-                    taxRate: $("#trProductItem_" + i).find(".productTaxRate").val(),
-                    amount: $("#trProductItem_" + i).find(".productAmount").val(),
-                    ps: $("#trProductItem_" + i).find(".productPS").val()
-                }
+                product.push({
+                    id: $(this).find(".productID").val(),
+                    name: $(this).find(".productName").val(),
+                    origPrice: $(this).find(".productOriginalPrice").val(),
+                    discount: $(this).find(".productDiscount").val(),
+                    taxRate: $(this).find(".productTaxRate").val(),
+                    amount: $(this).find(".productAmount").val(),
+                    ps: $(this).find(".productPS").val()
+                });
             }
-        }
+        });
+
+        //for(var i = 0; i < productItemColumn; i += 1)
+        //{
+        //    if ($("#trProductItem_" + i).find(".productID").val() != null)
+        //    {
+        //        product[i] = {
+        //            id: $("#trProductItem_" + i).find(".productID").val(),
+        //            name: $("#trProductItem_" + i).find(".productName").val(),
+        //            origPrice: $("#trProductItem_" + i).find(".productOriginalPrice").val(),
+        //            discount: $("#trProductItem_" + i).find(".productDiscount").val(),
+        //            taxRate: $("#trProductItem_" + i).find(".productTaxRate").val(),
+        //            amount: $("#trProductItem_" + i).find(".productAmount").val(),
+        //            ps: $("#trProductItem_" + i).find(".productPS").val()
+        //        }
+        //    }
+        //}
 
         //console.log(customer);
         //console.log(validity);
