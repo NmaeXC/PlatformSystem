@@ -19,11 +19,12 @@ if (isset($_POST['delete']))
     $old_amount = $_POST['oamount'];
     $old_attachment = $_POST['oattachment'];
     $old_remark = $_POST['oremark'];
-    $sql = "DELETE FROM `db_platform`.`expense_item` WHERE `id` = '{$id}' AND `type` = '{$old_type}' AND `amount` = '{$old_amount}' AND `remark` = '{$old_remark}' AND `date` = '{$old_date}' AND `site` = '{$old_site}' AND `attachment` = '{$old_attachment}'";
+    $sql = "DELETE FROM `db_platform`.`expense_item` WHERE `id` = '{$id}' AND `type` = '{$old_type}' AND `remark` = '{$old_remark}' AND `date` = '{$old_date}' AND `site` = '{$old_site}' AND `attachment` = '{$old_attachment}'";
+    //echo $sql;
     $mysqli -> query($sql);
     if(mysqli_affected_rows($mysqli) <= 0)
     {
-        exit("Edit Expense's Item Error");
+        exit("DELETE Expense's Item Error");
     }
 }
 else
@@ -46,7 +47,7 @@ else
         $new_attachment = $val ->_item -> attachment;
         $new_remark = $val ->_item -> remark;
 
-        $sql = "UPDATE `db_platform`.`expense_item` SET `type` = '{$new_type}', `amount` = '{$new_amount}', `remark` = '{$new_remark}', `date` = '{$new_date}', `site` = '{$new_site}', `attachment` = '{$new_attachment}' WHERE `id` = '{$id}' AND `type` = '{$old_type}' AND `amount` = '{$old_amount}' AND `remark` = '{$old_remark}' AND `date` = '{$old_date}' AND `site` = '{$old_site}' AND `attachment` = '{$old_attachment}'";
+        $sql = "UPDATE `db_platform`.`expense_item` SET `type` = '{$new_type}', `amount` = '{$new_amount}', `remark` = '{$new_remark}', `date` = '{$new_date}', `site` = '{$new_site}', `attachment` = '{$new_attachment}' WHERE `id` = '{$id}' AND `type` = '{$old_type}' AND `remark` = '{$old_remark}' AND `date` = '{$old_date}' AND `site` = '{$old_site}' AND `attachment` = '{$old_attachment}'";
         $mysqli -> query($sql);
     }
 
