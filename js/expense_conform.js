@@ -118,11 +118,11 @@ $("#btnAgreeLeave").click(function(){
         success : function(data){
             if(data === 0)
             {
-                alert('审核成功！');
+                alertMsg('审核成功！', 'success');
             }
             else
             {
-                alert("编号：\n" + data.join("\n") + "\n目前的状态不支持您的同意操作");
+                alertMsg("编号：\n" + data.join("\n") + "\n目前的状态不支持您的同意操作", "warning");
             }
         }
     })
@@ -149,11 +149,11 @@ $("#btnRejectLeave").click(function(){
         success : function(data){
             if(data === 0)
             {
-                alert('审核成功！');
+                alertMsg('审核成功！', "success");
             }
             else
             {
-                alert("编号：\n" + data.join("\n") + "\n目前的状态不支持您的驳回操作");
+                alertMsg("编号：\n" + data.join("\n") + "\n目前的状态不支持您的驳回操作", "warning");
             }
         }
     })

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <title>项目|详情</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.jqtimeline.css" />
+    <style type="text/css">
+        [parentpane]{}
+        .blur{
+            -webkit-filter:blur(3px);
+        }
+        .notehh{
+            width: 25%;
+            padding: 2px 0px;
+            text-align: center;
+        }
+        .mylist > div{
+            padding:7px 14px 7px 14px;
+        }
+        .mylist > div >p, strong{
+
+        }
+        #tbody_developer td{
+            text-align: center;
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="skin-blue">
+<!-- header logo: style can be found in header.less -->
+
+<header class="header">
+    <a href="../../index.html" class="logo">
+        <!-- Add the class icon to your logo image or logo icon to add the margining -->
+        Synthflex
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
+
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-right: 15px">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span class="nameUser"></span><i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header bg-light-blue">
+                            <img src="../../img/easy.jpg" class="img-circle imgUser" alt="User Image" />
+                            <p>
+                                <span class="nameUser"></span> - <span class="titleUser"></span>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="col-xs-6 text-center">
+                                <a href="../profile.html">我的资料</a>
+                            </div>
+                            <div class="col-xs-6 text-center">
+                                <a role="button" id="btnLogout">注销</a>
+                            </div>
+                        </li>
+                        <!-- Menu Footer-->
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>请您登录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" name="LoginForm" id="LoginForm" method="post" action="../../php/login.php" onSubmit="return InputCheck(this)">
+                    <div class="form-group ">
+                        <label for="username" class="col-md-2 col-md-offset-2 control-label">账号</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入账号" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-2 col-md-offset-2 control-label">密码</label>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" onkeydown="return clickBtnLogin()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnLogin">
+                    登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper row-offcanvas row-offcanvas-left" id="main">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="left-side sidebar-offcanvas">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="../../img/easy.jpg" class="img-circle imgUse" alt="User Image" />
+                </div>
+                <div class="pull-left info">
+                    <p>您好, <span id="givenName"></span></p>
+
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                    <span class="input-group-btn">
+                        <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul id="guide" class="sidebar-menu nav">
+                <li>
+                    <a href="../../index.html">
+                        <i class="fa fa-laptop"></i> <span>主页面</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../addressbook.html">
+                        <i class="fa fa-group"></i><span>通讯录</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-coffee"></i>
+                        <span>请假系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../leave/leave_new.html"><i class="fa fa-angle-double-right"></i>新建请假条</a></li>
+                        <li><a href="../leave/leave_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="../leave/leave_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-ticket"></i>
+                        <span>报销系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../expense/expense_new.html"><i class="fa fa-angle-double-right"></i>新建报销单</a></li>
+                        <li><a href="../expense/expense_history.html"><i class="fa fa-angle-double-right"></i>历史纪录</a></li>
+                        <li><a href="../expense/expense_conform.html"><i class="fa fa-angle-double-right"></i>审核</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-money"></i>
+                        <span>报价系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../quote/quote_new.html"><i class="fa fa-angle-double-right"></i>新建报价单</a></li>
+                        <li><a href="../quote/quote_record.html"><i class="fa fa-angle-double-right"></i>报价单记录</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-smile-o"></i>
+                        <span>客户系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../customer/customer.html"><i class="fa fa-angle-double-right"></i>客户管理</a></li>
+                        <li><a href="../customer/customer_new.html"><i class="fa fa-angle-double-right"></i>新建客户</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-gavel"></i>
+                        <span>产品系统</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../product/product.html"><i class="fa fa-angle-double-right"></i>产品管理</a></li>
+                        <li><a href="../product/product_new.html"><i class="fa fa-angle-double-right"></i>新建产品</a></li>
+                    </ul>
+                </li>
+                <li class="treeview active">
+                    <a href="">
+                        <i class="fa fa-tasks"></i>
+                        <span>项目工程</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="project_new.html"><i class="fa fa-angle-double-right"></i>新建项目</a></li>
+                        <li><a href="project_view.html"><i class="fa fa-angle-double-right"></i>项目概览</a></li>
+                        <li><a href="manhour_report.html"><i class="fa fa-angle-double-right"></i>工时申报</a></li>
+                        <li><a href="manhour_confirm.html"><i class="fa fa-angle-double-right"></i>工时审核</a></li>
+                        <li><a href="manhour_planning.html"><i class="fa fa-angle-double-right"></i>人力规划</a></li>
+                        <li><a href="planning_create.html"><i class="fa fa-angle-double-right"></i>创建规划</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <span id="hh1">项目工程</span>
+                <small id="hh2">项目详情</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="../../index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Project Detail</li>
+            </ol>
+        </section>
+        <section class="content tab-content">
+            <div class="row unstatic_option">
+                <div class="col-md-10">
+                    <div class="clearfix">
+                        <strong id="rate" style="font-size: 24px;" class="pull-left">
+                            -<sup style="font-size: 20px">%</sup>
+                        </strong>
+                        <strong id="done" class="pull-right" style="font-size: 24px;">
+                            -<sub style="font-size: 20px">h</sub>
+                        </strong>
+                    </div>
+                    <div class="progress progress-striped">
+                        <div id="process" class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 text-right " style="padding-top: 30px">
+                    <button class="btn btn-success" id="btnDone"><i class="fa fa-check-square-o" style="margin-right: 15px"></i>完成</button>
+                </div>
+                <div class="col-md-1" style="padding-top: 30px">
+                    <button class="btn btn-danger" id="btnCancel"><i class="fa fa-trash-o" style="margin-right: 15px"></i>废弃</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">基本信息</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-primary btn-sm" id="editCustomer"><i class="fa fa-edit"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="row mylist">
+                                <div class="col-md-3 text-right"><strong>项目名称</strong></div>
+                                <div class="col-md-6 text-left"><p id="project_name">-</p></div>
+                            </div>
+                            <div class="row mylist">
+                                <div class="col-md-3 text-right"><strong>项目编号</strong></div>
+                                <div class="col-md-6 text-left"><p id="project_id">-</p></div>
+                            </div>
+                            <div class="row mylist">
+                                <div class="col-md-3 text-right"><strong>负责人</strong></div>
+                                <div class="col-md-6 text-left"><p id="project_charge">-</p></div>
+                            </div>
+                            <div class="row mylist">
+                                <div class="col-md-3 text-right"><strong>预计工时</strong></div>
+                                <div class="col-md-6 text-left"><p id="project_manhours">-</p></div>
+                            </div>
+                            <div class="row mylist">
+                                <div class="col-md-3 text-right"><strong>起止时间</strong></div>
+                                <div class="col-md-6 text-left"><p id="project_time">0000-00-00</p></div>
+                            </div>
+                            <div class="row mylist">
+                                <div class="col-md-3 text-right"><strong>状态</strong></div>
+                                <div class="col-md-6 text-left"><p id="project_state">-</p></div>
+                            </div>
+                            <div class="row mylist">
+                                <div class="col-md-3 text-right"><strong>描述</strong></div>
+                                <div class="col-md-6 text-left"><p id="project_disc">-</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding: 50px 0">
+                    <div id="timeline"></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box box-success">
+                        <div class="box-header">
+                            <h3 class="box-title">开发比重（饼图）</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="pieChart" style="height: 200px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">开发人员</h3>
+                            <div class="box-tools pull-right">
+                                <button title="" class="btn btn-primary btn-sm" id="editProduct"><i class="fa fa-edit"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-striped" id="table_products">
+                                <thead>
+                                <tr>
+                                    <th class="notehh hidden charge_option" style="width: 8%"><small>修改</small></th>
+                                    <th class="notehh hidden charge_option" style="width: 8%"><small>删除</small></th>
+                                    <th class="notehh" style="width: 8%"><small>序号</small></th>
+                                    <th class="notehh" style="width: 10%"><small>姓名</small></th>
+                                    <th class="notehh" style="width: 10%"><small>员工号</small></th>
+                                    <th class="notehh unstatic_option" style="width: 10%"><small>分配工时</small></th>
+                                    <th class="notehh unstatic_option" style="width: 20%"><small></small></th>
+                                    <th class="notehh unstatic_option" style="width: 10%"><small>完成工时</small></th>
+                                    <th class="notehh hidden static_option" style="width: 10%"><small>占用工时</small></th>
+                                    <th class="notehh" style="width: 8%"><small>工时表</small></th>
+                                    <th class="notehh hidden charge_option" style="width: 8%"><small>可见权限</small></th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody_developer">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-success text-left hidden" id="btnAddProduct">
+                                <i class="fa fa-plus" style="margin-right: 15px"></i>
+                                添加
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="manhour_chart" class="row hidden">
+                <div class="col-md-12">
+                    <!-- Custom Tabs -->
+                    <div class="nav-tabs-custom">
+                        <ul id="manhourList" class="nav nav-tabs">
+
+                        </ul>
+                        <div id="manhourPanel" class="tab-content">
+
+                        </div><!-- /.tab-content -->
+                    </div><!-- nav-tabs-custom -->
+                </div>
+            </div>
+        </section>
+        <!-- Main content -->
+        <!-- /.content -->
+    </aside><!-- /.right-side -->
+</div><!-- ./wrapper -->
+
+<!-- add new calendar event modal -->
+
+
+<script src="../../js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../js/bootstrap.min.js"></script>
+<!-- FLOT CHARTS -->
+<script src="../../js/flot/jquery.flot.min.js" type="text/javascript"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="../../js/flot/jquery.flot.pie.min.js" type="text/javascript"></script>
+<!-- Timeline PLUGIN -->
+<script src="../../js/jquery.jqtimeline.js"></script>
+<script src="../../js/app.js"></script>
+<script src="../../js/project_detail.js"></script>
+</body>
+</html>

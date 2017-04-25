@@ -217,4 +217,4 @@
 
 	$.fn.bigAutocomplete = bigAutocomplete.autocomplete;
 
-})(jQuery)
+})(jQuery);

@@ -78,7 +78,7 @@
         //插入条目
         foreach ($expenseList as $value)
         {
-            $type = $value -> type;
+            $type = $value -> type_id;
             $amount = $value -> amount;
             $remark = $value -> remark;
             $date = $value -> date;

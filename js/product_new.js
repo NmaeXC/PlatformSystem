@@ -7,6 +7,7 @@ $(document).ready(function () {
 });
 
 $("#btnSubmit").click(function () {
+    $(this).attr("disabled", "disabled");
     $.ajax({
         url: "../../php/product_new.php",
         type : "POST",
@@ -16,10 +17,16 @@ $("#btnSubmit").click(function () {
             if (data == 0)
             {
                 alertMsg("新建产品成功", "success");
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500);
             }
             else
             {
                 alertMsg("新建产品失败", "warning");
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500);
             }
         }
     });

@@ -18,7 +18,7 @@
     var DateRangePicker = function (element, options, cb, onchangefunc) {
         var hasOptions = typeof options == 'object';
         var localeObject;
-
+        var onchangefunc = onchangefunc || null;
         //option defaults
 
         this.startDate = moment().startOf('day');
@@ -563,7 +563,11 @@
 
         clickApply: function (e) {
             this.updateInputText();
-            this.onchangefunc();    //为了在每次选择时间段后执行而添加的事件
+            if(this.onchangefunc != null){
+                //为了在每次选择时间段后执行而添加的事件
+                this.onchangefunc();
+            }
+
             this.hide();
         },
 

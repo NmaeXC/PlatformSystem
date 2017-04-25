@@ -10,6 +10,7 @@ include "comm.php";
 include "conn.php";
 
 $username = $_SESSION["username"];
+$data = null;
 
 //确定受理人
 $rs_sql = $mysqli -> query("SELECT name, top, uid FROM user WHERE username = '{$username}'");
@@ -103,7 +104,7 @@ else
         //插入条目
         foreach ($expenseList as $value)
         {
-            $type = $value -> type;
+            $type = $value -> type_id;
             $amount = $value -> amount;
             $remark = $value -> remark;
             $date = $value -> date;
@@ -123,7 +124,10 @@ else
         exit("Error");
     }
 
-    echo '0';
+    $data['state'] = 'ok';
+    $data['number'] = $number;
+
+    echo json_encode($data);
 
 }
 

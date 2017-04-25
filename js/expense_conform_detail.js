@@ -82,11 +82,11 @@
             success : function(data){
                 if(data === 0)
                 {
-                    alert('审核成功！');
+                    alertMsg('审核成功！', "success");
                 }
                 else
                 {
-                    alert("编号：\n" + data.join("\n") + "\n目前的状态不支持您的同意操作");
+                    alertMsg("编号：\n" + data.join("\n") + "\n目前的状态不支持您的同意操作", "warning");
                 }
             }
         });
@@ -98,7 +98,7 @@
         if (rejectInfo){
             var conformed = [];
             conformed[0] = number;
-            var rejectInfo = $("#rejectInfo").val();
+            // var rejectInfo = $("#rejectInfo").val();
             $.ajax({
                 url : "../../php/expenseConform.php",
                 type : "POST",
@@ -108,11 +108,11 @@
                 success : function(data){
                     if(data === 0)
                     {
-                        alert('驳回成功！');
+                        alertMsg('驳回成功！', 'success');
                     }
                     else
                     {
-                        alert("编号：\n" + data.join("\n") + "\n目前的状态不支持您的驳回操作");
+                        alertMsg("编号：\n" + data.join("\n") + "\n目前的状态不支持您的驳回操作", "warning");
                     }
                 }
             });

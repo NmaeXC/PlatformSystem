@@ -12,7 +12,7 @@ $username = $_SESSION["username"];
 
 $sql = "SELECT uid FROM user WHERE username = '{$username}'";
 $rs_sql = $mysqli -> query($sql);
-if($rs = $rs = mysqli_fetch_array($rs_sql))
+if($rs = mysqli_fetch_array($rs_sql))
 {
     $uid = $rs[0];
 }
@@ -21,7 +21,8 @@ else
     echo "Get User Info Error";
 }
 
-//报销单历史纪录
+
+
 $sql = "SELECT expense.number number, user.name accepted, submitDate, state FROM expense, user WHERE expense.uid = '{$uid}' AND user.uid = expense.accepted ORDER BY expense.id DESC";
 $rs_sql = $mysqli -> query($sql);
 

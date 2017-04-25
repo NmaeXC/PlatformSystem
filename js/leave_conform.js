@@ -84,9 +84,9 @@ $("#btnAgreeLeave").click(function(){
         var column = $(this).parent().parent().parent();
         column.find("td.state").html("<span class='glyphicon glyphicon-ok'></span>");
         conformed[sum] =column.find("td.number").text();
-        alert(column.find("td.number").text());
+        alertMsg(column.find("td.number").text(), "info");
         sum++;
-    })
+    });
 
     $.ajax({
         url : "../../php/leaveconform.php",
@@ -98,16 +98,16 @@ $("#btnAgreeLeave").click(function(){
         success : function(data){
             if(data == '')
             {
-                alert('审核成功！');
+                alertMsg('审核成功！', 'success');
             }
             else
             {
-                alert("编号：\n" + data.join("\n") + "\n已经同意,请勿再次操作");
+                alertMsg("编号：\n" + data.join("\n") + "\n已经同意,请勿再次操作", "warning");
             }
         }
     })
 
-})
+});
 
 $("#btnRejectLeave").click(function(){
     var sum = 0;
@@ -128,11 +128,11 @@ $("#btnRejectLeave").click(function(){
         success : function(data){
             if(data == '')
             {
-                alert('审核成功！');
+                alertMsg('审核成功！', 'success');
             }
             else
             {
-                alert("编号：\n" + data.join("\n") + "\n已经驳回,请勿再次操作");
+                alertMsg("编号：\n" + data.join("\n") + "\n已经驳回,请勿再次操作", "warning");
             }
         }
     })

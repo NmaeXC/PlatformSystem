@@ -26,7 +26,6 @@ $product = json_decode($_POST["product"]);
 
 //生成报价单号 demo:Q2016Q3M08001
 $idHead = "Q".date("Y")."Q".ceil(date("m")/3)."M".date("m");
-
 $sql = "SELECT id, no FROM quote ORDER BY no DESC limit 0,1";
 $rs_sql = $mysqli -> query($sql);
 if($rs = mysqli_fetch_array($rs_sql))
@@ -58,11 +57,11 @@ if(mysqli_affected_rows($mysqli) <= 0)
 }
 foreach($product as $key=>$item)
 {
-    $product_id = $item -> id;
+    $product_id = $item -> product_id;
     $product_name = $item -> name;
-    $product_origPrice = $item -> origPrice;
+    $product_origPrice = $item -> price;
     $product_discount = $item -> discount;
-    $product_taxRate = $item -> taxRate;
+    $product_taxRate = $item -> tax_rate;
     $product_amount = $item -> amount;
     $product_ps = $item -> ps;
     $sql = "INSERT INTO quote_products (id, quote_id, product_id, name, price, discount, tax_rate, amount, ps) VALUES ('{$key}', '{$id}', '{$product_id}', '{$product_name}', '{$product_origPrice}', '{$product_discount}', '{$product_taxRate}', '{$product_amount}', '{$product_ps}')";
@@ -74,5 +73,9 @@ foreach($product as $key=>$item)
         exit("INSERT INTO quote_products Error\nProduct ID:".$product_id);
     }
 }
+$data = new stdClass();
+$data -> tag = 0;
+$data -> quote_id = $id;
+$data -> contact_id = $contact_id;
 
-echo 0;
+echo json_encode($data);

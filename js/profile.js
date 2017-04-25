@@ -42,11 +42,11 @@ $("#btnSaveAlterMsg").click(function(){
         //async : false,
         success : function(data){
             if (data == "0") {
-                alert("保存成功！");
+                alertMsg("保存成功！", "success");
             }
             else
             {
-                alert("头像保存失败，请重试...");
+                alertMsg("头像保存失败，请重试...", "warning");
             }
 
             window.location.reload();
@@ -65,7 +65,7 @@ $(window).load(function() {
     {
         thumbBox: '.thumbBox',
         spinner: '.spinner',
-        imgSrc: '../img/easy.jpg'
+        imgSrc: '/platformsystem/img/easy.jpg'
     }
     var cropper = $('.imageBox').cropbox(options);
     $('#inputImg').on('change', function(){

@@ -10,7 +10,7 @@ $(document).ready(function () {
 var contact_colume = 0;     //联系人数
 
 $("#key").bigAutocomplete({
-    url: "../../php/auto_customer.php",
+    url: "../../php/autocomplete.php?type=customer",
     callback: function(data){
         if(typeof(data.id) != "undefined"){
             $("#tbody_contact").empty();
@@ -23,10 +23,10 @@ $("#key").bigAutocomplete({
                 dataType: "json",
                 success: function(data){
                     if (data.customer){
-                        $("#customer_name").text(data.customer['name']);
-                        $("#customer_id").text(data.customer['id']);
-                        $("#customer_tele").text(data.customer['tele']);
-                        $("#customer_email").text(data.customer['email']);
+                        $("#customer_name").text(data.customer['name'] == ""? "-": data.customer['name']);
+                        $("#customer_id").text(data.customer['id'] == ""? "-": data.customer['id']);
+                        $("#customer_tele").text(data.customer['tele'] == ""? "-": data.customer['tele']);
+                        $("#customer_email").text(data.customer['email'] == ""? "-": data.customer['email']);
                         $("#customer_addr").text(data.customer['addr0'] + " " + data.customer['addr1']);
 
                         //for (var m in data.customer){

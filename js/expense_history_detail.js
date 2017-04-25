@@ -54,7 +54,20 @@
                     case "4" :
                         //驳回
                         $('#btnPrint').removeClass('hidden');
-                        $("#editItem").addClass('hidden');
+                        $("#btnReedit").removeClass('hidden').click(function () {
+                            $.ajax({
+                                url: "../../php/expense_edit_item.php",
+                                type: "POST",
+                                data: {expenseID : number, action: 'reedit'}
+                            }).done(function (data) {
+                                if (data === '0'){
+                                    window.location.reload();
+                                }else{
+                                    alertMsg('重新编辑申请失败，请刷新页面重新尝试或联系管理员');
+                                }
+
+                            });
+                        });
                         break;
                     case "5" :
                         //已付款
@@ -120,8 +133,8 @@
     $("#editItem").click(function () {
         $("#table_item").find(".hidden").removeClass("hidden").addClass("editing");
         $("#btnAddItem").removeClass("hidden").addClass("editing");
-        $(this).addClass("disabled");
-        $("#saveItem").removeClass("disabled");
+        $(this).addClass("disabled").attr('disabled','disabled');
+        $("#saveItem").removeClass("disabled").removeAttr('disabled');
     });
 
     //保存条目修改
@@ -131,7 +144,7 @@
                 EditList[i]._item = {
                     date : $("#" + EditList[i].n).find('input.date:first').val(),
                     site : $("#" + EditList[i].n).find('.site:first').val(),
-                    type : $("#" + EditList[i].n).find('.type:first').val(),
+                    type_id : $("#" + EditList[i].n).find('.type:first').val(),
                     amount : $("#" + EditList[i].n).find('.amount:first').val(),
                     attachment : $("#" + EditList[i].n).find('.attachment:first').val(),
                     remark : $("#" + EditList[i].n).find('.remark:first').val()
@@ -144,7 +157,7 @@
             addList.push({
                 date : $(this).find('input.date:first').val(),
                 site : $(this).find('.site:first').val(),
-                type : $(this).find('.type:first').val(),
+                type_id : $(this).find('.type:first').val(),
                 amount : $(this).find('.amount:first').val(),
                 attachment : $(this).find('.attachment:first').val(),
                 remark : $(this).find('.remark:first').val()
@@ -172,8 +185,8 @@
 
         $("#btnAddItem").find(".editing").removeClass("editing").addClass("hidden");
         $("#table_item").find(".editing").removeClass("editing").addClass("hidden");
-        $(this).addClass("disabled");
-        $("#editItem").removeClass("disabled");
+        $(this).addClass("disabled").attr('disabled','disabled');
+        $("#editItem").removeClass("disabled").removeAttr('disabled');
     });
 
     //编辑报销单条目
@@ -284,7 +297,7 @@
             $.ajax({
                 url: "../../php/expense_edit_item.php",
                 type : "POST",
-                data : {'delete': 1, 'expenseID': number, 'odate': item.date, 'osite': item.site, 'otype': item.type_id,'oamount': item.amount,'oattachment': item.attachment,'oremark': item.remark},
+                data : {'delete_only': 1, 'expenseID': number, 'odate': item.date, 'osite': item.site, 'otype': item.type_id,'oamount': item.amount,'oattachment': item.attachment,'oremark': item.remark},
                 cache : false,
                 success: function(data){
                     if(data === "0")
@@ -367,11 +380,11 @@
 
     });
 
-    function removeAddItem(){
-        var i = 1;
-        var b = 2;
-        //$(para).parent().parent().remove();
-    }
+    //function removeAddItem(){
+    //    var i = 1;
+    //    var b = 2;
+    //    //$(para).parent().parent().remove();
+    //}
 
     //$("#btnAddItem").click(function () {
     //    $("#edit_item_date").val('');
@@ -419,7 +432,7 @@
             data: {'submit': true, 'expenseID': number},
             success: function(data){
                 if (data === "0"){
-                    alert("提交成功");
+                    alertMsg("提交成功", "success");
                     window.location('expense_history.html');
                 }
                 else{

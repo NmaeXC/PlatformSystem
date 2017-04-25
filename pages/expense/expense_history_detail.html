@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
     <title>报销|详情</title>
 
     <!-- Bootstrap -->
@@ -210,6 +212,21 @@
                         <li><a href="../product/product_new.html"><i class="fa fa-angle-double-right"></i>新建产品</a></li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-tasks"></i>
+                        <span>项目工程</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="../project/project_new.html"><i class="fa fa-angle-double-right"></i>新建项目</a></li>
+                        <li><a href="../project/project_view.html"><i class="fa fa-angle-double-right"></i>项目概览</a></li>
+                        <li><a href="../project/manhour_report.html"><i class="fa fa-angle-double-right"></i>工时申报</a></li>
+                        <li><a href="../project/manhour_confirm.html"><i class="fa fa-angle-double-right"></i>工时审核</a></li>
+                        <li><a href="../project/manhour_planning.html"><i class="fa fa-angle-double-right"></i>人力规划</a></li>
+                        <li><a href="planning_create.html"><i class="fa fa-angle-double-right"></i>创建规划</a></li>
+                    </ul>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -236,7 +253,7 @@
                             <h3 class="box-title">基本信息</h3>
                             <div class="box-tools pull-right">
                                 <button title="" class="btn btn-primary btn-sm" id="editExpense"><i class="fa fa-edit"></i></button>
-                                <button title="" class="btn btn-default btn-sm disabled" id="saveExpense"><i class="fa fa-save"></i></button>
+                                <button title="" class="btn btn-default btn-sm disabled" id="saveExpense" disabled="disabled"><i class="fa fa-save"></i></button>
                             </div>
                         </div>
                         <div class="box-body">
@@ -267,7 +284,7 @@
                             <h3 class="box-title">报销人信息</h3>
                             <div class="box-tools pull-right">
                                 <a href="../profile.html" class="btn btn-primary btn-sm" style="color: white"><i class="fa fa-edit"></i></a>
-                                <button title="" class="btn btn-default btn-sm disabled"><i class="fa fa-save"></i></button>
+                                <button title="" class="btn btn-default btn-sm disabled" disabled="disabled"><i class="fa fa-save"></i></button>
                             </div>
                         </div>
                         <div class="box-body">
@@ -298,7 +315,7 @@
                             <h3 class="box-title">条目列表</h3>
                             <div class="box-tools pull-right">
                                 <button title="" class="btn btn-primary btn-sm" id="editItem"><i class="fa fa-edit"></i></button>
-                                <button title="" class="btn btn-default btn-sm disabled" id="saveItem"><i class="fa fa-save"></i></button>
+                                <button title="" class="btn btn-default btn-sm disabled" id="saveItem" disabled><i class="fa fa-save" disabled="disabled"></i></button>
                             </div>
                         </div>
                         <div class="box-body">
@@ -336,6 +353,10 @@
                     <button class="btn btn-primary btn-lg hidden" id="btnPrint">
                         <i class="fa fa-print" style="margin-right: 15px"></i>
                         打印
+                    </button>
+                    <button class="btn btn-warning btn-lg hidden" id="btnReedit">
+                        <i class="fa fa-edit" style="margin-right: 15px"></i>
+                        重新编辑
                     </button>
                 </div>
             </div>

@@ -64,7 +64,7 @@
     });
 
     function showLeaveRemainTip(){
-        $("#leaveRemaindTip").text("提示：您的年休假余额为 " + Math.round(leaveRemainer / 8) +  " 天 " + (leaveRemainer % 8).toFixed(1) + " 小时");
+        $("#leaveRemaindTip").text("提示：您的年休假余额为 " + Math.floor(leaveRemainer / 8) +  " 天 " + Math.floor(leaveRemainer % 8) + " 小时");
         if (leavetime > leaveRemainer)
         {
             $("#overstep").show();
@@ -83,22 +83,26 @@
         var m1 = startDate.getHours() * 60 + startDate.getMinutes();
         var m2 = endDate.getHours() * 60 + endDate.getMinutes();
         //确定与工作时间相交的时间区间
-        if (m1 <= (8 * 60 + 30) || m1 >= 18 * 60){
+        if (m1 <= (8 * 60 + 30)){
             m1 = 0;
         }else if (m1 >= (12 * 60) && m1 <= (13 * 60 + 30)){
             m1 = 3.5;
         }else if(m1 <= (12 * 60)){
             m1 = (m1 - (8 * 60 + 30)) / 60;
+        }else if(m1 >= 18 * 60){
+            m1 = 8;
         }else{
             m1 = (m1 - (8 * 60 + 30) - (1.5 * 60)) / 60;
         }
 
-        if (m2 <= (8 * 60 + 30) || m2 >= 18 * 60){
+        if (m2 <= (8 * 60 + 30)){
             m2 = 0;
         }else if (m2 >= (12 * 60) && m2 <= (13 * 60 + 30)){
             m2 = 3.5;
         }else if(m2 <= (12 * 60)){
             m2 = (m2 - (8 * 60 + 30)) / 60;
+        }else if(m2 >= 18 * 60){
+            m2 = 8;
         }else{
             m2 = (m2 - (8 * 60 + 30) - (1.5 * 60)) / 60;
         }
@@ -134,31 +138,33 @@
         if ($("#time_interval").val() == "")
         {
             //没有填写时间区间
-            alert("请填写时间区间");
+            alertMsg("请填写时间区间", "danger");
             $("#time_interval").focus();
         }
         else if($("#reason").val() == "")
         {
             //没有填写请假原因
-            alert("请填写请假原因");
+            alertMsg("请填写请假原因", "danger");
             $("#reason").focus();
         }
         else if ($("#LeaveFile").val() == "")
         {
             //没有上传附加
-            alert("请上传附件");
+            alertMsg("请上传附件", "danger");
             $("#LeaveFile").focus();
         }else if ($("#tip1").text() == "结束日期必须大于开始日期！")
         {
             //结束日期必须大于开始日期
-            alert("结束日期必须大于开始日期, 请正确填写！");
+            alertMsg("结束日期必须大于开始日期, 请正确填写！", "danger");
         }else if($("#overstep").css('display') != 'none')
         {
             //年休假超出限额
-            alert("年休假超出限额");
+            alertMsg("年休假超出限额", "danger");
         }
         else
         {
+            $(this).attr("disabled", "disabled");
+
             // alert($("#formLeave").serialize());
             var form_date = new FormData(document.getElementById("formLeave"));
 
@@ -173,12 +179,12 @@
                 success : function(data){
                     if(data == "0")
                     {
-                        alert("提交成功!");
+                        alertMsg("提交成功!", "success");
                         window.location.href = "leave_history.html";
                     }
                     else
                     {
-                        alert("提交失败，请重试...");
+                        alertMsg("提交失败，请重试...", "warning");
                     }
 
                 }

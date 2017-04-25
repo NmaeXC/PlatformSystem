@@ -147,7 +147,10 @@
 
 		// echo date('Y-m-d');
 
-		$sql = "INSERT INTO leavenote (number, uid, name, startTime, endTime, reason, attachment, remark, accepted, submitDate, state) VALUES ('{$number}', '{$uid}', '{$name}', '{$startTime}', '{$endTime}', '{$reason}', '{$file_name}', '{$remark}','{$accepted}','" . date('Y-m-d') . "','未处理')";
+
+		$count = manhourCount($startTime, $endTime);
+
+		$sql = "INSERT INTO leavenote (number, uid, name, startTime, endTime, reason, attachment, remark, accepted, submitDate, state, count) VALUES ('{$number}', '{$uid}', '{$name}', '{$startTime}', '{$endTime}', '{$reason}', '{$file_name}', '{$remark}','{$accepted}','" . date('Y-m-d') . "','未处理', {$count})";
 		// echo $sql;
 		$rs = $mysqli -> query($sql);
 
@@ -157,6 +160,38 @@
 		else
 
 			echo "1";
+	}
+
+	function manhourCount($startT, $endT)
+	{
+		$start = split("[- :]",$startT);
+		$end = split("[- :]",$endT);
+		$m1 = intval($start[3]) * 60 + intval($start[4]);
+		$m2 = intval($end[3]) * 60 + intval($end[4]);
+		//确定与工作时间相交的时间区间
+		if ($m1 <= (8 * 60 + 30) || $m1 >= 18 * 60){
+			$m1 = 0;
+		}else if ($m1 >= (12 * 60) && $m1 <= (13 * 60 + 30)){
+			$m1 = 3.5;
+		}else if($m1 <= (12 * 60)){
+			$m1 = ($m1 - (8 * 60 + 30)) / 60;
+		}else{
+			$m1 = ($m1 - (8 * 60 + 30) - (1.5 * 60)) / 60;
+		}
+
+		if ($m2 <= (8 * 60 + 30) || $m2 >= 18 * 60){
+			$m2 = 0;
+		}else if ($m2 >= (12 * 60) && $m2 <= (13 * 60 + 30)){
+			$m2 = 3.5;
+		}else if($m2 <= (12 * 60)){
+			$m2 = ($m2 - (8 * 60 + 30)) / 60;
+		}else{
+			$m2 = ($m2 - (8 * 60 + 30) - (1.5 * 60)) / 60;
+		}
+
+		$t = ($m2 - $m1) < 0? ($m2 - $m1 + 8) : ($m2 - $m1);
+		$d = floor((strtotime($endT) - strtotime($startT)) / (60 * 60 * 24)) * 8;
+		return $t + $d;
 	}
 
 ?>

@@ -52,7 +52,7 @@
                 $("#end").text(nullornot(data.quote.validity_end));
                 $(".nameUser").text(nullornot(data.userInfo.name));
                 $(".teleUser").text(nullornot(data.userInfo.tele));
-                $(".foxUser").text("-");
+                $(".foxUser").text(nullornot(data.userInfo.fox));
                 $(".emailUser").text(nullornot(data.userInfo.email));
                 var sum = 0;
                 for(var i in data.products)
@@ -63,7 +63,28 @@
                     $("<td></td>").text(data.products[i].product_id).appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].name).appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].price).appendTo("#" + trID);
-                    var taxRate = new Number(data.products[i].tax_rate);
+                    //var taxRate = new Number(data.products[i].tax_rate);
+                    var taxRate = function(val){
+                        var rate = {
+                            '0': function () {
+                                return 0;
+                            },
+                            '1': function () {
+                                return 0.06;
+                            },
+                            '2': function () {
+                                return 0.17;
+                            }
+                        };
+                        if (typeof(rate[val]) === "function"){
+                            return rate[val]();
+                        }
+                        else
+                        {
+                            return NaN;
+                            console.log("taxRate Input Error");
+                        }
+                    }(data.products[i].tax_rate);
                     //$("<td></td>").text(data.products[i].discount).appendTo("#" + trID);
                     $("<td></td>").text((taxRate * 100) + "%").appendTo("#" + trID);
                     var price = new Number(data.products[i].price) * (taxRate + 1);

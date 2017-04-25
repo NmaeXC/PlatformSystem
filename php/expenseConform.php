@@ -26,7 +26,7 @@ if(isset($_POST["init"]))
 
 
     //财务审核人员将额外获取已通过上司审核的报销单（财务审核人员暂定为username=l0002）
-    if($username == 'l0002') {
+    if(strcasecmp($username, 'l0002') == 0) {
         $sql = "SELECT number, user.name, submitDate, state FROM expense LEFT JOIN user ON user.uid = expense.uid WHERE state !=1 AND state != 2 AND expense.accepted != '{$username}'";
         $rs_sql = $mysqli -> query($sql);
         while($rs = mysqli_fetch_array($rs_sql))
@@ -37,7 +37,7 @@ if(isset($_POST["init"]))
     }
 
     //统计人员将获得所有已提交的报销单 （统计人员暂定为username=t0011）
-    if($username == 't0011')
+    if(strcasecmp($username, 't0011') == 0 || strcasecmp($username, 'X0001') == 0)
     {
         $sql = "SELECT number, user.name, submitDate, state FROM expense LEFT JOIN user ON user.uid = expense.uid WHERE state !=1 AND expense.accepted != '{$username}'";
         $rs_sql = $mysqli -> query($sql);
@@ -117,6 +117,7 @@ else
                     $submitName = $rs["submitName"];
                     $subject = "报销单驳回提醒（来自：".$acceptedName.":".$_POST["rejectInfo"]."）";
                     $body = "尊敬的".$submitName."：\n    您提交的报销单(".$value.")未能通过审核。(点击进入个人历史记录查看  http://10.0.0.2:880/PlatformSystem/pages/expense/expense_history.html)。";
+                    echo "mailTo: $mailTo\nsubject: $subject\nbody: $body";
                     mail($mailTo, $subject, $body);
                 }
                 else

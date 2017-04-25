@@ -27,7 +27,7 @@ $(document).ready(function () {
 
 $('#validity').daterangepicker();
 $("#customerName").bigAutocomplete({
-    url: "../../php/auto_customer.php",
+    url: "../../php/autocomplete.php?type=customer",
     callback: function(data){
         var customerId = data.id;
         $("#customerID").text(customerId);
@@ -46,6 +46,16 @@ $("#customerName").bigAutocomplete({
 });
 
 var currency = "RMB";
+var customer = '';
+var validity = '';
+var product = [];
+
+var oldCustomer = {};
+var oldValidity = '';
+var oldCurrency = '';
+var oldProduct = '';
+var number = '';
+
 //选择货币类型
 $("#currencyRMB").click(function () {
     $(".rmb-usd").text("¥");
@@ -174,51 +184,35 @@ $("#btnSave").click(function () {
         alertMsg("请填写有效期区间", "warning");
     }
     else{
-        var customer = {
+
+        $(this).attr("disabled", "disabled");
+
+        customer = {
             id: $("#customerID").text(),
             contact: $("#customerContact").val()
         };
 
-        var validity = $("#validity").val().split(" - ");
-        var product = [];
+        validity = $("#validity").val().split(" - ");
+        product = [];
 
         $.each($(".trProductItem"), function () {
             if ($(this).find(".productID").val() != null)
             {
                 product.push({
-                    id: $(this).find(".productID").val(),
+                    product_id: $(this).find(".productID").val(),
                     name: $(this).find(".productName").val(),
-                    origPrice: $(this).find(".productOriginalPrice").val(),
+                    price: $(this).find(".productOriginalPrice").val(),
                     discount: $(this).find(".productDiscount").val(),
-                    taxRate: $(this).find(".productTaxRate").val(),
+                    tax_rate: $(this).find(".productTaxRate").val(),
                     amount: $(this).find(".productAmount").val(),
                     ps: $(this).find(".productPS").val()
                 });
             }
         });
 
-        //for(var i = 0; i < productItemColumn; i += 1)
-        //{
-        //    if ($("#trProductItem_" + i).find(".productID").val() != null)
-        //    {
-        //        product[i] = {
-        //            id: $("#trProductItem_" + i).find(".productID").val(),
-        //            name: $("#trProductItem_" + i).find(".productName").val(),
-        //            origPrice: $("#trProductItem_" + i).find(".productOriginalPrice").val(),
-        //            discount: $("#trProductItem_" + i).find(".productDiscount").val(),
-        //            taxRate: $("#trProductItem_" + i).find(".productTaxRate").val(),
-        //            amount: $("#trProductItem_" + i).find(".productAmount").val(),
-        //            ps: $("#trProductItem_" + i).find(".productPS").val()
-        //        }
-        //    }
-        //}
-
-        //console.log(customer);
-        //console.log(validity);
-        //console.log(product);
-
         $.ajax({
             url: "../../php/quote_save.php",
+            dataType: "json",
             data: {customer: JSON.stringify(customer),
                 validity: validity,
                 currency: currency,
@@ -227,9 +221,12 @@ $("#btnSave").click(function () {
             type : "POST",
             cache : false,
             success: function (data) {
-                if (data == 0)
+                if (data.tag == '0')
                 {
-                    alertMsg("报价单保存成功！", "success");
+                    alert("报价单保存成功！");
+                    number = data.quote_id;
+                    switchMode();
+                    //window.location.href = "quote_detail.html?x=" + data.quote_id + "&c=" + data.contact_id;
                 }
                 else
                 {
@@ -239,5 +236,161 @@ $("#btnSave").click(function () {
         });
     }
 });
+
+function switchMode(){
+    oldCustomer.id =  customer.id;
+    oldCustomer.contact = customer.contact;
+    oldValidity = validity.concat();
+    oldCurrency = currency;
+    oldProduct = product.concat();
+
+    $("#btnSave").unbind('click').click(function () {
+        if($("#customerID").text() === ""){
+            alertMsg("请填写目标客户", "warning");
+        }
+        else if($("#validity").val() === ""){
+            alertMsg("请填写有效期区间", "warning");
+        }else{
+            $(this).attr("disabled", "disabled");
+
+            customer = {
+                id: $("#customerID").text(),
+                contact: $("#customerContact").val()
+            };
+
+            validity = $("#validity").val().split(" - ");
+            product = [];
+
+            $.each($(".trProductItem"), function () {
+                if ($(this).find(".productID").val() != null)
+                {
+                    product.push({
+                        product_id: $(this).find(".productID").val(),
+                        name: $(this).find(".productName").val(),
+                        price: $(this).find(".productOriginalPrice").val(),
+                        discount: $(this).find(".productDiscount").val(),
+                        tax_rate: $(this).find(".productTaxRate").val(),
+                        amount: $(this).find(".productAmount").val(),
+                        ps: $(this).find(".productPS").val()
+                    });
+                }
+            });
+
+            var chged = false;
+            var faild = false;
+            if (customer.id != oldCustomer.id || customer.contact != oldCustomer.contact){
+                chged = true;
+                $.ajax({
+                    url: "../../php/quote_edit_customer.php",
+                    type: "POST",
+                    data: {'newCustomerId': customer.id, 'newContactId': customer.contact, 'quote': number},
+                    success: function(data){
+                        if (data !== "0"){
+                            faild = true;
+                        }
+                    }
+                });
+            }
+
+            if(validity[0] != oldValidity[0] || validity[1] != oldValidity[1] || currency != oldCurrency){
+                chged = true;
+                $.ajax({
+                    url: "../../php/quote_edit_quote.php",
+                    type: "POST",
+                    data: {'validity': validity, 'c': currency, 'quote': number},
+                    success: function(data){
+                        if (data !== "0"){
+                            faild = true;
+                        }
+                    }
+                });
+            }
+
+            var editList = {};
+            var addList = {};
+            var deleteList = [];
+
+            for (var i = 0; i < (oldProduct.length > product.length? oldProduct.length: product.length); i++){
+                if (i >= oldProduct.length){
+                    //新增项
+                    addList[i] = product[i];
+
+                }else if (i >= product.length){
+                    //删除项
+                    deleteList.push(i);
+
+                }else{
+                    //修改项
+                    if (JSON.stringify(product[i]) != JSON.stringify(oldProduct[i])){
+                        editList[i] = product[i];
+                    }
+                }
+            }
+            if(!$.isEmptyObject(editList)){
+                chged = true;
+                $.ajax({
+                    url: "../../php/quote_edit_product.php",
+                    type: "POST",
+                    dataType: 'json',
+                    data: {editList: JSON.stringify(editList), quote_id: number, action: 'edit'},
+                    success: function(data){
+                        if (data.tag !== "ok"){
+                            faild = true;
+                        }
+                    }
+                });
+            }
+            if (!$.isEmptyObject(addList)){
+                chged = true;
+                $.ajax({
+                    url: "../../php/quote_edit_product.php",
+                    type: "POST",
+                    dataType: "json",
+                    data : {quote_id : number, action: 'add_list', addList: JSON.stringify(addList)},
+                    success: function (data) {
+                        if (data.tag !== 'ok'){
+                            faild = true;
+                        }
+
+                    }
+                });
+            }
+
+            if (deleteList.length > 0){
+                chged = true;
+                $.ajax({
+                    url: "../../php/quote_edit_product.php",
+                    type: "POST",
+                    dataType: "json",
+                    data : {quote_id : number, action: 'delete_list', deleteList: JSON.stringify(deleteList)},
+                    success: function (data) {
+                        if (data.tag !== 'ok'){
+                            faild = true;
+                        }
+
+                    }
+                });
+            }
+
+            if (!chged){
+                alertMsg("内容未修改", "danger");
+                $(this).removeAttr("disabled");
+            }else if (faild){
+                alertMsg("保存失败", "warning");
+            }else{
+                oldCustomer.id =  customer.id;
+                oldCustomer.contact = customer.contact;
+                oldValidity = validity.concat();
+                oldCurrency = currency;
+                oldProduct = product.concat();
+                alertMsg("已保存，修改成功", "success");
+                $(this).removeAttr("disabled");
+            }
+
+        }
+
+    }).removeAttr('disabled');
+
+}
 
 

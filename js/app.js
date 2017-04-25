@@ -11,7 +11,7 @@
  *Date: 2015
  */
 
-var projectName = "PlatformSystem";
+var projectName = "platformsystem";
 
 function logout(){
     $.ajax({
@@ -22,15 +22,15 @@ function logout(){
         success : function(data){
             if(data == 0)
             {
-                alert('注销成功！');
+                alertMsg('注销成功！', 'success');
             }
             else
             {
-                alert("注销失败，请重试");
+                alertMsg("注销失败，请重试", 'warning');
             }
             window.location.reload();
         }
-    })
+    });
 }
 
 //获取用户的个人信息
@@ -42,7 +42,7 @@ function freshMyPage(){
         //async : false,
         dataType : 'json',
         success : showMyPage
-    })
+    });
 }
 
 //将个人信息摆放至页面，否则说明用户未登录，提示其登录
@@ -57,7 +57,7 @@ function showMyPage(data)
     else if(data.init == true)
     {
         //检测到用户是第一次登录，提示用户完善信息
-        alert("请联系管理员初始化个人信息后再尝试登录");
+        alertMsg("请联系管理员初始化个人信息后再尝试登录", "danger");
         logout();
     }
     else
@@ -83,13 +83,13 @@ $("#btnLogin").click(function(){
     //检查账号密码输入
     if (LoginForm.username.value == "")
     {
-        alert("请输入用户名!");
+        alertMsg("请输入用户名!", "danger");
         LoginForm.username.focus();
         return (false);
     }
     if (LoginForm.password.value == "")
     {
-        alert("请输入密码!");
+        alertMsg("请输入密码!", "danger");
         LoginForm.password.focus();
         return (false);
     }
@@ -109,12 +109,20 @@ $("#btnLogin").click(function(){
             }
             else
             {
-                alert("登录失败，请重试");
+                alertMsg("登录失败，请重试", "warning");
                 $("#LoginForm").find("#password").val("");
             }
         }
-    })
-})
+    });
+});
+
+//若有错误返回上一版本
+$("<div></div>").css({
+    position:'absolute',
+    bottom:'0'
+}).append("<small>如果出现系统Bug，可尝试使用<a role='link' href='" + (window.location.href).replace(projectName, projectName + '_previous') + "'>上一版本</a></small>")
+    .appendTo("aside.left-side");
+
 //Enter键提交登录
 function clickBtnLogin()
 {
@@ -127,11 +135,12 @@ function clickBtnLogin()
 //显示提示信息
 function alertMsg(msg, type)
 {
-    var content = "<div id='divAlert' class='alert alert-" + type + "'>" +
+    var content = $("<div id='divAlert' class='alert alert-" + type + "'>" +
         "<a href='#' class='close' data-dismiss='alert'>&times;</a> " +
         "<strong>" + msg + "</strong>" +
-        "</div>";
-    $("section.tab-content").first().before(content);
+        "</div>");
+    $("section.tab-content").prepend(content);
+    setTimeout("$('#divAlert').remove()", 3000);
 }
 
 //注销

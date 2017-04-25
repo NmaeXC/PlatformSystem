@@ -17,7 +17,7 @@ $("#btnSearch").click(function(){
         success : function(data){
             if(data == "")
             {
-                alert("不存在该员工！");
+                alertMsg("不存在该员工！", 'danger');
             }
             else
             {

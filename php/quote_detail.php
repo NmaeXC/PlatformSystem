@@ -29,7 +29,7 @@ else
 }
 
 //报价单填写人信息
-$sql = "SELECT user.name, user.tele, user.email FROM user LEFT JOIN quote ON user.uid = quote.staff_uid WHERE quote.id = '{$quoteId}'";
+$sql = "SELECT user.name, user.tele, user.email, user.fox FROM user LEFT JOIN quote ON user.uid = quote.staff_uid WHERE quote.id = '{$quoteId}'";
 $rs_sql = $mysqli -> query($sql);
 if($rs = mysqli_fetch_array($rs_sql))
 {
@@ -41,7 +41,7 @@ else
 }
 
 //返回报价单的产品列表
-$sql = "SELECT quote_products.id, quote_products.product_id, quote_products.name, quote_products.price, quote_products.discount, tax_rate.value tax_rate, quote_products.amount, quote_products.ps FROM quote_products LEFT JOIN tax_rate ON db_platform.tax_rate.id = quote_products.tax_rate WHERE quote_products.quote_id = '{$quoteId}'";
+$sql = "SELECT quote_products.id, quote_products.product_id, quote_products.name, quote_products.price, quote_products.discount, quote_products.tax_rate, quote_products.amount, quote_products.ps FROM quote_products WHERE quote_products.quote_id = '{$quoteId}' ORDER BY quote_products.id";
 $rs_sql = $mysqli -> query($sql);
 
 $x = 0;

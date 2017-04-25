@@ -8,7 +8,7 @@ $(document).ready(function () {
 });
 
 $("#key").bigAutocomplete({
-    url: "../../php/auto_product.php",
+    url: "../../php/autocomplete.php?type=product",
     callback: function(data){
         $.ajax({
             url: "../../php/product_info.php",

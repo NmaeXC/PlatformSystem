@@ -1,4 +1,8 @@
 var columnIndex = 1;
+var oldList = new Array();
+var newList = new Array();
+var number = '';
+
 $(document).ready(function () {
     freshMyPage();
 
@@ -119,24 +123,24 @@ function removeColumn(ele){
 
 
 $("#btnSubmitExpenseAccount").click(function(){
-    var column = 0;
-
     if (error != 0)
     {
         $("#expenseTip").text("输入有误！请更正后重新提交。");
     }
     else
     {
-        var expenseList = new Array();
+        $(this).attr("disabled", "disabled");
+
+        newList = new Array();
         $("#tbodyNewExpenseAccount").children().each(function(){
             if (!$(this).hasClass('hidden')){
-                var expenseAmount = $(this).find(".expenseAmount").val();
+                var expenseAmount = $(this).find(".expenseAmount").val() === ''? 0 : $(this).find(".expenseAmount").val();
                 var expenseType = $(this).find(".expenseType").val();
-                var expenseDate = $(this).find(".expenseDate").val();
-                var expenseAttachment = $(this).find(".expenseAttachment").val();
+                var expenseDate = $(this).find(".expenseDate").val() === ''? '0000-00-00' : $(this).find(".expenseDate").val();
+                var expenseAttachment = $(this).find(".expenseAttachment").val() === ''? 0 : $(this).find(".expenseAttachment").val();
                 var expenseRemark = $(this).find(".expenseRemark").val();
                 var expenseSite = $(this).find(".expenseSite").val();
-                column = expenseList.push({'type' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
+                newList.push({'type_id' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
             }
         });
 
@@ -144,7 +148,7 @@ $("#btnSubmitExpenseAccount").click(function(){
             url : "../../php/submitExpenseAccount.php",
             type : "POST",
             cache : false,
-            data : {'expenseList' : JSON.stringify(expenseList)},
+            data : {'expenseList' : JSON.stringify(newList)},
             async : false,
             dataType : 'json',
             //processData : false,  // 告诉jQuery不要去处理发送的数据
@@ -153,7 +157,7 @@ $("#btnSubmitExpenseAccount").click(function(){
                 if(data == "0")
                 {
                     alert("提交成功!");
-                    window.location('expense_history.html');
+                    window.location.href = 'expense_history.html';
                 }
                 else
                 {
@@ -175,25 +179,24 @@ $("#btnSubmitExpenseAccount").click(function(){
 
 //保存草稿
 $("#btnSaveDraft").click(function(){
-
-    var column = 0;
-
     if (error != 0)
     {
         $("#expenseTip").text("输入有误！请更正后重新提交。");
     }
     else
     {
-        var expenseList = new Array();
+        $(this).attr("disabled", "disabled");
+
+        newList = new Array();
         $("#tbodyNewExpenseAccount").children().each(function(){
             if (!$(this).hasClass('hidden')){
-                var expenseAmount = $(this).find(".expenseAmount").val();
+                var expenseAmount = $(this).find(".expenseAmount").val() === ''? 0 : $(this).find(".expenseAmount").val();
                 var expenseType = $(this).find(".expenseType").val();
-                var expenseDate = $(this).find(".expenseDate").val();
-                var expenseAttachment = $(this).find(".expenseAttachment").val();
+                var expenseDate = $(this).find(".expenseDate").val() === ''? '0000-00-00' : $(this).find(".expenseDate").val();
+                var expenseAttachment = $(this).find(".expenseAttachment").val() === ''? 0 : $(this).find(".expenseAttachment").val();
                 var expenseRemark = $(this).find(".expenseRemark").val();
                 var expenseSite = $(this).find(".expenseSite").val();
-                column = expenseList.push({'type' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
+                newList.push({'type_id' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
             }
         });
 
@@ -201,14 +204,15 @@ $("#btnSaveDraft").click(function(){
             url : "../../php/expenseSaveDraft.php",
             type : "POST",
             cache : false,
-            data : {'expenseList' : JSON.stringify(expenseList)},
+            data : {'expenseList' : JSON.stringify(newList)},
             async : false,
             dataType : 'json',
             success : function(data){
-                if(data == "0")
+                if(data.state == "ok")
                 {
                     alert("保存成功!");
-                    window.location('expense_history.html');
+                    number = data.number;
+                    switchMode();
                 }
                 else
                 {
@@ -218,54 +222,136 @@ $("#btnSaveDraft").click(function(){
             }
         });
     }
-
-
-    //if (error != 0)
-    //{
-    //    $("#expenseTip").text("输入有误！请更正后重新保存。");
-    //}
-    //else
-    //{
-    //    //处理数据
-    //    var expenseList = new Array();
-    //    var expenseAmount = $("#trNewExpenseAccount_0").find(".expenseAmount").val();
-    //    var expenseType = $("#trNewExpenseAccount_0").find(".expenseType").val();
-    //    var expenseDate = $("#trNewExpenseAccount_0").find(".expenseDate").val();
-    //    var expenseAttachment = $("#trNewExpenseAccount_0").find(".expenseAttachment").val();
-    //    var expenseRemark = $("#trNewExpenseAccount_0").find(".expenseRemark").val();
-    //
-    //    var i = 0;
-    //    while(i < column)
-    //    {
-    //        expenseList[i] = {'type' : expenseType, 'date' : expenseDate, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark};
-    //        ++i;
-    //        var expenseAmount = $("#trNewExpenseAccount_" + i).find(".expenseAmount").val();
-    //        var expenseType = $("#trNewExpenseAccount_" + i).find(".expenseType").val();
-    //        var expenseDate = $("#trNewExpenseAccount_" + i).find(".expenseDate").val();
-    //        var expenseAttachment = $("#trNewExpenseAccount_" + i).find(".expenseAttachment").val();
-    //        var expenseRemark = $("#trNewExpenseAccount_" + i).find(".expenseRemark").val();
-    //    }
-    //
-    //
-    //    $.ajax({
-    //        url : "../../php/expenseSaveDraft.php",
-    //        type : "POST",
-    //        cache : false,
-    //        data : {'expenseList' : JSON.stringify(expenseList)},
-    //        //async : false,
-    //        dataType : 'json',
-    //        success : function(data){
-    //            if(data == "0")
-    //            {
-    //                alert("保存成功!");
-    //            }
-    //            else
-    //            {
-    //                alert("保存失败，请重试...");
-    //            }
-    //
-    //        }
-    //    })
-    //
-    //}
 });
+
+//将页面调整为可多次保存的编辑草稿模式
+function switchMode(){
+
+    oldList = newList.concat();
+
+    //修改提交和保存两个按钮的绑定事件
+    $("#btnSaveDraft").unbind('click').click(function () {
+        if (error != 0)
+        {
+            $("#expenseTip").text("输入有误！请更正后重新提交。");
+        }
+        else
+        {
+            $(this).attr("disabled", "disabled");
+
+            newList = [];
+            $("#tbodyNewExpenseAccount").children().each(function(){
+                if (!$(this).hasClass('hidden')){
+                    var expenseAmount = $(this).find(".expenseAmount").val() === ''? 0 : $(this).find(".expenseAmount").val();
+                    var expenseType = $(this).find(".expenseType").val();
+                    var expenseDate = $(this).find(".expenseDate").val() === ''? '0000-00-00' : $(this).find(".expenseDate").val();
+                    var expenseAttachment = $(this).find(".expenseAttachment").val() === ''? 0 : $(this).find(".expenseAttachment").val();
+                    var expenseRemark = $(this).find(".expenseRemark").val();
+                    var expenseSite = $(this).find(".expenseSite").val();
+                    newList.push({'type_id' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
+                }
+            });
+
+            if(JSON.stringify(oldList) == JSON.stringify(newList)){
+                alertMsg("信息未修改", 'danger');
+            }else{
+                //比较
+                var editList = [];
+                var addList = [];
+                var deleteList = [];
+
+                for (var i = 0; i < (oldList.length > newList.length? oldList.length: newList.length); i++){
+                    if (i >= oldList.length){
+                        //新增项
+                        addList.push(newList[i]);
+
+                    }else if (i >= newList.length){
+                        //删除项
+                        deleteList.push(oldList[i]);
+
+                    }else{
+                        //修改项
+                        if (JSON.stringify(newList[i]) != JSON.stringify(oldList[i])){
+                            editList.push({'item': oldList[i], '_item': newList[i]});
+                        }
+                    }
+                }
+
+                $.ajax({
+                    url: "../../php/expense_edit_item.php",
+                    type: "POST",
+                    data: {
+                        expenseID : number,
+                        delete : JSON.stringify(deleteList),
+                        edit : JSON.stringify(editList),
+                        add : JSON.stringify(addList)
+                    },
+                    success: function(data){
+                        if (data === "0"){
+                            alertMsg("修改成功", "success");
+                            $("#btnSaveDraft").removeAttr("disabled");
+                            oldList = newList.concat();
+                        }
+                        else{
+                            alertMsg("保存失败", "danger");
+                        }
+                    }
+                });
+            }
+
+
+        }
+
+    }).removeAttr('disabled');
+
+    $("#btnSubmitExpenseAccount").unbind('click').click(function () {
+        if (error != 0)
+        {
+            $("#expenseTip").text("输入有误！请更正后重新提交。");
+        }
+
+        else
+        {
+            $(this).attr("disabled", "disabled");
+
+            newList = new Array();
+            $("#tbodyNewExpenseAccount").children().each(function(){
+                if (!$(this).hasClass('hidden')){
+                    var expenseAmount = $(this).find(".expenseAmount").val() === ''? 0 : $(this).find(".expenseAmount").val();
+                    var expenseType = $(this).find(".expenseType").val();
+                    var expenseDate = $(this).find(".expenseDate").val() === ''? '0000-00-00' : $(this).find(".expenseDate").val();
+                    var expenseAttachment = $(this).find(".expenseAttachment").val() === ''? 0 : $(this).find(".expenseAttachment").val();
+                    var expenseRemark = $(this).find(".expenseRemark").val();
+                    var expenseSite = $(this).find(".expenseSite").val();
+                    newList.push({'type_id' : expenseType, 'date' : expenseDate, 'site' : expenseSite, 'amount' : expenseAmount, 'attachment' : expenseAttachment, 'remark' : expenseRemark});
+                }
+            });
+
+            if(JSON.stringify(oldList) != JSON.stringify(newList)){
+                $("#expenseTip").text("信息有更改，如需保留请点击保存按钮后再行提交。");
+            }else{
+                $.ajax({
+                    url : "../../php/expenseSaveDraft.php",
+                    type : "POST",
+                    cache : false,
+                    data : {'submit': true, 'expenseID': number},
+                    async : false,
+                    dataType : 'json',
+                    success : function(data){
+                        if(data == "0")
+                        {
+                            alertMsg("提交成功!", "success");
+                            window.location.href = 'expense_history.html';
+                        }
+                        else
+                        {
+                            alertMsg("提交失败，请重试...", "warning");
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+
+}
