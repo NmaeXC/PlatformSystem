@@ -54,6 +54,7 @@
                     case "4" :
                         //驳回
                         $('#btnPrint').removeClass('hidden');
+                        $("#editItem").attr('disabled','disabled').attr('title', '欲重新编辑请点击下方重新编辑按钮');
                         $("#btnReedit").removeClass('hidden').click(function () {
                             $.ajax({
                                 url: "../../php/expense_edit_item.php",
