@@ -9,183 +9,105 @@
     <title>报价单详情</title>
 
     <style>
-        @media print {
-            .container {
-                width: 594.3pt;
-                padding-right: 15pt;
-                padding-left: 15pt;
-                margin-right: auto;
-                margin-left: auto;
-            }
-            p, td, th{
-                font-size: 9pt;
-                margin: 2pt 0;
-                font-family: "Microsoft YaHei UI";
-            }
-
-            .hd > p{
-                font-weight: 600;
-            }
-
-            h2{
-                margin-top: 0pt;
-                font-family:"Microsoft YaHei";
-                font-size: 14pt;
-            }
-            td, th{
-                padding: 7pt;
-                text-align: left;
-            }
-
-
-            #header{
-                height: 102px;
-            }
-
-            #info_1{
-                height: 120px;
-            }
-
-            #info_2{
-
-            }
-            #footer{
-                position:absolute;
-                top:800pt;
-                width: 100%;
-            }
-
-            #footer p{
-                font-weight: 600;
-                font-size: 8pt;
-                margin-top: 2pt;
-                margin-bottom: 2pt;
-            }
-            #footer ul{
-                margin-top: 5pt;
-            }
-
-            .noprint{
-                display: none;
-            }
-
-            #divSum{
-                position: absolute;
-                top: 770pt;
-                left: 450pt;
-                width: 100pt;
-            }
-
-            hr{
-                height:1pt;
-                border:none;
-                border-top:1pt solid #555555;
-                margin-left: 15pt;
-                margin-right: 15pt
-            }
-
+        .container {
+            width: 594.3pt;
+            padding-right: 15pt;
+            padding-left: 15pt;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        p, td, th{
+            font-size: 9pt;
+            margin: 2pt 0;
+            font-family: "Microsoft YaHei UI";
         }
 
-        @media screen and (min-width: 768px) {
-            .container {
-                width: 750px;
-            }
-        }
-        @media screen and (min-width: 992px) {
-            .container {
-                width: 970px;
-            }
-        }
-        @media screen and (min-width: 1200px) {
-            .container {
-                width: 1170px;
-            }
+        .hd > p{
+            font-weight: 600;
         }
 
-        @media screen {
-            hr{
-                height:1px;
-                border:none;
-                border-top:1px solid #555555;
-                margin-left: 20px;
-                margin-right: 20px
-            }
-            .container {
-                padding-right: 15px;
-                padding-left: 15px;
-                margin-right: auto;
-                margin-left: auto;
-            }
-
-            p, td, th{
-                font-size: 9pt;
-                margin: 2pt 0;
-                font-family: "Microsoft YaHei UI";
-            }
-
-            .hd > p{
-                font-weight: 600;
-            }
-
-            h2{
-                margin-top: 0pt;
-                font-family:"Microsoft YaHei";
-                font-size: 11pt;
-            }
-            td, th{
-                padding: 7pt;
-                text-align: left;
-            }
-
-
-            #header{
-                height: 102px;
-            }
-
-            #info_1{
-                height: 120px;
-            }
-
-            #info_2{
-
-            }
-
-            .noshow{
-                display: none;
-            }
-
-            #footer p{
-                font-weight: 600;
-                font-size: 8pt;
-                margin-top: 2pt;
-                margin-bottom: 2pt;
-            }
-            #footer ul{
-                margin-top: 5pt;
-            }
-
+        h2{
+            margin-top: 0pt;
+            font-family:"Microsoft YaHei";
+            font-size: 14pt;
+        }
+        td, th{
+            padding: 7pt;
+            text-align: left;
+        }
+        #info_1{
+            height: 120px;
         }
 
+        #divHead{
+            height: 235pt;
+        }
+
+        #divSum{
+            height: 35pt;
+        }
+
+        #header{
+            height: 102px;
+        }
+        #divProduct{
+            height:555pt;
+        }
+
+        /*#divList_0{*/
+            /*height: 515pt;*/
+        /*}*/
+
+        /*#divList_1{*/
+            /*height: 750pt;*/
+        /*}*/
+
+        #divFoot{
+            height: 100pt;
+        }
+
+        #footer p{
+            font-weight: 600;
+            font-size: 8pt;
+            margin-top: 2pt;
+            margin-bottom: 2pt;
+        }
+        #footer ul{
+            margin-top: 5pt;
+        }
+
+        .noprint{
+            display: none;
+        }
+
+        hr{
+            height:1pt;
+            border:none;
+            border-top:1pt solid #555555;
+            margin-left: 15pt;
+            margin-right: 15pt
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="../../img/logo.png" style="width: 200px; height: auto">
+<div class="container">
+    <div id="divHead">
+        <img src="http://10.0.0.2:880/platformsystem/img/logo.png" style="width: 200px; height: auto">
         <div id="header">
             <div style="width: 55%; float: left; margin-left: 20px">
                 <p>北京中科世行测控技术有限公司</p>
                 <p>地址：西安市雁塔区瞪羚路26号现代企业中心西区B2-10303室</p>
                 <p>电话：029-81027890</p>
                 <p>传真：029-81027890</p>
-                <P>Web：www.synthflex.com</P>
+                <p>Web：www.synthflex.com</p>
             </div>
             <div style="width: 30%; float: right">
                 <p>报价单号：</p>
-                <h2 id="id"></h2>
-                <p>币种：<span id="currency"></span></p>
+                <h2 id="id">Q2017Q2M04127</h2>
+                <p>币种：<span id="currency">人民币(RMB)</span></p>
             </div>
         </div>
-        <hr/>
+        <hr>
         <div id="info_1">
             <div style="width: 50%; float: left">
                 <div>
@@ -198,12 +120,12 @@
                         <p>地址：</p>
                     </div>
                     <div style="width: 65%; float: right; text-align: left">
-                        <p id="customer_name">-</p>
-                        <p id="customer_id">-</p>
-                        <p id="contact_name">-</p>
-                        <p id="contact_tele">-</p>
-                        <P id="contact_email">-</P>
-                        <P id="customer_addr">-</P>
+                        <p id="customer_name">烟台海军航空工程学院</p>
+                        <p id="customer_id">37060001</p>
+                        <p id="contact_name">黄勇</p>
+                        <p id="contact_tele">13127071580/1355</p>
+                        <p id="contact_email">-</p>
+                        <p id="customer_addr">山东省烟台市山东省烟台市二马路188号</p>
                     </div>
                 </div>
             </div>
@@ -217,17 +139,19 @@
                         <p>E-mail：</p>
                     </div>
                     <div style="width: 65%; float: right; text-align: left">
-                        <p id="validity"><span id="start"></span> ~ <span id="end"></span></p>
-                        <p class="nameUser">-</p>
-                        <p class="teleUser">-</p>
-                        <p class="foxUser">-</p>
-                        <P class="emailUser">-</P>
+                        <p id="validity"><span id="start">2017-04-26</span> ~ <span id="end">2017-04-26</span></p>
+                        <p class="nameUser">王传华</p>
+                        <p class="teleUser">15891757490</p>
+                        <p class="foxUser">029-81027890</p>
+                        <p class="emailUser">chuanhua.wang@synthflex.com</p>
                     </div>
                 </div>
             </div>
         </div>
-        <hr/>
-        <div id="info_2">
+        <hr>
+    </div>
+    <div id="divProduct">
+        <div id="divList_0">
             <table style="width: 100%">
                 <thead>
                 <tr>
@@ -241,36 +165,40 @@
                     <th style="width: 10%">总价[¥]</th>
                 </tr>
                 </thead>
-                <tbody id="tbody_products">
+                <tbody id="tbody_products_0">
 
                 </tbody>
             </table>
         </div>
-        <hr/>
-        <div id="divSum" style="height: 43px; padding-right: 20px">
-            <div style="float: left;width: 80%; text-align: right">
-                <h2>总计<span class="currency"></span>：</h2>
-            </div>
-            <div style="float: left;width: 15%; text-align: right;">
-                <h2 id="sum"></h2>
+        <div id="divSum">
+            <hr>
+            <div style="padding-right: 20px">
+                <div style="float: left;width: 80%; text-align: right">
+                    <h2>总计<span class="currency">[¥]</span>：</h2>
+                </div>
+                <div style="float: left;width: 15%; text-align: right;">
+                    <h2 id="sum"></h2>
+                </div>
+                <div style="clear: both">
+                </div>
             </div>
         </div>
-        <div id="footer" class="noshow" class="hd">
-            <hr style="margin-right: 50pt"/>
-            <p style="margin-left: 20px">附加信息:</p>
-            <ul>
-                <li><p>付款方式：100%全额预付</p></li>
-                <li><p>运货方式：CPT</p></li>
-                <li><p>预计发货期：货架产品一般情况下为销售合同订立之后30个工作日内，定制类产品以最终合同为准。</p></li>
-                <li><p>产品保修期：硬件产品保修期为1年，代理产品以原厂保修期为准。</p></li>
-            </ul>
-        </div>
+    </div>
+    <div id="divFoot" class="" style="">
+        <hr>
+        <p style="margin-left: 20px">附加信息:</p>
+        <ul>
+            <li><p>付款方式：100%全额预付</p></li>
+            <li><p>运货方式：CPT</p></li>
+            <li><p>预计发货期：货架产品一般情况下为销售合同订立之后30个工作日内，定制类产品以最终合同为准。</p></li>
+            <li><p>产品保修期：硬件产品保修期为1年，代理产品以原厂保修期为准。</p></li>
+        </ul>
     </div>
     <div class="noprint" style="text-align: center">
-        <button id="btnPrint">打印</button>
+        <button id="btnPrint" style="display: inline-block;">打印</button>
     </div>
-    <script src="../../js/jquery.js"></script>
-    <script src="../../js/quote_print.js"></script>
-
+</div>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/quote_print.js"></script>
 </body>
 </html>

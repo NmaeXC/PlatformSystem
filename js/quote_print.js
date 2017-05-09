@@ -11,8 +11,22 @@
 
 
 (function () {
+    /**分页参数*****/
+    var DIV1_LENTH = 235;
+    var DIV2_LENTH = 515;
+    var DIV3_LENTH = 35;
+    var DIV4_LENTH = 85;
+
+    var ratio = document.getElementById('divHead').offsetHeight / DIV1_LENTH;
+    var pt2px = function (pt) {
+        return pt * ratio;
+    };
+
+    /*******页面参数**********/
     var number = getQueryString("x");
     var contact = getQueryString("c");
+
+
     if (number !== null)
     {
         //初始化页面
@@ -55,10 +69,11 @@
                 $(".foxUser").text(nullornot(data.userInfo.fox));
                 $(".emailUser").text(nullornot(data.userInfo.email));
                 var sum = 0;
+                var page_index = 0;
                 for(var i in data.products)
                 {
                     var trID = "tr" + i;
-                    $("<tr>").attr('id', trID).appendTo("#tbody_products");
+                    $("<tr>").attr('id', trID).appendTo("#tbody_products_" + page_index);
                     $("<td></td>").text((parseInt(i) + 1) + ".").appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].product_id).appendTo("#" + trID);
                     $("<td></td>").text(data.products[i].name).appendTo("#" + trID);
@@ -94,6 +109,32 @@
                     var totalPrice = price * (new Number(data.products[i].amount));
                     $("<td></td>").text(totalPrice.toFixed(2)).appendTo("#" + trID);
                     sum += totalPrice;
+                    if (page_index === 0 && $("#divList_" + page_index).get(0).offsetHeight > pt2px(DIV2_LENTH + DIV3_LENTH)){
+                        $("#divProduct").css('height', (555 + DIV1_LENTH + DIV2_LENTH + DIV3_LENTH + DIV4_LENTH) + "pt");
+                        $("#divList_" + page_index).css('height', (DIV2_LENTH + DIV3_LENTH) + "pt");
+                        $("#divList_" + page_index).after("<div style='height: 115pt'><hr></div>" +
+                            "<div id='divList_1'><hr>" +
+                            "<table style='width: 100%'>" +
+                            "<thead>" +
+                            "<tr>" +
+                            "<th style='width: 6%'>序号</th>" +
+                            "<th style='width: 18%'>产品号</th>" +
+                            "<th style='width: 32%'>产品详细说明</th>" +
+                            "<th style='width: 10%'>原价[¥]</th>" +
+                            "<th style='width: 8%'>税率</th>" +
+                            "<th style='width: 10%'>税后单价[¥]</th>" +
+                            "<th style='width: 6%'>数量</th>" +
+                            "<th style='width: 10%'>总价[¥]</th>" +
+                            "</tr>" +
+                            "</thead>" +
+                            "<tbody id='tbody_products_1'>" +
+                            "</tbody>" +
+                            "</table>" +
+                            "</div>");
+
+                        $("#" + trID).appendTo("#tbody_products_1");
+                        page_index++;
+                    }
                 }
                 if(!isNaN(sum))
                 {
@@ -103,8 +144,13 @@
                 {
                     $("#sum").text("数据有误");
                 }
+                if (page_index === 0 && $("#divList_" + page_index).get(0).offsetHeight + $("#divSum").get(0).offsetHeight > pt2px(DIV2_LENTH + DIV3_LENTH)){
+                    $("#divProduct").css('height', (555 + DIV1_LENTH + DIV2_LENTH + DIV3_LENTH + DIV4_LENTH) + "pt");
+                    $("#divList_" + page_index).css('height', (DIV2_LENTH + DIV3_LENTH) + "pt");
+                    $("#divList_" + page_index).after("<div style='height: 115pt'><hr></div>");
+                }
             }
-        })
+        });
     }
 
     function nullornot(str){
@@ -115,6 +161,7 @@
             return str;
         }
     }
+
 
     //点击打印按钮
     $("#btnPrint").click(function(){
