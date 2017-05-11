@@ -492,6 +492,11 @@
         window.open("quote_print.html?x=" + number + "&c=" + contact);
     });
 
+    //导出Excel
+    $("#btnExcel").click(function () {
+        window.open("../../php/quote2excel.php?id=" + number + "&contact=" + contact);
+    });
+
     function autoCalculate(id){
         var originalPrice = new Number(editList[id].price);
         var discount = new Number(editList[id].discount);
