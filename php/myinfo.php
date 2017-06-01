@@ -17,13 +17,13 @@
 			//初始化用户，新建用户记录
 			$time = date("Y-m-d");
 			// echo $time;
-			$sql = "INSERT INTO user (username, date) VALUES ('{$username}', '{$time}')";
+			$sql = "INSERT INTO user (uid, username, date) VALUES ('{$username}','{$username}', '{$time}')";
 			// echo $sql;
 			$rs_sql = $mysqli -> query($sql);
 			if(mysqli_affected_rows($mysqli) <= 0)
 			{
 				echo -3;
-				exit();	
+				exit("初始化用户失败，请联系管理员");
 			}
 			$sql = "SELECT username, date FROM user WHERE username = '$username'";
 			$rs_sql = $mysqli -> query($sql);
