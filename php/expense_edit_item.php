@@ -52,6 +52,31 @@ if (isset($_POST['delete_only']))
 }
 else
 {
+    if (isset($_POST['new']))
+    {
+        $new_list = json_decode($_POST['new']);
+        $sql = "DELETE FROM `db_platform`.`expense_item` WHERE `id` = '{$id}'";
+        $mysqli -> query($sql);
+        foreach($new_list as $val)
+        {
+            $new_date = $val -> date;
+            $new_site = $val -> site;
+            $new_type = $val -> type_id;
+            $new_amount = $val -> amount;
+            $new_attachment = $val -> attachment;
+            $new_remark = $val -> remark;
+
+            $sql = "INSERT INTO expense_item (`id`, `type`, `amount`, `remark`, `date`, `site`, `attachment`) VALUES ('{$id}', '{$new_type}', '{$new_amount}', '{$new_remark}', '{$new_date}', '{$new_site}', '{$new_attachment}')";
+            $mysqli -> query($sql);
+            if(mysqli_affected_rows($mysqli) <= 0)
+            {
+                exit("Edit Expense's Item Error");
+            }
+        }
+
+        exit("0");
+    }
+
     if (isset($_POST['edit']))
     {
         $edit_list = json_decode($_POST['edit']);

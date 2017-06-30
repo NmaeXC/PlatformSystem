@@ -256,35 +256,36 @@ function switchMode(){
                 alertMsg("信息未修改", 'danger');
             }else{
                 //比较
-                var editList = [];
-                var addList = [];
-                var deleteList = [];
+                //var editList = [];
+                //var addList = [];
+                //var deleteList = [];
 
-                for (var i = 0; i < (oldList.length > newList.length? oldList.length: newList.length); i++){
-                    if (i >= oldList.length){
-                        //新增项
-                        addList.push(newList[i]);
-
-                    }else if (i >= newList.length){
-                        //删除项
-                        deleteList.push(oldList[i]);
-
-                    }else{
-                        //修改项
-                        if (JSON.stringify(newList[i]) != JSON.stringify(oldList[i])){
-                            editList.push({'item': oldList[i], '_item': newList[i]});
-                        }
-                    }
-                }
+                //for (var i = 0; i < (oldList.length > newList.length? oldList.length: newList.length); i++){
+                //    if (i >= oldList.length){
+                //        //新增项
+                //        addList.push(newList[i]);
+                //
+                //    }else if (i >= newList.length){
+                //        //删除项
+                //        deleteList.push(oldList[i]);
+                //
+                //    }else{
+                //        //修改项
+                //        if (JSON.stringify(newList[i]) != JSON.stringify(oldList[i])){
+                //            editList.push({'item': oldList[i], '_item': newList[i]});
+                //        }
+                //    }
+                //}
 
                 $.ajax({
                     url: "../../php/expense_edit_item.php",
                     type: "POST",
                     data: {
                         expenseID : number,
-                        delete : JSON.stringify(deleteList),
-                        edit : JSON.stringify(editList),
-                        add : JSON.stringify(addList)
+                        //delete : JSON.stringify(deleteList),
+                        //edit : JSON.stringify(editList),
+                        //add : JSON.stringify(addList),
+                        new : JSON.stringify(newList)
                     },
                     success: function(data){
                         if (data === "0"){

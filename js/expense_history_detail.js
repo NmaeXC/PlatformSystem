@@ -140,22 +140,23 @@
 
     //保存条目修改
     $("#saveItem").click(function () {
-        for (var i in EditList){
-            if($("#" + EditList[i].n).length > 0){
-                EditList[i]._item = {
-                    date : $("#" + EditList[i].n).find('input.date:first').val(),
-                    site : $("#" + EditList[i].n).find('.site:first').val(),
-                    type_id : $("#" + EditList[i].n).find('.type:first').val(),
-                    amount : $("#" + EditList[i].n).find('.amount:first').val(),
-                    attachment : $("#" + EditList[i].n).find('.attachment:first').val(),
-                    remark : $("#" + EditList[i].n).find('.remark:first').val()
-                }
-            }
-        }
+        //for (var i in EditList){
+        //    if($("#" + EditList[i].n).length > 0){
+        //        EditList[i]._item = {
+        //            date : $("#" + EditList[i].n).find('input.date:first').val(),
+        //            site : $("#" + EditList[i].n).find('.site:first').val(),
+        //            type_id : $("#" + EditList[i].n).find('.type:first').val(),
+        //            amount : $("#" + EditList[i].n).find('.amount:first').val(),
+        //            attachment : $("#" + EditList[i].n).find('.attachment:first').val(),
+        //            remark : $("#" + EditList[i].n).find('.remark:first').val()
+        //        }
+        //    }
+        //}
 
-        var addList = new Array();
-        $.each($("tr.item-add"), function () {
-            addList.push({
+        //var addList = new Array();
+        var newList = new Array();
+        $.each($("tr.items"), function () {
+            newList.push({
                 date : $(this).find('input.date:first').val(),
                 site : $(this).find('.site:first').val(),
                 type_id : $(this).find('.type:first').val(),
@@ -170,8 +171,9 @@
             type: "POST",
             data: {
                 expenseID : number,
-                edit : JSON.stringify(EditList),
-                add : JSON.stringify(addList)
+                //edit : JSON.stringify(EditList),
+                //add : JSON.stringify(addList),
+                new : JSON.stringify(newList)
             },
             success: function(data){
                 if (data === "0"){
@@ -244,51 +246,6 @@
 
     }
 
-    //function editItem(item){
-    //    $("#edit_item_date").val(item.date);
-    //    $("#edit_item_site").val(item.site);
-    //    $("#edit_item_type").val(item.type_id);
-    //    $("#edit_item_amount").val(item.amount);
-    //    $("#edit_item_attachment").val(item.attachment);
-    //    $("#edit_item_remark").val(item.remark);
-    //
-    //    $("#btnItemSubmit").click(item, function (e) {
-    //        if($("#edit_item_date").val() !== item.date
-    //            || $("#edit_item_site").val() !== item.site
-    //            || $("#edit_item_type").val() !== item.type_id
-    //            || $("#edit_item_amount").val() !== item.amount
-    //            || $("#edit_item_attachment").val() !== item.attachment
-    //            || $("#edit_item_remark").val() !== item.remark){
-    //
-    //            $.ajax({
-    //                url: "../../php/expense_edit_item.php",
-    //                type: "POST",
-    //                data: $("#formItem").serialize() + "&expenseID=" + number
-    //                    + "&odate=" + item.date
-    //                    + "&osite=" + item.site
-    //                    + "&otype=" + item.type_id
-    //                    + "&oamount=" + item.amount
-    //                    + "&oattachment=" + item.attachment
-    //                    + "&oremark=" + item.remark,
-    //                success: function(data){
-    //                    if (data === "0"){
-    //                        alert("修改成功");
-    //                        window.location.reload();
-    //                    }
-    //                    else{
-    //                        alertMsg("保存失败", "danger");
-    //                    }
-    //                }
-    //            });
-    //
-    //        }
-    //        else {
-    //            alertMsg("已保存，并无修改", "success");
-    //        }
-    //    });
-    //
-    //    $("#modalEditItem").modal('show');
-    //}
 
     //删除报销单条目
     function deleteItem(item, trID){
@@ -325,7 +282,7 @@
     //添加一行
     $("#btnAddItem").click(function () {
         SumOfItem += 1;
-        var tr = $("<tr>").addClass('item-add').appendTo("#tbodyExpenseItem");
+        var tr = $("<tr>").addClass('items').appendTo("#tbodyExpenseItem");
             tr.append("<td class='editing'>" +
                 "<a type='button' class='badge bg-light-blue' disabled='disabled'><i class='fa fa-pencil'></i></a>" +
                 "</td>")
@@ -381,44 +338,6 @@
 
     });
 
-    //function removeAddItem(){
-    //    var i = 1;
-    //    var b = 2;
-    //    //$(para).parent().parent().remove();
-    //}
-
-    //$("#btnAddItem").click(function () {
-    //    $("#edit_item_date").val('');
-    //    $("#edit_item_site").val('');
-    //    $("#edit_item_type").val(1);
-    //    $("#edit_item_amount").val(0);
-    //    $("#edit_item_attachment").val('');
-    //    $("#edit_item_remark").val('');
-    //
-    //    $("#btnItemSubmit").unbind().click(function (e) {
-    //        $.ajax({
-    //            url: "../../php/expense_edit_item.php",
-    //            type: "POST",
-    //            data: $("#formItem").serialize() + "&expenseID=" + number
-    //            + "&add=true",
-    //            success: function(data){
-    //                if (data === "0"){
-    //                    alert("添加成功");
-    //                    window.location.reload();
-    //                }
-    //                else{
-    //                    alertMsg("添加失败", "danger");
-    //                }
-    //
-    //                setTimeout("location.reload();", 1000);
-    //            }
-    //        });
-    //        $("#modalEditItem").modal('hide');
-    //
-    //    });
-    //
-    //    $("#modalEditItem").modal('show');
-    //});
 
     //点击打印按钮
     $("#btnPrint").click(function(){
